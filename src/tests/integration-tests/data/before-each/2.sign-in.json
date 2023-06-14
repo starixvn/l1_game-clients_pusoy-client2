@@ -1,0 +1,40 @@
+[
+    {
+        "name": "Sign In",
+        "server": {
+            "waitForRequest": {
+                "namespace": "/user/dragontigerfight",
+                "event": "signin",
+                "payload": {
+                    "ss": "ss",
+                    "username": "username",
+                    "system": 1
+                }
+            },
+            "response": [
+                {
+                    "namespace": "/user/dragontigerfight",
+                    "event": "message",
+                    "payload": {
+                        "userStakeLevel": {
+                            "minBet": 1,
+                            "maxBet": 3000
+                        }
+                    }
+                },
+                {
+                    "namespace": "/user/dragontigerfight",
+                    "event": "signedIn",
+                    "payload": {}
+                },
+                {
+                    "namespace": "/user/dragontigerfight",
+                    "event": "message",
+                    "payload": {
+                        "toGame": "DragonTigerFight"
+                    }
+                }
+            ]
+        }
+    }
+]

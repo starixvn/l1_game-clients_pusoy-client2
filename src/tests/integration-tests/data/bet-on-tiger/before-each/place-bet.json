@@ -1,0 +1,50 @@
+{
+    "name": "Place Bet",
+    "server": {
+        "waitForRequest": {
+            "namespace": "/user/dragontigerfight",
+            "event": "bet",
+            "payload": {
+                "m": 1,
+                "username": "Conall",
+                "betChoice": "tiger",
+                "amount": 1,
+                "freeBet": false
+            }
+        },
+        "response": [
+            {
+                "namespace": "/user/dragontigerfight",
+                "event": "DragonTigerFight",
+                "payload": {
+                    "ownBets": {
+                        "tiger": 1
+                    },
+                    "totalBets": {
+                        "tiger": 1
+                    },
+                    "endBet": 1,
+                    "betChoice": "tiger",
+                    "freeBet": false,
+                    "user": {
+                        "red": 1999,
+                        "scoins": 0,
+                        "minBet": 1,
+                        "maxBet": 3000
+                    },
+                    "ownChip": {
+                        "betChoice": "tiger",
+                        "amount": 1
+                    }
+                }
+            }
+        ]
+    },
+    "client": {
+        "action": "Integration.click('tiger')",
+        "waitUntilMetExpectation": true,
+        "waitExpectationTimeout": 60000,
+        "actual": "Integration.label('balance')",
+        "expected": "1,999"
+    }
+}

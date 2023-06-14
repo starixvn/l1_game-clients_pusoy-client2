@@ -1,0 +1,64 @@
+<mxfile host="65bd71144e">
+    <diagram id="P2DfNrpP3MUkYTW9ud_u" name="Page-1">
+        <mxGraphModel dx="1539" dy="801" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;Game Client&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;rounded=1;swimlaneLine=1;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="60" width="710" height="370" as="geometry">
+                        <mxRectangle x="190" y="120" width="120" height="30" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="11" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;Stores and Handlers&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;rounded=1;swimlaneLine=1;fillColor=#d5e8d4;strokeColor=#82b366;startSize=23;" parent="2" vertex="1">
+                    <mxGeometry x="20" y="60" width="430" height="290" as="geometry">
+                        <mxRectangle x="220" y="260" width="120" height="30" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="12" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;b&gt;Arround table players&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="11" vertex="1">
+                    <mxGeometry x="15" y="40" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;b&gt;Connection&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="11" vertex="1">
+                    <mxGeometry x="15" y="90" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;b&gt;Excluded game&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="11" vertex="1">
+                    <mxGeometry x="15" y="140" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;b&gt;Game configs&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="11" vertex="1">
+                    <mxGeometry x="15" y="190" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;b&gt;Game configs&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="11" vertex="1">
+                    <mxGeometry x="15" y="240" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;b&gt;Hide game&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="11" vertex="1">
+                    <mxGeometry x="220" y="40" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;b&gt;Join game&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="11" vertex="1">
+                    <mxGeometry x="220" y="90" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;b&gt;Rounds&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="11" vertex="1">
+                    <mxGeometry x="220" y="140" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;b&gt;Settlements&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="11" vertex="1">
+                    <mxGeometry x="220" y="190" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;b&gt;Sounds&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="11">
+                    <mxGeometry x="220" y="240" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;Components&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;rounded=1;swimlaneLine=1;fillColor=#fff2cc;strokeColor=#d6b656;startSize=23;" vertex="1" parent="2">
+                    <mxGeometry x="470" y="60" width="220" height="190" as="geometry">
+                        <mxRectangle x="220" y="260" width="120" height="30" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="37" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;b&gt;Game Timer&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="36">
+                    <mxGeometry x="15" y="40" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;b&gt;Main player profile&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="36">
+                    <mxGeometry x="15" y="90" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;b&gt;Sounds&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="36">
+                    <mxGeometry x="15" y="140" width="190" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
