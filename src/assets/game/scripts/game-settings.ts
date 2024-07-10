@@ -4,7 +4,7 @@ import { sharedContainer } from "../../scripts/shared-container";
 
 export const settings = {
     id: 67,
-    name: "DragonTigerFight",
+    name: "Pusoy",
     durations: {
         wholeRound: 41,
         lockingBet: 3,

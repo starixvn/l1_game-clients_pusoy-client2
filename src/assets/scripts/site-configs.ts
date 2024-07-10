@@ -8,22 +8,22 @@ declare global {
 
 const defaultConfig: gc.Configs.SiteConfigs = {
     isDev: false, // if this property is true, then you should add token=anything into the querytring to sso to the game http://localhost:7456/?token=anything
-    systemType: "VG",
+    systemType: "SC",
     serverDomainMapper: {
         localhost: "lumigame.com",
     },
     ssl: true,
-    subDomain: "l2-proxy2",
-    env: "LOCAL2",
-    subGuideDomain: "l1-guide-3",
+    subDomain: "l1-proxy1",
+    env: "LOCAL1",
+    subGuideDomain: "l1-guide1",
     SGConnectSubDomain: "connectsite",
     enableMsgpackParserAllGames: false,
     enableMsgpackParserOnNotification: false,
     websocket: {
-        proxyPath: "dragontigerfight",
-        route: "dragontigerfight",
+        proxyPath: "pusoy",
+        route: "pusoy",
     },
-    mainObserverNamespace: "DragonTigerFight",
+    mainObserverNamespace: "Pusoy",
     tolgeeUrl: "",
 };
 
