@@ -3,14 +3,12 @@ import { LogStore } from "db://shared-components/game/scripts/stores/log-store";
 import { sharedContainer } from "../../scripts/shared-container";
 
 export const settings = {
-    id: 67,
+    id: 94,
     name: "Pusoy",
     durations: {
-        wholeRound: 41,
-        lockingBet: 3,
-        placingBet: 30,
-        generatingResult: 3,
-        startRound: 2,
+        wholeRound: 65,
+        lockingBet: 5,
+        placingBet: 45,
     },
     numberOfRoundHistory: 102,
 };
