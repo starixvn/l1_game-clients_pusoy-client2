@@ -6,12 +6,13 @@ import { startGame } from "db://shared-components/shared/scripts/startup";
 import Observer from "observer";
 import { siteConfigs } from "../../../scripts/site-configs";
 import { containerOptions, settings } from "../game-settings";
+import gc from "@sg/game-client-base";
 import "./../../../resources/i18n";
 
 startGame(settings.name, containerOptions, siteConfigs);
 
 const { ccclass, property } = _decorator;
-const { observer } = Observer;
+const { observer, handle, render } = Observer;
 
 @ccclass
 @observer(settings.name)
@@ -39,4 +40,19 @@ export default class Game extends GameComponent {
 
     override namespace = settings.name;
     override containerOptions = containerOptions;
+
+    onLoad() {
+        super.onLoad();
+    }
+
+    @render(gc.GameConfigs.GameConfigStore, (store) => store.initialized)
+    onConfigsLoaded() {
+        this.placeBet();
+    }
+
+    @handle(gc.Bet.BetHandler)
+    placeBet() {
+        console.log("Print");
+        return "pusoy";
+    }
 }
