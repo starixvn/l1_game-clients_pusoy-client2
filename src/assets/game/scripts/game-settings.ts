@@ -1,22 +1,18 @@
 import gc from "@sg/game-client-base";
-import { LogStore } from "db://shared-components/game/scripts/stores/log-store";
 import { sharedContainer } from "../../scripts/shared-container";
 
 export const settings = {
     id: 94,
     name: "Pusoy",
-    durations: {
-        wholeRound: 65,
-        lockingBet: 5,
-        placingBet: 45,
-    },
-    numberOfRoundHistory: 102,
+    durations: {},
 };
 
 export const containerOptions: gc.IContainerOptions = {
     globalContainer: sharedContainer,
+    features: gc.GamePusoy.features,
     onContainerCreated: (container) => {
-        container.bind(gc.GameConfigs.GameSetting).toConstantValue(settings);
-        container.bind(LogStore).to(LogStore);
+        container.bind(gc.GamePusoy.GameSetting).toConstantValue(settings);
+
+        gc.GamePusoy.onContainerCreated(container, settings);
     },
 };

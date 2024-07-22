@@ -52,7 +52,11 @@ export default class Game extends GameComponent {
 
     @handle(gc.Bet.BetHandler)
     placeBet() {
-        console.log("Print");
         return "pusoy";
+    }
+
+    @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.remaining)
+    updateRemaining(remaining: number) {
+        console.log(remaining);
     }
 }
