@@ -24,7 +24,7 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,0}</string>
+                <string>{-4,2}</string>
                 <key>spriteSize</key>
                 <string>{40,54}</string>
                 <key>spriteSourceSize</key>
@@ -174,7 +174,7 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,0}</string>
+                <string>{1,0}</string>
                 <key>spriteSize</key>
                 <string>{36,54}</string>
                 <key>spriteSourceSize</key>
@@ -303,7 +303,7 @@
             <key>size</key>
             <string>{256,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:75e14689a2596ac98d1699fb740f5dec:aaf5bba5294c18ad61cc9610fd733950:fc86278e5045194fe7638df41a1aa4f3$</string>
+            <string>$TexturePacker:SmartUpdate:7096398e5c4a0de8bbe9a9cac1be2858:df49076434488384c3892a332a6a4527:fc86278e5045194fe7638df41a1aa4f3$</string>
             <key>textureFileName</key>
             <string>cards.png</string>
         </dict>
