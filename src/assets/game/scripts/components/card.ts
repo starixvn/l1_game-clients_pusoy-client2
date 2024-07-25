@@ -1,4 +1,4 @@
-import { _decorator, Color, Component, Enum, Node, Sprite } from "cc";
+import { _decorator, Color, Component, Enum, Node, Sprite, UITransform } from "cc";
 
 const { ccclass, property } = _decorator;
 
@@ -110,6 +110,20 @@ export class Card extends Component {
 
     public set back(value: boolean) {
         this.backNode.active = value;
+    }
+
+    @property
+    public get size() {
+        const ui = this.node.getComponent(UITransform);
+
+        return ui.width;
+    }
+
+    public set size(value: number) {
+        const ui = this.node.getComponent(UITransform);
+        const height = (value * 177) / 134;
+
+        ui.setContentSize(value, height);
     }
 
     protected render(): void {
