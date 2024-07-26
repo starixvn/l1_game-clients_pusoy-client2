@@ -1,4 +1,5 @@
-import { _decorator, CCBoolean, Component, Enum, Label, Node, Sprite, SpriteAtlas, Widget } from "cc";
+import { _decorator, CCBoolean, Component, Enum, instantiate, Label, Node, Prefab, Sprite, SpriteAtlas, Widget } from "cc";
+import { CardContainer } from "./card-container";
 const { ccclass, property } = _decorator;
 
 enum SegmentType {
@@ -32,44 +33,27 @@ const IconName = {
     wrong: "changecard-icon-wrong",
 };
 
-@ccclass("segment")
-export class segment extends Component {
-    private _spriteAtlas: SpriteAtlas;
-    public get spriteAtlas(): SpriteAtlas {
-        return this._spriteAtlas;
-    }
+@ccclass("Segment")
+export class Segment extends Component {
     @property({ type: SpriteAtlas })
-    public set spriteAtlas(value: SpriteAtlas) {
-        this._spriteAtlas = value;
-    }
-
-    private _segmentTypeIcon: Node;
-    public get segmentTypeIcon(): Node {
-        return this._segmentTypeIcon;
-    }
-    @property(Node)
-    public set segmentTypeIcon(value: Node) {
-        this._segmentTypeIcon = value;
-    }
+    spriteAtlas: SpriteAtlas;
 
     @property(Node)
-    private _segmentTypeLabel: Node;
-    public get segmentTypeLabel(): Node {
-        return this._segmentTypeLabel;
-    }
+    segmentContainer: Node;
+
     @property(Node)
-    public set segmentTypeLabel(value: Node) {
-        this._segmentTypeLabel = value;
-    }
+    segmentTypeIcon: Node;
 
-    _isRightPosition: boolean;
+    @property(Node)
+    segmentTypeLabel: Node;
 
-    get isRightPosition() {
+    private _isRightPosition: boolean;
+    public get isRightPosition() {
         return this._isRightPosition;
     }
 
     @property(CCBoolean)
-    set isRightPosition(v: boolean) {
+    public set isRightPosition(v: boolean) {
         this._isRightPosition = v;
         const sprite = this.segmentTypeIcon.getComponent(Sprite);
         if (v) {
@@ -79,16 +63,22 @@ export class segment extends Component {
         }
     }
 
-    _segmentType: SegmentType;
-    get segmentType() {
+    private _segmentType: SegmentType;
+    public get segmentType() {
         return this._segmentType;
     }
-
     @property({ type: SegmentType })
-    set segmentType(v: SegmentType) {
+    public set segmentType(v: SegmentType) {
         this._segmentType = v;
         const label = this.segmentTypeLabel.getComponent(Label);
         label.string = SegmentDict[v];
+    }
+
+    fillCards(cards: Node[]) {
+        for (let i = 0; i < this.segmentContainer.children.length; i++) {
+            const cardContainer = this.segmentContainer.children[i].getComponent(CardContainer);
+            cardContainer.addCard(cards[i]);
+        }
     }
 
     start() {}
