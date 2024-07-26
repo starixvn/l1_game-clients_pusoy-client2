@@ -1,4 +1,4 @@
-import { _decorator, Color, Component, Enum, Node, Sprite, UITransform } from "cc";
+import { _decorator, BoxCollider2D, Color, Component, Contact2DType, Enum, Node, Sprite, UITransform } from "cc";
 
 const { ccclass, property } = _decorator;
 
@@ -83,6 +83,9 @@ export class Card extends Component {
     @property(Sprite)
     protected suitImage: Sprite = null;
 
+    @property(Node)
+    protected disableNode: Node = null;
+
     @property({ type: Enum(CardRank) })
     public get rank() {
         return this._rank;
@@ -109,7 +112,16 @@ export class Card extends Component {
     }
 
     public set back(value: boolean) {
-        this.backNode.active = value;
+        this.backNode!.active = value;
+    }
+
+    @property
+    public get disable() {
+        return this.disableNode.active;
+    }
+
+    public set disable(value: boolean) {
+        this.disableNode!.active = value;
     }
 
     @property

@@ -1,0 +1,27 @@
+
+HandRank.png
+size: 1024,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+light-center
+  rotate: false
+  xy: 2, 2
+  size: 453, 82
+  orig: 453, 82
+  offset: 0, 0
+  index: -1
+light-right
+  rotate: false
+  xy: 457, 11
+  size: 314, 73
+  orig: 314, 73
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 773, 37
+  size: 47, 47
+  orig: 47, 47
+  offset: 0, 0
+  index: -1
