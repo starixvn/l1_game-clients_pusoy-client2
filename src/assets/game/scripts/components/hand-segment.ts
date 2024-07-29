@@ -14,7 +14,7 @@ const ANIMATION_STEPS = [
             { rotation: 0, x: 68, y: 0 },
         ],
         duration: 0,
-        rank: true,
+        rank: false,
     },
     {
         cards: [
@@ -24,7 +24,7 @@ const ANIMATION_STEPS = [
             { rotation: 0, x: 49, y: 0 },
             { rotation: 0, x: 98, y: 0 },
         ],
-        duration: 0.5,
+        duration: 1,
         rank: true,
     },
     {
@@ -47,7 +47,7 @@ const ANIMATION_STEPS = [
             { rotation: -12, x: 49, y: -3, disable: true },
             { rotation: -20, x: 98, y: -15, disable: true },
         ],
-        duration: 0,
+        duration: 0.5,
         rank: false,
     },
 ];
