@@ -1,6 +1,6 @@
-import { _decorator, BoxCollider2D, Color, Component, Contact2DType, Enum, instantiate, Node, Prefab, Sprite, UITransform } from "cc";
-import { HandSegment } from "./hand-segment";
+import { _decorator, Component, instantiate, Prefab, tween, v3 } from "cc";
 import { Card } from "./card";
+import { HandSegment } from "./hand-segment";
 
 const { ccclass, property } = _decorator;
 
@@ -38,9 +38,17 @@ export class Hand extends Component {
             segment.addCard(cards[index]);
 
             this.scheduleOnce(() => {
-                cards[index].forEach((card) => (card.getComponent(Card).back = false));
-                segment.playSettleAnimation("Example", index === 2);
-            }, -index * 4 + 12);
+                for (const node of cards[index]) {
+                    const card = node.getComponent(Card);
+
+                    tween(node)
+                        .to(0.16, { scale: v3(0, 1, 1) })
+                        .call(() => (card.back = false))
+                        .to(0.16, { scale: v3(1, 1, 1) })
+                        .start();
+                }
+                segment.playSettleAnimation("Three of a Kind", !!index);
+            }, -index * 2 + 8);
         });
     }
 

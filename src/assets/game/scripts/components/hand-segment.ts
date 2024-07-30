@@ -1,4 +1,4 @@
-import { _decorator, Color, Component, Label, Node, sp, tween, v3 } from "cc";
+import { _decorator, Color, Component, Label, Node, sp, tween, v3, Vec3 } from "cc";
 import { GradientNode } from "db://shared-components/shared/common-components/custom-materials/components/gradient-node";
 import { Card } from "./card";
 
@@ -14,7 +14,7 @@ const ANIMATION_STEPS = [
             { rotation: 0, x: 68, y: 0 },
         ],
         duration: 0,
-        rank: false,
+        rank: { scale: v3(0.5, 0.5, 1) },
     },
     {
         cards: [
@@ -24,8 +24,8 @@ const ANIMATION_STEPS = [
             { rotation: 0, x: 49, y: 0 },
             { rotation: 0, x: 98, y: 0 },
         ],
-        duration: 1,
-        rank: true,
+        duration: 0.5,
+        rank: { scale: v3(1.1, 1.1, 1) },
     },
     {
         cards: [
@@ -35,8 +35,8 @@ const ANIMATION_STEPS = [
             { rotation: -12, x: 49, y: -3 },
             { rotation: -20, x: 98, y: -15 },
         ],
-        duration: 1,
-        rank: true,
+        duration: 0.7,
+        rank: { scale: v3(1, 1, 1) },
         default: true,
     },
     {
@@ -47,15 +47,15 @@ const ANIMATION_STEPS = [
             { rotation: -12, x: 49, y: -3, disable: true },
             { rotation: -20, x: 98, y: -15, disable: true },
         ],
-        duration: 0.5,
-        rank: false,
+        duration: 0.25,
+        rank: { scale: v3(1, 1, 1) },
     },
 ];
 
 type AnimationStep = {
     cards: { rotation: number; x: number; y: number; disable?: boolean }[];
     duration: number;
-    rank: boolean;
+    rank: { scale: Vec3 };
     default?: boolean;
 };
 
@@ -88,6 +88,10 @@ export class HandSegment extends Component {
     }
 
     public playSettleAnimation(rank: string, win: boolean, done: Function = () => ({})) {
+        if (!this.cardsNode.children) {
+            return;
+        }
+
         this.rankNode.active = false;
         this.setRankData(rank, win);
 
@@ -140,15 +144,22 @@ export class HandSegment extends Component {
     }
 
     private createRankTween(node: Node, steps: AnimationStep[]) {
-        const animation = tween(node);
+        const animation = tween(node).call(() => {
+            node.active = true;
+        });
 
-        for (const { rank, duration } of steps) {
-            animation.delay(duration).call(() => {
-                node.active = rank;
-            });
+        for (const { duration, rank } of steps) {
+            animation.to(duration, rank);
         }
+        // for (const { rank, duration } of steps) {
+        //     animation.delay(duration).call(() => {
+        //         node.active = rank;
+        //     });
+        // }
 
-        return animation;
+        return animation.call(() => {
+            node.active = false;
+        });
     }
 
     private setRankData(rank: string, win: boolean) {
