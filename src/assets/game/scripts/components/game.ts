@@ -46,16 +46,18 @@ export default class Game extends GameComponent {
     }
 
     @render(gc.GameConfigs.GameConfigStore, (store) => store.initialized)
-    onConfigsLoaded() {
-        this.placeBet();
+    onConfigsLoaded(initialized: boolean) {
+        if (initialized) {
+            this.placeBet();
+        }
     }
 
-    @handle(gc.Bet.BetHandler)
+    @handle(gc.Bet.BetHandler, (handler, payload: string) => handler.handle(payload))
     placeBet() {
         return "pusoy";
     }
 
-    @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.remaining)
+    @render(gc.Rounds.RoundTimeStore, (store) => store.remaining)
     updateRemaining(remaining: number) {
         console.log(remaining);
     }
