@@ -1,5 +1,7 @@
-import { __private, _decorator, Component, Enum, Node, Sprite, SpriteAtlas, tween, Vec3 } from "cc";
+import { _decorator, Component, Enum, EventHandler, Node, Sprite, SpriteAtlas, tween, Vec3 } from "cc";
 import { CardContainerEvent } from "../custom-event";
+import { Card } from "./card";
+import { Collision } from "./collision";
 const { ccclass, property } = _decorator;
 
 export enum CardState {
@@ -24,6 +26,9 @@ export class CardContainer extends Component {
     @property(SpriteAtlas)
     atlas: SpriteAtlas = null;
 
+    @property([EventHandler])
+    changeArrangementHandlers: EventHandler[] = [];
+
     private _state: CardState = CardState.Normal;
     public get state(): CardState {
         return this._state;
@@ -41,15 +46,22 @@ export class CardContainer extends Component {
     }
 
     @property({ type: Node })
+    draggableCard: Node = null;
+
+    @property({ type: Node })
     card: Node = null;
 
-    public addCard(value: Node) {
-        if (!this.card) {
-            this.node.removeChild(this.card);
+    cardValue: number = 0;
+
+    @property
+    index: number;
+
+    changeValue(rank: number, suit: number) {
+        if (this.card) {
+            const card = this.card.getComponent(Card);
+            card.rank = rank;
+            card.suit = suit;
         }
-        this.node.insertChild(value, 0);
-        this.node.setPosition(0, 0);
-        this.card = value;
     }
 
     start() {
@@ -59,7 +71,7 @@ export class CardContainer extends Component {
     }
 
     onCardDragOver(card: Node) {
-        if (this.card?.uuid !== card?.uuid) {
+        if (this.draggableCard?.uuid !== card?.uuid) {
             this.state = CardState.Selected;
         }
     }
@@ -70,8 +82,13 @@ export class CardContainer extends Component {
 
     swapCard(newCard: Node, parentOfNewCard: Node) {
         const cardContainer = parentOfNewCard.getComponent(CardContainer);
-        replaceCard(this.card, parentOfNewCard, cardContainer, this.node, true);
-        replaceCard(newCard, this.node, this, parentOfNewCard, true);
+        [this.cardValue, cardContainer.cardValue] = [cardContainer.cardValue, this.cardValue];
+        replaceCard(this.draggableCard, parentOfNewCard, cardContainer, this.node, true);
+        replaceCard(newCard, this.node, this, parentOfNewCard);
+
+        this.changeArrangementHandlers.forEach((handler) => {
+            handler.emit([]);
+        });
     }
 
     update(deltaTime: number) {}
@@ -90,10 +107,24 @@ const replaceCard = (
     currentCard.setWorldPosition(worldPosition);
     if (isAnimation) {
         tween(currentCard)
-            .to(0.05, { position: new Vec3(0, 0, 0) }, { easing: "smooth" })
+            .to(
+                0.1,
+                { position: new Vec3(0, 0, 0) },
+                {
+                    easing: "smooth",
+                    onStart: () => {
+                        const draggable = currentCard.getComponent(Collision);
+                        draggable.enabled = false;
+                    },
+                    onComplete: () => {
+                        const draggable = currentCard.getComponent(Collision);
+                        draggable.enabled = true;
+                    },
+                }
+            )
             .start();
     } else {
         currentCard.setPosition(0, 0);
     }
-    newContainerComponent.card = currentCard;
+    newContainerComponent.draggableCard = currentCard;
 };

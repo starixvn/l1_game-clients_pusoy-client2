@@ -1,37 +1,46 @@
-import { _decorator, CCBoolean, Component, Enum, instantiate, Label, Node, Prefab, Sprite, SpriteAtlas, Widget } from "cc";
-import { CardContainer } from "./card-container";
+import pusoy from "@rd/pusoy-rules";
+import { _decorator, CCBoolean, Component, Enum, Label, Node, Sprite, SpriteAtlas } from "cc";
+import { idToRankSuit } from "../helpers/card-helper";
+import { CardRank, CardSuit } from "./card";
+import { CardContainer, CardState } from "./card-container";
 const { ccclass, property } = _decorator;
 
-enum SegmentType {
-    HighCard = 1,
-    OnePair = 2,
-    TwoPairs = 3,
-    ThreeOfAKind = 4,
-    Straight = 5,
-    Flush = 6,
-    FullHouse = 7,
-    FourOfAKind = 8,
-    StraightFlush = 9,
-}
-
-Enum(SegmentType);
+Enum(pusoy.HandTypeRank);
 
 const SegmentDict = {
-    [SegmentType.HighCard]: "High Card",
-    [SegmentType.OnePair]: "One Pair",
-    [SegmentType.TwoPairs]: "Two Pairs",
-    [SegmentType.ThreeOfAKind]: "Three Of A Kind",
-    [SegmentType.Straight]: "Straight",
-    [SegmentType.Flush]: "Flush",
-    [SegmentType.FullHouse]: "Full House",
-    [SegmentType.FourOfAKind]: "Four Of A Kind",
-    [SegmentType.StraightFlush]: "Straight Flush",
+    [pusoy.HandTypeRank.HighCard]: "High Card",
+    [pusoy.HandTypeRank.OnePair]: "One Pair",
+    [pusoy.HandTypeRank.TwoPairs]: "Two Pairs",
+    [pusoy.HandTypeRank.ThreeOfAKind]: "Three Of A Kind",
+    [pusoy.HandTypeRank.Straight]: "Straight",
+    [pusoy.HandTypeRank.Flush]: "Flush",
+    [pusoy.HandTypeRank.FullHouse]: "Full House",
+    [pusoy.HandTypeRank.FourOfAKind]: "Four Of A Kind",
+    [pusoy.HandTypeRank.StraightFlush]: "Straight Flush",
 };
 
 const IconName = {
     right: "changecard-icon-right",
     wrong: "changecard-icon-wrong",
 };
+
+const RankMap = [
+    CardRank.TWO,
+    CardRank.THREE,
+    CardRank.FOUR,
+    CardRank.FIVE,
+    CardRank.SIX,
+    CardRank.SEVEN,
+    CardRank.EIGHT,
+    CardRank.NINE,
+    CardRank.TEN,
+    CardRank.JACK,
+    CardRank.QUEEN,
+    CardRank.KING,
+    CardRank.ACE,
+];
+
+const SuitMap = [CardSuit.SPADE, CardSuit.HEART, CardSuit.CLUB, CardSuit.DIAMOND];
 
 @ccclass("Segment")
 export class Segment extends Component {
@@ -63,22 +72,53 @@ export class Segment extends Component {
         }
     }
 
-    private _segmentType: SegmentType;
+    private _segmentType: pusoy.HandTypeRank;
     public get segmentType() {
         return this._segmentType;
     }
-    @property({ type: SegmentType })
-    public set segmentType(v: SegmentType) {
-        this._segmentType = v;
+    @property({ type: pusoy.HandTypeRank })
+    public set segmentType(value: pusoy.HandTypeRank) {
+        this._segmentType = value;
         const label = this.segmentTypeLabel.getComponent(Label);
-        label.string = SegmentDict[v];
+        label.string = SegmentDict[value];
     }
 
-    fillCards(cards: Node[]) {
+    fillCards(cards: { value: number; index: number }[]) {
         for (let i = 0; i < this.segmentContainer.children.length; i++) {
-            const cardContainer = this.segmentContainer.children[i].getComponent(CardContainer);
-            cardContainer.addCard(cards[i]);
+            const card = this.segmentContainer.children[i].getComponent(CardContainer);
+            card.index = cards[i].index;
+            card.cardValue = cards[i].value;
+            const { rank, suit } = idToRankSuit(cards[i].value, RankMap, SuitMap);
+            card.changeValue(rank, suit);
         }
+    }
+
+    swapPosition(otherSegment: Node) {
+        const otherSegmentContainer = otherSegment.getComponent(Segment).segmentContainer;
+        const otherSegmentCards = otherSegmentContainer.children.map((c) => c.getComponent(CardContainer));
+        const selfSegmentCards = this.segmentContainer.children.map((c) => c.getComponent(CardContainer));
+
+        for (let i = 0; i < selfSegmentCards.length; i++) {
+            [selfSegmentCards[i].index, otherSegmentCards[i].index] = [otherSegmentCards[i].index, selfSegmentCards[i].index];
+        }
+    }
+
+    getCards() {
+        return this.segmentContainer.children.map((c) => c.getComponent(CardContainer).cardValue);
+    }
+
+    highlightCards() {
+        for (let i = 0; i < this.segmentContainer.children.length; i++) {
+            const card = this.segmentContainer.children[i].getComponent(CardContainer);
+            card.state = CardState.Highlight;
+        }
+    }
+
+    getCardValues() {
+        return this.segmentContainer.children.map((c) => ({
+            value: c.getComponent(CardContainer).cardValue,
+            index: c.getComponent(CardContainer).index,
+        }));
     }
 
     start() {}

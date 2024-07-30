@@ -1,7 +1,6 @@
-export const idToRankSuit = (id: number) => {
-    const cardValue = (id + 13) % 51;
-    const rank = Math.floor(cardValue / 4) + 1;
-    const suit = (cardValue % 4) + 1;
+export const idToRankSuit = (id: number, rankMap: number[], suitMap: number[]) => {
+    const rank = Math.floor(id / 4);
+    const suit = id % 4;
 
-    return { rank: rank === 14 ? 1 : rank, suit };
+    return { rank: rankMap[rank], suit: suitMap[suit] };
 };
