@@ -139,16 +139,10 @@ export class Card extends Component {
     }
 
     protected render(): void {
-        if (this.back) {
-            this.backNode.active = true;
-        } else {
-            this.suitImage.spriteFrame = this.getSuitSpriteFrame();
-            this.rankImage.spriteFrame = this.getRankSpriteFrame();
+        this.suitImage.spriteFrame = this.getSuitSpriteFrame();
+        this.rankImage.spriteFrame = this.getRankSpriteFrame();
 
-            this.updateColor();
-
-            this.backNode.active = false;
-        }
+        this.updateColor();
     }
 
     protected getSuitSpriteFrame() {

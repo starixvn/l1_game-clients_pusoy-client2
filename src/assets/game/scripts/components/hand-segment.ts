@@ -1,6 +1,6 @@
 import { _decorator, Color, Component, Label, Node, sp, tween, v3, Vec3 } from "cc";
 import { GradientNode } from "db://shared-components/shared/common-components/custom-materials/components/gradient-node";
-import { Card } from "./card";
+import { HandCard } from "./hand-card";
 
 const { ccclass, property } = _decorator;
 
@@ -133,9 +133,9 @@ export class HandSegment extends Component {
                         return;
                     }
 
-                    const card = node.getComponent(Card);
+                    const card = node.getComponent(HandCard);
 
-                    card!.disable = disable;
+                    card.disable = disable;
                 });
             }
 
