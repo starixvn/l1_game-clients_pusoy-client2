@@ -1,4 +1,4 @@
-import { _decorator, Component, tween, v3 } from "cc";
+import { _decorator, Component, easing, tween, v3 } from "cc";
 import { Card } from "./card";
 
 const { ccclass, property } = _decorator;
@@ -22,15 +22,19 @@ export class HandCard extends Component {
         this.card!.rank = rank;
     }
 
-    flip(duration = 0.32, done = () => ({})) {
+    flip(duration = 0.5, keepBack = false, done = () => ({})) {
         const halfDuration = duration / 2;
 
         tween(this.node)
-            .to(halfDuration, { scale: v3(0, 1, 1) })
+            .by(halfDuration, { eulerAngles: v3(0, 90, 0) })
             .call(() => {
-                this.card.back = !this.card.back;
+                if (keepBack) {
+                    this.card.back = true;
+                } else {
+                    this.card.back = !this.card.back;
+                }
             })
-            .to(halfDuration, { scale: v3(1, 1, 1) })
+            .by(halfDuration, { eulerAngles: v3(0, -90, 0) }, { easing: easing.backOut })
             .call(done)
             .start();
     }

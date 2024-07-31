@@ -151,11 +151,6 @@ export class HandSegment extends Component {
         for (const { duration, rank } of steps) {
             animation.to(duration, rank);
         }
-        // for (const { rank, duration } of steps) {
-        //     animation.delay(duration).call(() => {
-        //         node.active = rank;
-        //     });
-        // }
 
         return animation.call(() => {
             node.active = false;
