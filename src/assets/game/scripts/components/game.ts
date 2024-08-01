@@ -12,7 +12,7 @@ import "./../../../resources/i18n";
 startGame(settings.name, containerOptions, siteConfigs);
 
 const { ccclass, property } = _decorator;
-const { observer, handle, render } = Observer;
+const { observer, render } = Observer;
 
 @ccclass
 @observer(settings.name)
@@ -43,18 +43,6 @@ export default class Game extends GameComponent {
 
     onLoad() {
         super.onLoad();
-    }
-
-    @render(gc.GamePusoy.GameConfigs.GameConfigStore, (store) => store.initialized)
-    onConfigsLoaded(initialized: boolean) {
-        if (initialized) {
-            this.placeBet();
-        }
-    }
-
-    @handle(gc.GamePusoy.Bet.BetHandler, (handler, payload: string) => handler.handle(payload))
-    placeBet() {
-        return "pusoy";
     }
 
     @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.remaining)

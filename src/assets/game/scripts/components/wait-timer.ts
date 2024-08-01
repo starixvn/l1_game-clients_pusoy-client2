@@ -20,6 +20,7 @@ export default class WaitTimer extends ObserverComponent {
 
     @render(RoundTimeStore, (store) => store.isInTransitionTime)
     setVisibility(isInTransitionTime: boolean) {
+        console.log("isInTransitionTime: ", isInTransitionTime);
         if (this.node.active && !isInTransitionTime) {
             this.placeBet();
         }
