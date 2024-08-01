@@ -1,6 +1,5 @@
 import pusoy from "@rd/pusoy-rules";
 import { _decorator, CCBoolean, Component, Enum, Label, Node, Sprite, SpriteAtlas } from "cc";
-import { CardRank, CardSuit } from "./card";
 import { CardContainer, CardState } from "./card-container";
 const { ccclass, property } = _decorator;
 
@@ -16,30 +15,13 @@ const SegmentDict = {
     [pusoy.HandTypeRank.FullHouse]: "Full House",
     [pusoy.HandTypeRank.FourOfAKind]: "Four Of A Kind",
     [pusoy.HandTypeRank.StraightFlush]: "Straight Flush",
+    [pusoy.HandTypeRank.RoyalFlush]: "Royal Flush",
 };
 
 const IconName = {
     right: "changecard-icon-right",
     wrong: "changecard-icon-wrong",
 };
-
-const RankMap = [
-    CardRank.TWO,
-    CardRank.THREE,
-    CardRank.FOUR,
-    CardRank.FIVE,
-    CardRank.SIX,
-    CardRank.SEVEN,
-    CardRank.EIGHT,
-    CardRank.NINE,
-    CardRank.TEN,
-    CardRank.JACK,
-    CardRank.QUEEN,
-    CardRank.KING,
-    CardRank.ACE,
-];
-
-const SuitMap = [CardSuit.SPADE, CardSuit.HEART, CardSuit.CLUB, CardSuit.DIAMOND];
 
 @ccclass("Segment")
 export class Segment extends Component {

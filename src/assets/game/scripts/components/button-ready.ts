@@ -17,8 +17,7 @@ export class button_ready extends ObserverComponent {
 
     @handle(gc.GamePusoy.Arrangement.ArrangementHandler, (handler) => handler.submitHand())
     onClick() {
-        console.log("submit hand");
-        this.clickEventsHandler.forEach((h) => h.emit([]));
+        this.clickEventsHandler.forEach((handler) => handler.emit([]));
     }
 
     update(deltaTime: number) {}

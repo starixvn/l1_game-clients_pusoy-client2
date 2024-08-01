@@ -46,25 +46,7 @@ export class Arrangement extends ObserverComponent {
     @property(Prefab)
     cardPrefab: Prefab = null;
 
-    start() {
-        const cards: number[] = [];
-        while (cards.length < 13) {
-            const card = Math.floor(Math.random() * 52);
-            if (!cards.includes(card)) {
-                cards.push(card);
-            }
-        }
-
-        const defaultSuitMap = [SuitMap.spade, SuitMap.diamond, SuitMap.heart, SuitMap.club];
-
-        const hand = {
-            front: addRankSuit(cards.slice(0, 3), RankMap, defaultSuitMap),
-            middle: addRankSuit(cards.slice(3, 8), RankMap, defaultSuitMap),
-            back: addRankSuit(cards.slice(8, 13), RankMap, defaultSuitMap),
-        };
-
-        //this.loadHand(hand);
-    }
+    start() {}
 
     update(deltaTime: number) {}
 
@@ -73,7 +55,10 @@ export class Arrangement extends ObserverComponent {
         middle: { value: number; rank: number; suit: number }[];
         back: { value: number; rank: number; suit: number }[];
     }) {
-        console.log("loadHand", hand);
+        const { front, middle, back } = hand;
+        if (front.length !== 3 || middle.length !== 5 || back.length !== 5) {
+            return;
+        }
         this.fillCards(this.front, hand.front);
         this.fillCards(this.middle, hand.middle);
         this.fillCards(this.back, hand.back);
@@ -91,7 +76,6 @@ export class Arrangement extends ObserverComponent {
             return;
         }
         const { hand, suitConfig } = data;
-        console.log("renderHand", hand);
         const suitMap: CardSuit[] = [0, 1, 2, 3].map((i) => {
             return SuitMap[suitConfig[i]];
         });
@@ -120,7 +104,6 @@ export class Arrangement extends ObserverComponent {
 
     @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.isInArrangementTime)
     setVisibility(isInArrangementTime: boolean) {
-        console.log("setVisibility arrangement", isInArrangementTime);
         this.node.active = isInArrangementTime;
     }
 
@@ -137,7 +120,6 @@ export class Arrangement extends ObserverComponent {
         const frontCards = frontSegment.getCards();
         const middleCards = middleSegment.getCards();
         const backCards = backSegment.getCards();
-        console.log("recalculate", frontCards, middleCards, backCards);
 
         this.checkType(frontCards, middleCards, backCards);
 
@@ -152,7 +134,6 @@ export class Arrangement extends ObserverComponent {
         const frontScore = pusoy.calculateSegmentScore(frontCards);
         const middleScore = pusoy.calculateSegmentScore(middleCards);
         const backScore = pusoy.calculateSegmentScore(backCards);
-        console.log(frontScore, middleScore, backScore);
 
         const crackFrontAndMiddle = pusoy.isLarger(frontScore, middleScore);
         const crackMiddleAndBack = pusoy.isLarger(middleScore, backScore);
