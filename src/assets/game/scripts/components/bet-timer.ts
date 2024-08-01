@@ -5,16 +5,15 @@ import TwoDigitsTimer from "../../../../extensions/shared-components/assets/game
 
 const { ccclass } = _decorator;
 const { render } = Observer;
-const { Rounds } = gc.GamePusoy;
-const { TimelineKey } = Rounds;
+const { RoundTimeStore } = gc.GamePusoy.Rounds;
 @ccclass
 export default class BetTimer extends TwoDigitsTimer {
-    @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.remaining)
+    @render(RoundTimeStore, (store) => store.remaining)
     setTime(time: number) {
         super.setTime(time);
     }
 
-    @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.isInArrangementTime)
+    @render(RoundTimeStore, (store) => store.isInArrangementTime)
     setVisibility(isInArrangementTime: boolean) {
         this.node.active = isInArrangementTime;
     }

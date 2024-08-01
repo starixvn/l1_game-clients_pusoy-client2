@@ -4,6 +4,7 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 
 const { RoundTimeStore } = gc.GamePusoy.Rounds;
+const { BetHandler } = gc.GamePusoy.Bet;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -26,7 +27,7 @@ export default class WaitTimer extends ObserverComponent {
         }
     }
 
-    @handle(gc.Bet.BetHandler, (handler, payload: string) => handler.handle(payload))
+    @handle(BetHandler, (handler, payload: string) => handler.handle(payload))
     placeBet() {
         return "pusoy";
     }

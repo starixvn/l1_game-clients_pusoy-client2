@@ -9,8 +9,9 @@ export const settings = {
 
 export const containerOptions: gc.IContainerOptions = {
     globalContainer: sharedContainer,
+    features: gc.GamePusoy.features,
     onContainerCreated: (container) => {
-        container.bind(gc.GamePusoy.GameSetting).toConstantValue(settings);
+        container.bind(gc.GamePusoy.GameConfigs.GameSetting).toConstantValue(settings);
 
         gc.GamePusoy.onContainerCreated(container, settings);
     },
