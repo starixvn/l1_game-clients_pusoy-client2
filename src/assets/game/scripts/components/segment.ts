@@ -1,6 +1,5 @@
 import pusoy from "@rd/pusoy-rules";
 import { _decorator, CCBoolean, Component, Enum, Label, Node, Sprite, SpriteAtlas } from "cc";
-import { idToRankSuit } from "../helpers/card-helper";
 import { CardRank, CardSuit } from "./card";
 import { CardContainer, CardState } from "./card-container";
 const { ccclass, property } = _decorator;
@@ -83,25 +82,15 @@ export class Segment extends Component {
         label.string = SegmentDict[value];
     }
 
-    fillCards(cards: { value: number; index: number }[]) {
+    fillCards(cards: { value: number; rank: number; suit: number }[]) {
         for (let i = 0; i < this.segmentContainer.children.length; i++) {
             const card = this.segmentContainer.children[i].getComponent(CardContainer);
-            card.index = cards[i].index;
             card.cardValue = cards[i].value;
-            const { rank, suit } = idToRankSuit(cards[i].value, RankMap, SuitMap);
-            card.changeValue(rank, suit);
+            card.changeValue(cards[i].rank, cards[i].suit);
         }
     }
 
-    swapPosition(otherSegment: Node) {
-        const otherSegmentContainer = otherSegment.getComponent(Segment).segmentContainer;
-        const otherSegmentCards = otherSegmentContainer.children.map((c) => c.getComponent(CardContainer));
-        const selfSegmentCards = this.segmentContainer.children.map((c) => c.getComponent(CardContainer));
-
-        for (let i = 0; i < selfSegmentCards.length; i++) {
-            [selfSegmentCards[i].index, otherSegmentCards[i].index] = [otherSegmentCards[i].index, selfSegmentCards[i].index];
-        }
-    }
+    swapPosition(otherSegment: Node) {}
 
     getCards() {
         return this.segmentContainer.children.map((c) => c.getComponent(CardContainer).cardValue);
@@ -117,7 +106,6 @@ export class Segment extends Component {
     getCardValues() {
         return this.segmentContainer.children.map((c) => ({
             value: c.getComponent(CardContainer).cardValue,
-            index: c.getComponent(CardContainer).index,
         }));
     }
 

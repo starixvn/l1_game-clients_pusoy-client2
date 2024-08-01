@@ -4,3 +4,9 @@ export const idToRankSuit = (id: number, rankMap: number[], suitMap: number[]) =
 
     return { rank: rankMap[rank], suit: suitMap[suit] };
 };
+
+export const addRankSuit = (cards: number[], rankMap: number[], suitMap: number[]) => {
+    return cards.map((card) => {
+        return { value: card, ...idToRankSuit(card, rankMap, suitMap) };
+    });
+};

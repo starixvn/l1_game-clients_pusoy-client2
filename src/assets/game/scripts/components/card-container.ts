@@ -53,9 +53,6 @@ export class CardContainer extends Component {
 
     cardValue: number = 0;
 
-    @property
-    index: number;
-
     changeValue(rank: number, suit: number) {
         if (this.card) {
             const card = this.card.getComponent(Card);

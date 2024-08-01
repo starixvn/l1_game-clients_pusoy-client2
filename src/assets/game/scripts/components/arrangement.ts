@@ -1,11 +1,39 @@
 import pusoy from "@rd/pusoy-rules";
-import { _decorator, Component, Node, Prefab } from "cc";
+import { _decorator, Node, Prefab } from "cc";
 import { Segment } from "./segment";
+import gc from "@sg/game-client-base";
+import { ObserverComponent } from "../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
+import Observer from "observer";
+import { CardRank, CardSuit } from "./card";
+import { addRankSuit } from "../helpers/card-helper";
 
 const { ccclass, property } = _decorator;
+const { render, handle } = Observer;
 
-@ccclass("Arrangement")
-export class Arrangement extends Component {
+const SuitMap = {
+    spade: CardSuit.SPADE,
+    heart: CardSuit.HEART,
+    diamond: CardSuit.DIAMOND,
+    club: CardSuit.CLUB,
+};
+const RankMap = [
+    CardRank.TWO,
+    CardRank.THREE,
+    CardRank.FOUR,
+    CardRank.FIVE,
+    CardRank.SIX,
+    CardRank.SEVEN,
+    CardRank.EIGHT,
+    CardRank.NINE,
+    CardRank.TEN,
+    CardRank.JACK,
+    CardRank.QUEEN,
+    CardRank.KING,
+    CardRank.ACE,
+];
+
+@ccclass
+export class Arrangement extends ObserverComponent {
     @property(Node)
     front: Node = null;
 
@@ -26,32 +54,58 @@ export class Arrangement extends Component {
                 cards.push(card);
             }
         }
-        const cardData = cards.map((card, index) => ({ value: card, index }));
+
+        const defaultSuitMap = [SuitMap.spade, SuitMap.diamond, SuitMap.heart, SuitMap.club];
 
         const hand = {
-            front: cardData.slice(0, 3),
-            middle: cardData.slice(3, 8),
-            back: cardData.slice(8, 13),
+            front: addRankSuit(cards.slice(0, 3), RankMap, defaultSuitMap),
+            middle: addRankSuit(cards.slice(3, 8), RankMap, defaultSuitMap),
+            back: addRankSuit(cards.slice(8, 13), RankMap, defaultSuitMap),
         };
 
-        this.loadHand(hand);
+        //this.loadHand(hand);
     }
 
     update(deltaTime: number) {}
 
     loadHand(hand: {
-        front: { value: number; index: number }[];
-        middle: { value: number; index: number }[];
-        back: { value: number; index: number }[];
+        front: { value: number; rank: number; suit: number }[];
+        middle: { value: number; rank: number; suit: number }[];
+        back: { value: number; rank: number; suit: number }[];
     }) {
+        console.log("loadHand", hand);
         this.fillCards(this.front, hand.front);
         this.fillCards(this.middle, hand.middle);
         this.fillCards(this.back, hand.back);
 
-        this.recalculate();
+        this.checkType(
+            hand.front.map((c) => c.value),
+            hand.middle.map((c) => c.value),
+            hand.back.map((c) => c.value)
+        );
     }
 
-    fillCards(container: Node, cardData: { value: number; index: number }[]) {
+    @render(gc.GamePusoy.Rounds.RoundStore, (store) => store.hand)
+    renderHand(data: { hand: pusoy.Hand<number[]>; scoreConfig: any; suitConfig: { [key: number]: string } }) {
+        if (!data?.suitConfig || !data?.hand) {
+            return;
+        }
+        const { hand, suitConfig } = data;
+        console.log("renderHand", hand);
+        const suitMap: CardSuit[] = [0, 1, 2, 3].map((i) => {
+            return SuitMap[suitConfig[i]];
+        });
+
+        const handData = {
+            front: addRankSuit(hand.front, RankMap, suitMap),
+            middle: addRankSuit(hand.middle, RankMap, suitMap),
+            back: addRankSuit(hand.back, RankMap, suitMap),
+        };
+
+        this.loadHand(handData);
+    }
+
+    fillCards(container: Node, cardData: { value: number; rank: number; suit: number }[]) {
         const segmentComponent = container.getComponent(Segment);
         segmentComponent.fillCards(cardData);
     }
@@ -64,15 +118,40 @@ export class Arrangement extends Component {
         this.recalculate();
     }
 
+    @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.isInArrangementTime)
+    setVisibility(isInArrangementTime: boolean) {
+        console.log("setVisibility arrangement", isInArrangementTime);
+        this.node.active = isInArrangementTime;
+    }
+
+    hide() {
+        this.node.active = false;
+    }
+
+    @handle(gc.GamePusoy.Arrangement.ArrangementHandler, (handler, hand: pusoy.Hand<number[]>) => handler.changeHand(hand))
     recalculate() {
         const frontSegment = this.front.getComponent(Segment);
         const middleSegment = this.middle.getComponent(Segment);
         const backSegment = this.back.getComponent(Segment);
 
-        const frontScore = pusoy.calculateSegmentScore(frontSegment.getCards());
-        const middleScore = pusoy.calculateSegmentScore(middleSegment.getCards());
-        const backScore = pusoy.calculateSegmentScore(backSegment.getCards());
-        console.log(frontSegment.getCardValues(), middleSegment.getCardValues(), backSegment.getCardValues());
+        const frontCards = frontSegment.getCards();
+        const middleCards = middleSegment.getCards();
+        const backCards = backSegment.getCards();
+        console.log("recalculate", frontCards, middleCards, backCards);
+
+        this.checkType(frontCards, middleCards, backCards);
+
+        return {
+            front: frontCards,
+            middle: middleCards,
+            back: backCards,
+        };
+    }
+
+    private checkType(frontCards: number[], middleCards: number[], backCards: number[]) {
+        const frontScore = pusoy.calculateSegmentScore(frontCards);
+        const middleScore = pusoy.calculateSegmentScore(middleCards);
+        const backScore = pusoy.calculateSegmentScore(backCards);
         console.log(frontScore, middleScore, backScore);
 
         const crackFrontAndMiddle = pusoy.isLarger(frontScore, middleScore);
