@@ -35,7 +35,7 @@ export class draggable extends Component {
 
     onDragStart(event: EventTouch) {
         if (!this._isDragging) {
-            const { x, y } = event.getLocation();
+            const { x, y } = event.getUILocation();
             this._delta = v3(x, y, this.node.worldPosition.z).subtract(this.node.worldPosition);
             emitHandlers(this.dragStartHandlers, [this.node, event]);
         }
@@ -44,7 +44,7 @@ export class draggable extends Component {
     }
 
     onDragging(event: EventTouch) {
-        const { x, y } = event.getLocation();
+        const { x, y } = event.getUILocation();
         const newPosition = v3(x, y, this.node.worldPosition.z).subtract(this._delta);
         this.node.setWorldPosition(newPosition);
         emitHandlers(this.draggingHandlers, [this.node, event]);
