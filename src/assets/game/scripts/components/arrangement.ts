@@ -2,7 +2,7 @@ import pusoy from "@rd/pusoy-rules";
 import { _decorator, Node, Prefab } from "cc";
 import { Segment } from "./segment";
 import gc from "@sg/game-client-base";
-import { ObserverComponent } from "../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import Observer from "observer";
 import { CardRank, CardSuit } from "./card";
 import { addRankSuit } from "../helpers/card-helper";

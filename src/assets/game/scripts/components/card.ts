@@ -1,4 +1,4 @@
-import { _decorator, BoxCollider2D, Color, Component, Contact2DType, Enum, Node, Sprite, UITransform } from "cc";
+import { _decorator, Color, Component, Enum, Node, Sprite, UITransform } from "cc";
 
 const { ccclass, property } = _decorator;
 

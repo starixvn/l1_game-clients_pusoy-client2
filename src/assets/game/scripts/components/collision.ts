@@ -1,6 +1,5 @@
 import { _decorator, Collider2D, Component, Contact2DType, EventTouch, math, Node, tween, Vec3 } from "cc";
 import { CardContainerEvent } from "../custom-event";
-import { NodeEventEmitter } from "electron";
 const { ccclass, property } = _decorator;
 
 @ccclass("Collision")
