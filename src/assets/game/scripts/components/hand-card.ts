@@ -13,6 +13,10 @@ export class HandCard extends Component {
         return this.card?.back;
     }
 
+    set back(value: boolean) {
+        this.card!.back = value;
+    }
+
     set disable(value: boolean) {
         this.card!.disable = value;
     }
@@ -31,7 +35,7 @@ export class HandCard extends Component {
                 if (keepBack) {
                     this.card.back = true;
                 } else {
-                    this.card.back = !this.card.back;
+                    this.card.back = false;
                 }
             })
             .by(halfDuration, { eulerAngles: v3(0, -90, 0) }, { easing: easing.backOut })

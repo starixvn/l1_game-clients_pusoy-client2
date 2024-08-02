@@ -16,7 +16,7 @@ export class Hand extends Component {
     protected segments: HandSegment[] = [];
 
     @property
-    protected mine = false;
+    mine = false;
 
     protected onLoad(): void {
         this.loadComponents();
@@ -42,38 +42,9 @@ export class Hand extends Component {
         this.segments.forEach((segment, index) => segment.addCard(cards[index]));
         this.segments.reverse();
 
-        // For demo
-        this.renderCards({
-            front: [
-                { rank: 1, suit: 2 },
-                { rank: 1, suit: 2 },
-                { rank: 1, suit: 2 },
-            ],
-            middle: [
-                { rank: 2, suit: 1 },
-                { rank: 2, suit: 1 },
-                { rank: 2, suit: 1 },
-                { rank: 2, suit: 1 },
-                { rank: 2, suit: 1 },
-            ],
-            back: [
-                { rank: 3, suit: 1 },
-                { rank: 3, suit: 1 },
-                { rank: 3, suit: 1 },
-                { rank: 3, suit: 1 },
-                { rank: 3, suit: 1 },
-            ],
-        });
-
-        this.playDealsAnimation();
-
-        this.scheduleOnce(() => {
-            this.playSettleAnimation({
-                front: { name: "High card", win: true },
-                middle: { name: "Full house", win: true },
-                back: { name: "Three of a Kind", win: false },
-            });
-        }, 5);
+        for (const card of cards.flat()) {
+            card.active = false;
+        }
     }
 
     renderCards(data: Record<string, { rank: number; suit: number }[]>) {
@@ -86,6 +57,15 @@ export class Hand extends Component {
 
                 component.value(rank, suit);
             });
+        }
+    }
+
+    activeCards(active: boolean, showCards = false) {
+        const cards = this.segments.reduce((result, segment) => result.concat(segment.getComponentsInChildren(HandCard)), [] as HandCard[]);
+
+        for (const card of cards) {
+            card.node.active = active;
+            card.back = !showCards;
         }
     }
 
