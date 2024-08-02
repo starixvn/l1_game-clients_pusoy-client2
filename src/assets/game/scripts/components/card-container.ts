@@ -1,7 +1,7 @@
 import { _decorator, Component, Enum, EventHandler, Node, Sprite, SpriteAtlas, tween, Vec3 } from "cc";
 import { CardContainerEvent } from "../custom-event";
-import { Card } from "./card";
 import { Collision } from "./collision";
+import { CardValue } from "./card-value";
 const { ccclass, property } = _decorator;
 
 export enum CardState {
@@ -48,16 +48,15 @@ export class CardContainer extends Component {
     @property({ type: Node })
     draggableCard: Node = null;
 
-    @property({ type: Node })
-    card: Node = null;
+    getCardValue() {
+        return this.draggableCard.getComponent(CardValue).value;
+    }
 
-    cardValue: number = 0;
-
-    changeValue(rank: number, suit: number) {
-        if (this.card) {
-            const card = this.card.getComponent(Card);
-            card.rank = rank;
-            card.suit = suit;
+    changeValue(rank: number, suit: number, value: number) {
+        if (this.draggableCard) {
+            const cardValue = this.draggableCard.getComponent(CardValue);
+            cardValue.value = value;
+            cardValue.changeFront(rank, suit);
         }
     }
 
@@ -79,7 +78,6 @@ export class CardContainer extends Component {
 
     swapCard(newCard: Node, parentOfNewCard: Node) {
         const cardContainer = parentOfNewCard.getComponent(CardContainer);
-        [this.cardValue, cardContainer.cardValue] = [cardContainer.cardValue, this.cardValue];
         replaceCard(this.draggableCard, parentOfNewCard, cardContainer, this.node, true);
         replaceCard(newCard, this.node, this, parentOfNewCard);
 

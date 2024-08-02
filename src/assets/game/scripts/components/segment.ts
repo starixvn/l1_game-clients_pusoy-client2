@@ -67,15 +67,12 @@ export class Segment extends Component {
     fillCards(cards: { value: number; rank: number; suit: number }[]) {
         for (let i = 0; i < this.segmentContainer.children.length; i++) {
             const card = this.segmentContainer.children[i].getComponent(CardContainer);
-            card.cardValue = cards[i].value;
-            card.changeValue(cards[i].rank, cards[i].suit);
+            card.changeValue(cards[i].rank, cards[i].suit, cards[i].value);
         }
     }
 
-    swapPosition(otherSegment: Node) {}
-
     getCards() {
-        return this.segmentContainer.children.map((c) => c.getComponent(CardContainer).cardValue);
+        return this.segmentContainer.children.map((c) => c.getComponent(CardContainer).getCardValue());
     }
 
     highlightCards() {
@@ -83,12 +80,6 @@ export class Segment extends Component {
             const card = this.segmentContainer.children[i].getComponent(CardContainer);
             card.state = CardState.Highlight;
         }
-    }
-
-    getCardValues() {
-        return this.segmentContainer.children.map((c) => ({
-            value: c.getComponent(CardContainer).cardValue,
-        }));
     }
 
     start() {}

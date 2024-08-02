@@ -1,14 +1,16 @@
 import gc from "@sg/game-client-base";
-import { Label, Sprite, SpriteFrame, _decorator } from "cc";
+import { CCInteger, Label, Sprite, SpriteFrame, _decorator } from "cc";
 import { bundleManager } from "db://shared-components/shared/common-components/bundle-magager/bundle-manager";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import Observer from "observer";
 
 const { ccclass, property } = _decorator;
 
-const { Player } = gc;
+const { Player, GamePusoy } = gc;
 const { render } = Observer;
 const { MainPlayerStore } = Player;
+const { OtherPlayers } = GamePusoy;
+const { OtherPlayersStore } = OtherPlayers;
 
 @ccclass
 export default class PlayerProfile extends ObserverComponent {
@@ -17,6 +19,9 @@ export default class PlayerProfile extends ObserverComponent {
 
     @property(Sprite)
     playerAvatar: Sprite = null;
+
+    @property(CCInteger)
+    slotIndex: number = 0;
 
     onLoad() {
         super.onLoad();
@@ -53,5 +58,17 @@ export default class PlayerProfile extends ObserverComponent {
     @render(MainPlayerStore, (store) => store.name)
     renderPlayerName(name: string) {
         this.setPlayerName(name);
+    }
+
+    @render(OtherPlayersStore, (store) => store.otherPlayers)
+    renderSlotIndex(otherPlayers: { avatarId: number; name: string; slot: number }[]) {
+        const player = otherPlayers.find((p) => p.slot === this.slotIndex);
+        if (player) {
+            this.setPlayerName(player.name);
+            this.setPlayerAvatar(player.avatarId);
+            this.node.active = true;
+        } else if (this.slotIndex > 0) {
+            this.node.active = false;
+        }
     }
 }

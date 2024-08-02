@@ -11,6 +11,7 @@ import "./../../../resources/i18n";
 import { Hand } from "./hand";
 import { CardRank, CardSuit } from "./card";
 import { addRankSuit } from "../helpers/card-helper";
+import pusoy from "@rd/pusoy-rules";
 
 startGame(settings.name, containerOptions, siteConfigs);
 
@@ -60,8 +61,8 @@ export default class Game extends GameComponent {
         this.suitMappings = data;
     }
 
-    @render(gc.GamePusoy.Rounds.RoundStore, (store) => store.currentHand)
-    renderHand(hand: Record<string, number[]>) {
+    //@render(gc.GamePusoy.Rounds.RoundStore, (store) => store.currentHand)
+    renderHand1(hand: Record<string, number[]>) {
         const suitMap = [0, 1, 2, 3].map((i) => {
             return {
                 spade: CardSuit.SPADE,
