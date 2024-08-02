@@ -1,4 +1,4 @@
-import { _decorator, Component, Enum, EventHandler, Node, Sprite, SpriteAtlas, tween, Vec3 } from "cc";
+import { _decorator, Component, Enum, EventHandler, instantiate, Node, Prefab, Sprite, SpriteAtlas, tween, Vec3 } from "cc";
 import { CardContainerEvent } from "../custom-event";
 import { Collision } from "./collision";
 import { CardValue } from "./card-value";
@@ -45,19 +45,27 @@ export class CardContainer extends Component {
         }
     }
 
-    @property({ type: Node })
+    @property(Node)
     draggableCard: Node = null;
+
+    @property(Prefab)
+    draggingCard: Prefab = null;
 
     getCardValue() {
         return this.draggableCard.getComponent(CardValue).value;
     }
 
-    changeValue(rank: number, suit: number, value: number) {
+    loadValue(rank: number, suit: number, value: number) {
         if (this.draggableCard) {
-            const cardValue = this.draggableCard.getComponent(CardValue);
-            cardValue.value = value;
-            cardValue.changeFront(rank, suit);
+            this.draggableCard.destroy();
         }
+
+        const draggableCard = instantiate(this.draggingCard);
+        this.node.insertChild(draggableCard, 0);
+        this.draggableCard = draggableCard;
+        const cardValue = this.draggableCard.getComponent(CardValue);
+        cardValue.value = value;
+        cardValue.changeFront(rank, suit);
     }
 
     start() {

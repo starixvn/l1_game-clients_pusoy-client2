@@ -119,19 +119,6 @@ export class Arrangement extends ObserverComponent {
         this.recalculate();
     }
 
-    @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.isInArrangementTime)
-    setVisibility(isInArrangementTime: boolean) {
-        this.node.active = isInArrangementTime;
-    }
-
-    @handle(gc.GamePusoy.Arrangement.ArrangementHandler, (handler, hand: pusoy.Hand<number[]>) =>
-        handler.sendArrangementToServer(hand, true)
-    )
-    hide() {
-        this.node.active = false;
-        return this._hand;
-    }
-
     @handle(gc.GamePusoy.Arrangement.ArrangementHandler, (handler, payload: { hand: pusoy.Hand<number[]>; isChangeSegment: boolean }) => {
         if (payload.isChangeSegment) {
             handler.sendArrangementToServer(payload.hand, false);
@@ -183,5 +170,25 @@ export class Arrangement extends ObserverComponent {
         const segmentComponent = container.getComponent(Segment);
         segmentComponent.segmentType = type;
         segmentComponent.isRightPosition = !isCrack;
+    }
+
+    @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.isInArrangementTime)
+    setVisibility(isInArrangementTime: boolean) {
+        this.node.active = isInArrangementTime;
+    }
+
+    @render(gc.GamePusoy.Rounds.RoundStore, (store) => store.mainPlayerSubmitted)
+    hideArrangement(submittedPlayers: boolean) {
+        if (submittedPlayers) {
+            this.node.active = false;
+        }
+    }
+
+    @handle(gc.GamePusoy.Arrangement.ArrangementHandler, (handler, hand: pusoy.Hand<number[]>) =>
+        handler.sendArrangementToServer(hand, true)
+    )
+    submitHand() {
+        this.node.active = false;
+        return this._hand;
     }
 }

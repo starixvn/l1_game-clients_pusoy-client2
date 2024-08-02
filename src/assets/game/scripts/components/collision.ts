@@ -1,4 +1,4 @@
-import { _decorator, Collider2D, Component, Contact2DType, EventTouch, math, Node, tween, Vec3 } from "cc";
+import { _decorator, Collider2D, Component, Contact2DType, EventHandler, EventTouch, math, Node, tween, Vec3 } from "cc";
 import { CardContainerEvent } from "../custom-event";
 const { ccclass, property } = _decorator;
 

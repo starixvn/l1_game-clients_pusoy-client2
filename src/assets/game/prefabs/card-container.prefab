@@ -405,6 +405,10 @@
     "draggableCard": {
       "__id__": 2
     },
+    "draggingCard": {
+      "__uuid__": "75986fa7-07b6-4d1e-9871-4cc63f08cbcf",
+      "__expectedType__": "cc.Prefab"
+    },
     "_id": ""
   },
   {

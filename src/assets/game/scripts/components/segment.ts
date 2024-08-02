@@ -67,7 +67,7 @@ export class Segment extends Component {
     fillCards(cards: { value: number; rank: number; suit: number }[]) {
         for (let i = 0; i < this.segmentContainer.children.length; i++) {
             const card = this.segmentContainer.children[i].getComponent(CardContainer);
-            card.changeValue(cards[i].rank, cards[i].suit, cards[i].value);
+            card.loadValue(cards[i].rank, cards[i].suit, cards[i].value);
         }
     }
 
