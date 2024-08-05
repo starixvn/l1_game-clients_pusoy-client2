@@ -1,5 +1,6 @@
-export enum CardContainerEvent {
+export enum DragCardEvent {
     OnDragOver = "onDragOver",
     OnDragOverEnd = "onDragOverEnd",
     SwapCard = "swapCard",
+    OnDragStart = "onDragStart",
 }

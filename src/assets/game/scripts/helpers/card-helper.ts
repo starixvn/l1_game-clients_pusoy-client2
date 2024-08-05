@@ -14,6 +14,7 @@ export const addRankSuit = (cards: number[], rankMap: number[], suitMap: number[
 };
 
 export const isChangeSegment = (hand: pusoy.Hand<number[]>, currentHand: pusoy.Hand<number[]>) => {
+    console.log("changeSegment: ", hand, currentHand);
     const isDifferent = (newSegment: number[], currentSegment: number[]) => {
         if (newSegment.length !== currentSegment.length) {
             return true;

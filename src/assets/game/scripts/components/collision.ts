@@ -1,5 +1,6 @@
-import { _decorator, Collider2D, Component, Contact2DType, EventHandler, EventTouch, math, Node, tween, Vec3 } from "cc";
-import { CardContainerEvent } from "../custom-event";
+import { _decorator, Collider2D, Component, Contact2DType, EventTouch, math, Node, tween, Vec3 } from "cc";
+import { DragCardEvent } from "../custom-event";
+import { CardContainer } from "./card-container";
 const { ccclass, property } = _decorator;
 
 @ccclass("Collision")
@@ -24,6 +25,7 @@ export class Collision extends Component {
     onDragStart(_: EventTouch) {
         this._currentWorldPosition = this.node.getWorldPosition();
         this._currentParent = this.node.parent;
+        this.node.emit(DragCardEvent.OnDragStart, this.node);
 
         this.node.setParent(this.node.parent.parent.parent.parent);
         this.node.setWorldPosition(this._currentWorldPosition);
@@ -45,10 +47,14 @@ export class Collision extends Component {
     private notifyCardContainer(max: Node) {
         if (max) {
             if (!this._newCardContainer) {
-                max.emit(CardContainerEvent.OnDragOver, this.node);
+                const cardContainer = max.getComponent(CardContainer);
+                cardContainer.draggableCardNode.emit(DragCardEvent.OnDragOver, this.node);
             } else if (this._newCardContainer && max.uuid !== this._newCardContainer?.uuid) {
-                this._newCardContainer.emit(CardContainerEvent.OnDragOverEnd);
-                max.emit(CardContainerEvent.OnDragOver, this.node);
+                const newCardContainer = this._newCardContainer.getComponent(CardContainer);
+                newCardContainer.draggableCardNode.emit(DragCardEvent.OnDragOverEnd);
+
+                const maxCardContainer = max.getComponent(CardContainer);
+                maxCardContainer.draggableCardNode.emit(DragCardEvent.OnDragOver, this.node);
             }
             this._newCardContainer = max;
         }
@@ -59,11 +65,11 @@ export class Collision extends Component {
         this.node.setParent(this._currentParent);
         this.node.setWorldPosition(currentWordPosition);
         if (this._newCardContainer && this._newCardContainer.uuid !== this.node.parent.uuid) {
-            this._newCardContainer.emit(CardContainerEvent.SwapCard, this.node, this.node.parent);
+            this._newCardContainer.emit(DragCardEvent.SwapCard, this.node, this.node.parent);
         } else {
             tween(this.node)
                 .to(
-                    0.1,
+                    0.05,
                     { worldPosition: this._currentParent.worldPosition },
                     {
                         easing: "smooth",
@@ -117,7 +123,8 @@ export class Collision extends Component {
 
     onEndContact(_: Collider2D, otherCollider: Collider2D) {
         if (this._newCardContainer?.uuid === otherCollider.node.uuid) {
-            this._newCardContainer.emit(CardContainerEvent.OnDragOverEnd);
+            const newCardContainer = this._newCardContainer.getComponent(CardContainer);
+            newCardContainer.draggableCardNode.emit(DragCardEvent.OnDragOverEnd);
             this._newCardContainer = null;
         }
         this._containerMap.delete(otherCollider.node.uuid);

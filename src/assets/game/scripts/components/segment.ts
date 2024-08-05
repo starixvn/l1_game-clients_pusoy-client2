@@ -1,6 +1,7 @@
 import pusoy from "@rd/pusoy-rules";
 import { _decorator, CCBoolean, Component, Enum, Label, Node, Sprite, SpriteAtlas } from "cc";
-import { CardContainer, CardState } from "./card-container";
+import { CardContainer } from "./card-container";
+import { CardFrame, CardState } from "./card-frame";
 const { ccclass, property } = _decorator;
 
 Enum(pusoy.HandTypeRank);
@@ -75,10 +76,22 @@ export class Segment extends Component {
         return this.segmentContainer.children.map((c) => c.getComponent(CardContainer).getCardValue());
     }
 
-    highlightCards() {
+    highlightCards(highlightValues: number[], playAnimation = false) {
         for (let i = 0; i < this.segmentContainer.children.length; i++) {
             const card = this.segmentContainer.children[i].getComponent(CardContainer);
-            card.state = CardState.Highlight;
+            const frame = card.draggableCardNode.getComponent(CardFrame);
+            const value = card.getCardValue();
+            const frames = [];
+            if (highlightValues.includes(value)) {
+                frame.state = CardState.Highlight;
+                frames.push(frame);
+            } else {
+                frame.state = CardState.Normal;
+            }
+
+            if (playAnimation) {
+                frames.forEach((f) => f.playHighlight());
+            }
         }
     }
 

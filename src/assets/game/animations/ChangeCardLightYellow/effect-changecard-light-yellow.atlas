@@ -1,0 +1,20 @@
+
+effect-changecard-light-yellow.png
+size: 256,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+changecard-bg-yellow-light
+  rotate: true
+  xy: 2, 2
+  size: 65, 73
+  orig: 65, 73
+  offset: 0, 0
+  index: -1
+changecard-bg-yellow-light-2
+  rotate: false
+  xy: 2, 69
+  size: 147, 189
+  orig: 147, 189
+  offset: 0, 0
+  index: -1
