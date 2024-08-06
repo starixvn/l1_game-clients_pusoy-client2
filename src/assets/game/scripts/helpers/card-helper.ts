@@ -1,4 +1,5 @@
 import pusoy from "@rd/pusoy-rules";
+import { sortIntegers } from "./number-helper";
 
 export const idToRankSuit = (id: number, rankMap: number[], suitMap: number[]) => {
     const rank = Math.floor(id / 4);
@@ -34,4 +35,14 @@ export const isChangeSegment = (hand: pusoy.Hand<number[]>, currentHand: pusoy.H
         isDifferent(hand.middle, currentHand.middle) ||
         isDifferent(hand.back, currentHand.back)
     );
+};
+
+export const sortSegment = (cards: number[], increase = true) => {
+    const statistic = pusoy.statisticCardByCountSameRank(cards);
+    const kind: number[] = sortIntegers([...statistic.keys()]);
+    const result: number[] = [];
+    for (let i = 0; i < kind.length; i++) {
+        result.push(...statistic.get(kind[i]));
+    }
+    return result;
 };

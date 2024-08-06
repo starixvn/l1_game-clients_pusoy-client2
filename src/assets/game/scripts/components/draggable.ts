@@ -59,8 +59,6 @@ export class draggable extends Component {
         emitHandlers(this.dragCancelHandlers, [this.node, event]);
         this._isDragging = false;
     }
-
-    update(deltaTime: number) {}
 }
 
 const emitHandlers = (handlers: EventHandler[], params: any[]) => {

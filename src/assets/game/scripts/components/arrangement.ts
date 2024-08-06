@@ -3,8 +3,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, EventHandler, Node, Prefab } from "cc";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import Observer from "observer";
-import { isChangeSegment } from "../helpers/card-helper";
-import { sortIntegers } from "../helpers/number-helper";
+import { isChangeSegment, sortSegment } from "../helpers/card-helper";
 import { CardConverter } from "./card-converter";
 import { Segment } from "./segment";
 
@@ -222,9 +221,9 @@ export class Arrangement extends ObserverComponent {
     submitHand() {
         const cardConverter = this.getComponent(CardConverter);
         const hand = {
-            front: sortIntegers(this._hand.front),
-            middle: sortIntegers(this._hand.middle),
-            back: sortIntegers(this._hand.back),
+            front: sortSegment(this._hand.front),
+            middle: sortSegment(this._hand.middle),
+            back: sortSegment(this._hand.back),
         };
         this.submitHandler.forEach((handler) => handler.emit([cardConverter.convertHand(hand)]));
         return this._hand;

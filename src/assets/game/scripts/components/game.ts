@@ -7,10 +7,10 @@ import { startGame } from "db://shared-components/shared/scripts/startup";
 import Observer from "observer";
 import { siteConfigs } from "../../../scripts/site-configs";
 import { containerOptions, settings } from "../game-settings";
+import { sortSegment } from "../helpers/card-helper";
 import "./../../../resources/i18n";
 import { CardConverter } from "./card-converter";
 import { Hand } from "./hand";
-import { sortIntegers } from "../helpers/number-helper";
 
 startGame(settings.name, containerOptions, siteConfigs);
 
@@ -74,9 +74,9 @@ export default class Game extends GameComponent {
         const converter = this.getComponent(CardConverter);
         handsData.forEach((data, index) => {
             const hand = {
-                front: sortIntegers(data.hand.front),
-                middle: sortIntegers(data.hand.middle),
-                back: sortIntegers(data.hand.back),
+                front: sortSegment(data.hand.front),
+                middle: sortSegment(data.hand.middle),
+                back: sortSegment(data.hand.back),
             };
             const cards = converter.convertHand(hand);
 
