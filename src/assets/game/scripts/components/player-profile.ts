@@ -9,8 +9,8 @@ const { ccclass, property } = _decorator;
 const { Player, GamePusoy } = gc;
 const { render } = Observer;
 const { MainPlayerStore } = Player;
-const { OtherPlayers } = GamePusoy;
-const { OtherPlayersStore } = OtherPlayers;
+const { Rounds } = GamePusoy;
+const { RoundStore } = Rounds;
 
 @ccclass
 export default class PlayerProfile extends ObserverComponent {
@@ -60,7 +60,7 @@ export default class PlayerProfile extends ObserverComponent {
         this.setPlayerName(name);
     }
 
-    @render(OtherPlayersStore, (store) => store.otherPlayers)
+    @render(RoundStore, (store) => store.otherPlayers)
     renderSlotIndex(otherPlayers: { avatarId: number; name: string; slot: number }[]) {
         const player = otherPlayers.find((p) => p.slot === this.slotIndex);
         if (player) {

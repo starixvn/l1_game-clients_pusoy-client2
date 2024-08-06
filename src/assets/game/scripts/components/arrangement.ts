@@ -6,31 +6,11 @@ import Observer from "observer";
 import { addRankSuit, isChangeSegment } from "../helpers/card-helper";
 import { CardRank, CardSuit } from "./card";
 import { Segment } from "./segment";
+import { CardConverter } from "./card-converter";
+import { sortIntegers } from "../helpers/number-helper";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
-
-const SuitMap = {
-    spade: CardSuit.SPADE,
-    heart: CardSuit.HEART,
-    diamond: CardSuit.DIAMOND,
-    club: CardSuit.CLUB,
-};
-const RankMap = [
-    CardRank.TWO,
-    CardRank.THREE,
-    CardRank.FOUR,
-    CardRank.FIVE,
-    CardRank.SIX,
-    CardRank.SEVEN,
-    CardRank.EIGHT,
-    CardRank.NINE,
-    CardRank.TEN,
-    CardRank.JACK,
-    CardRank.QUEEN,
-    CardRank.KING,
-    CardRank.ACE,
-];
 
 @ccclass
 export class Arrangement extends ObserverComponent {
@@ -49,29 +29,24 @@ export class Arrangement extends ObserverComponent {
     @property([EventHandler])
     renderHandHandler: EventHandler[] = [];
 
+    @property([EventHandler])
+    submitHandler: EventHandler[] = [];
+
     private _hand: pusoy.Hand<number[]> = {
         front: [],
         middle: [],
         back: [],
     };
 
-    @render(gc.GamePusoy.Rounds.RoundStore, (store) => store.hand)
-    renderHand(data: { hand: pusoy.Hand<number[]>; scoreConfig: any; suitConfig: { [key: number]: string } }) {
-        if (!data?.suitConfig || !data?.hand) {
+    @render(gc.GamePusoy.Rounds.RoundStore, (store) => store.initPlayerHand)
+    renderHand(data: { hand: pusoy.Hand<number[]> }) {
+        if (!data?.hand) {
             return;
         }
-        const { hand, suitConfig } = data;
-        const suitMap: CardSuit[] = ["0", "1", "2", "3"].map((i) => {
-            return SuitMap[suitConfig[i]];
-        });
-
+        const cardConverter = this.getComponent(CardConverter);
+        const { hand } = data;
         this._hand = hand;
-
-        const handData = {
-            front: addRankSuit(hand.front, RankMap, suitMap),
-            middle: addRankSuit(hand.middle, RankMap, suitMap),
-            back: addRankSuit(hand.back, RankMap, suitMap),
-        };
+        const handData = cardConverter.convertHand(hand);
         this.renderHandHandler.forEach((handler) => {
             if (handData.front.length === 3 && handData.middle.length === 5 && handData.back.length === 5) {
                 handler.emit([handData]);
@@ -109,7 +84,6 @@ export class Arrangement extends ObserverComponent {
 
     changePosition() {
         [this.middle, this.back] = [this.back, this.middle];
-        //[this._hand.middle, this._hand.back] = [this._hand.back, this._hand.middle];
 
         this.recalculate();
     }
@@ -141,7 +115,6 @@ export class Arrangement extends ObserverComponent {
         };
 
         if (!changeSegment) {
-            console.log("no change segment");
             return {
                 hand: undefined,
                 isChangeSegment: false,
@@ -203,23 +176,22 @@ export class Arrangement extends ObserverComponent {
         segmentComponent.highlightCards(highlightValues, playAnimation);
     }
 
-    @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.isInArrangementTime)
-    setVisibility(isInArrangementTime: boolean) {
-        this.node.active = isInArrangementTime;
-    }
-
     @render(gc.GamePusoy.Arrangement.ArrangementStore, (store) => store.isShowArrangement)
-    hideArrangement(submittedPlayers: boolean) {
-        if (submittedPlayers) {
-            this.node.active = false;
-        }
+    setVisibility(isShowArrangement: boolean) {
+        this.node.active = isShowArrangement;
     }
 
     @handle(gc.GamePusoy.Arrangement.ArrangementHandler, (handler, hand: pusoy.Hand<number[]>) =>
         handler.sendArrangementToServer(hand, true)
     )
     submitHand() {
-        this.node.active = false;
+        const cardConverter = this.getComponent(CardConverter);
+        const hand = {
+            front: sortIntegers(this._hand.front),
+            middle: sortIntegers(this._hand.middle),
+            back: sortIntegers(this._hand.back),
+        };
+        this.submitHandler.forEach((handler) => handler.emit([cardConverter.convertHand(hand)]));
         return this._hand;
     }
 }

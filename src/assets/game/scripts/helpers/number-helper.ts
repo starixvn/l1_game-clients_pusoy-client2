@@ -1,3 +1,3 @@
-export const sortIntegers = (arr: number[]) => {
-    return arr.sort((a, b) => Number(a) - Number(b));
+export const sortIntegers = (arr: number[], increase = true) => {
+    return arr.sort((a, b) => (increase ? Number(a) - Number(b) : Number(b) - Number(a)));
 };

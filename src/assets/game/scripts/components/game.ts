@@ -8,8 +8,9 @@ import Observer from "observer";
 import { siteConfigs } from "../../../scripts/site-configs";
 import { containerOptions, settings } from "../game-settings";
 import "./../../../resources/i18n";
-import { CardConverter } from "./card-coverter";
+import { CardConverter } from "./card-converter";
 import { Hand } from "./hand";
+import { sortIntegers } from "../helpers/number-helper";
 
 startGame(settings.name, containerOptions, siteConfigs);
 
@@ -28,8 +29,6 @@ export default class Game extends GameComponent {
     override namespace = settings.name;
     override containerOptions = containerOptions;
 
-    suitMappings = {};
-
     @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.remaining && store.at("deal"))
     deals(shouldDeals: boolean) {
         if (shouldDeals) {
@@ -46,11 +45,7 @@ export default class Game extends GameComponent {
         const hands = this.getComponentsInChildren(Hand);
 
         for (const hand of hands) {
-            if (hand.mine) {
-                hand.activeCards(!inArrangement, true);
-            } else {
-                hand.activeCards(true);
-            }
+            hand.activeCards(true);
         }
     }
 
@@ -71,12 +66,19 @@ export default class Game extends GameComponent {
 
     @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.result)
     settlmentData(result: Record<string, GamePusoy.PlayerHand>) {
+        if (!result) {
+            return;
+        }
         const handsData = Object.values(result).sort((a, b) => a.slot - b.slot);
         const handsComponent = this.getComponentsInChildren(Hand);
         const converter = this.getComponent(CardConverter);
-
         handsData.forEach((data, index) => {
-            const cards = converter.convertHand(data.hand);
+            const hand = {
+                front: sortIntegers(data.hand.front),
+                middle: sortIntegers(data.hand.middle),
+                back: sortIntegers(data.hand.back),
+            };
+            const cards = converter.convertHand(hand);
 
             handsComponent[index].renderCards(cards);
         });
@@ -93,8 +95,15 @@ export default class Game extends GameComponent {
         }
     }
 
-    @render(gc.GamePusoy.GameConfigs.GameConfigStore, (store) => store.suitesMapper)
-    setSuitMapping(data: Record<string, string>) {
-        this.suitMappings = data;
+    @render(gc.GamePusoy.Arrangement.ArrangementStore, (store) => store.mainPlayerSubmitted)
+    showHandMainPlayer(mainPlayerSubmitted: boolean) {
+        if (mainPlayerSubmitted) {
+            const hands = this.getComponentsInChildren(Hand);
+            for (const hand of hands) {
+                if (hand.mine) {
+                    hand.activeCards(true, true);
+                }
+            }
+        }
     }
 }

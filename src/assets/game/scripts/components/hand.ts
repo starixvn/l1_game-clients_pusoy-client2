@@ -69,6 +69,11 @@ export class Hand extends Component {
         }
     }
 
+    showCards(data: Record<string, { rank: number; suit: number }[]>) {
+        this.renderCards(data);
+        this.activeCards(true, true);
+    }
+
     async playSettleAnimation(settlements: Record<string, { name: string; win: boolean }>) {
         for (const segment of this.segments) {
             const { name, win } = settlements[segment.node.name];

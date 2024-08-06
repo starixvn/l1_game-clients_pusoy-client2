@@ -32,21 +32,13 @@ const RankMap = [
 
 @ccclass
 export class CardConverter extends ObserverComponent {
-    private suitMapper: Record<string, string> = null;
+    suitMap: CardSuit[] = [];
 
-    convert(card: number): { rank: CardRank; suit: CardSuit } {
-        if (!this.suitMapper) {
-            return;
-        }
-
-        const suitMap: CardSuit[] = ["0", "1", "2", "3"].map((i) => {
-            return SuitMap[this.suitMapper[i]];
-        });
-
-        return idToRankSuit(card, RankMap, suitMap);
+    convert(card: number): { value: number; rank: CardRank; suit: CardSuit } {
+        return { value: card, ...idToRankSuit(card, RankMap, this.suitMap) };
     }
 
-    convertHand(hand: gc.GamePusoy.Messages.Hand<number[]>) {
+    convertHand(hand: gc.GamePusoy.Hand<number[]>): gc.GamePusoy.Hand<{ value: number; rank: CardRank; suit: CardSuit }[]> {
         return {
             back: hand.back.map(this.convert.bind(this)),
             middle: hand.middle.map(this.convert.bind(this)),
@@ -56,6 +48,8 @@ export class CardConverter extends ObserverComponent {
 
     @render(gc.GamePusoy.GameConfigs.GameConfigStore, (store) => store.suitesMapper)
     setSuitMapper(mapper: Record<string, string>) {
-        this.suitMapper = mapper;
+        this.suitMap = ["0", "1", "2", "3"].map((i) => {
+            return SuitMap[mapper[i]];
+        });
     }
 }
