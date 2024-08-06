@@ -6,6 +6,8 @@ import TwoDigitsTimer from "../../../../extensions/shared-components/assets/game
 const { ccclass } = _decorator;
 const { render } = Observer;
 const { RoundTimeStore } = gc.GamePusoy.Rounds;
+
+const changeColorTime = 5;
 @ccclass
 export default class BetTimer extends TwoDigitsTimer {
     @render(RoundTimeStore, (store) => store.remaining)
@@ -16,5 +18,11 @@ export default class BetTimer extends TwoDigitsTimer {
     @render(RoundTimeStore, (store) => store.isInArrangementTime)
     setVisibility(isInArrangementTime: boolean) {
         this.node.active = isInArrangementTime;
+    }
+
+    @render(RoundTimeStore, (store) => store.remaining)
+    setTimerColor(remainingTime: number) {
+        const color = remainingTime <= changeColorTime ? this.lockingColor : this.normalColor;
+        this.setColor(color);
     }
 }
