@@ -3,11 +3,10 @@ import gc from "@sg/game-client-base";
 import { _decorator, EventHandler, Node, Prefab } from "cc";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import Observer from "observer";
-import { addRankSuit, isChangeSegment } from "../helpers/card-helper";
-import { CardRank, CardSuit } from "./card";
-import { Segment } from "./segment";
-import { CardConverter } from "./card-converter";
+import { isChangeSegment } from "../helpers/card-helper";
 import { sortIntegers } from "../helpers/number-helper";
+import { CardConverter } from "./card-converter";
+import { Segment } from "./segment";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -69,10 +68,12 @@ export class Arrangement extends ObserverComponent {
         this.fillCards(this.middle, hand.middle);
         this.fillCards(this.back, hand.back);
 
-        this.checkType(
-            hand.front.map((c) => c.value),
-            hand.middle.map((c) => c.value),
-            hand.back.map((c) => c.value),
+        this.renderType(
+            {
+                front: hand.front.map((c) => c.value),
+                middle: hand.middle.map((c) => c.value),
+                back: hand.back.map((c) => c.value),
+            },
             false
         );
     }
@@ -96,23 +97,15 @@ export class Arrangement extends ObserverComponent {
         const middleSegment = this.middle.getComponent(Segment);
         const backSegment = this.back.getComponent(Segment);
 
-        const frontCards = frontSegment.getCards();
-        const middleCards = middleSegment.getCards();
-        const backCards = backSegment.getCards();
-
-        const changeSegment = isChangeSegment(this._hand, {
-            front: frontCards,
-            middle: middleCards,
-            back: backCards,
-        });
-
-        this.checkType(frontCards, middleCards, backCards, true);
-
-        this._hand = {
-            front: frontCards,
-            middle: middleCards,
-            back: backCards,
+        const newHand = {
+            front: frontSegment.getCards(),
+            middle: middleSegment.getCards(),
+            back: backSegment.getCards(),
         };
+
+        const changeSegment = this.renderType(newHand, true);
+
+        this._hand = newHand;
 
         if (!changeSegment) {
             return {
@@ -123,29 +116,66 @@ export class Arrangement extends ObserverComponent {
 
         return {
             hand: {
-                front: frontCards,
-                middle: middleCards,
-                back: backCards,
+                ...newHand,
             },
             isChangeSegment: changeSegment,
         };
     }
 
-    private checkType(frontCards: number[], middleCards: number[], backCards: number[], playAnimation = false) {
-        const frontScore = pusoy.calculateSegmentScore(frontCards);
-        const middleScore = pusoy.calculateSegmentScore(middleCards);
-        const backScore = pusoy.calculateSegmentScore(backCards);
+    private renderType(newHand: { front: number[]; middle: number[]; back: number[] }, isPlayAnimation = false) {
+        const changeSegment = isChangeSegment(this._hand, newHand);
+        const handScore = this.getScoreHand(newHand);
 
-        const highlightFrontValues = this.getValuesHighlight(frontCards, frontScore.type);
-        const highlightMiddleValues = this.getValuesHighlight(middleCards, middleScore.type);
-        const highlightBackValues = this.getValuesHighlight(backCards, backScore.type);
+        this.checkType(handScore);
 
-        const crackFrontAndMiddle = pusoy.isLarger(frontScore, middleScore);
-        const crackMiddleAndBack = pusoy.isLarger(middleScore, backScore);
+        const oldHandScore = this.getScoreHand(this._hand);
+        const playAnimation = {
+            front: pusoy.isLarger(handScore.front, oldHandScore.front),
+            middle: pusoy.isLarger(handScore.middle, oldHandScore.middle),
+            back: pusoy.isLarger(handScore.back, oldHandScore.back),
+        };
+        const highlightValues = this.getHighLightValuesInHand(newHand, handScore);
 
-        this.changeType(this.front, frontScore.type, crackFrontAndMiddle, highlightFrontValues, playAnimation);
-        this.changeType(this.middle, middleScore.type, crackFrontAndMiddle && crackMiddleAndBack, highlightMiddleValues, playAnimation);
-        this.changeType(this.back, backScore.type, crackMiddleAndBack, highlightBackValues, playAnimation);
+        if (isPlayAnimation) {
+            this.highlightCards(highlightValues, playAnimation);
+        } else {
+            this.highlightCards(highlightValues);
+        }
+
+        return changeSegment;
+    }
+
+    private getScoreHand({ front, middle, back }: pusoy.Hand<number[]>) {
+        const frontScore = pusoy.calculateSegmentScore(front);
+        const middleScore = pusoy.calculateSegmentScore(middle);
+        const backScore = pusoy.calculateSegmentScore(back);
+
+        return {
+            front: frontScore,
+            middle: middleScore,
+            back: backScore,
+        };
+    }
+
+    private checkType({ front, middle, back }: pusoy.Hand<pusoy.SegmentScore>) {
+        const crackFrontAndMiddle = pusoy.isLarger(front, middle);
+        const crackMiddleAndBack = pusoy.isLarger(middle, back);
+
+        this.changeType(this.front, front.type, crackFrontAndMiddle);
+        this.changeType(this.middle, middle.type, crackFrontAndMiddle && crackMiddleAndBack);
+        this.changeType(this.back, back.type, crackMiddleAndBack);
+    }
+
+    private getHighLightValuesInHand(newHand: pusoy.Hand<number[]>, newHandScore: pusoy.Hand<pusoy.SegmentScore>) {
+        const highlightFrontValues = this.getValuesHighlight(newHand.front, newHandScore.front.type);
+        const highlightMiddleValues = this.getValuesHighlight(newHand.middle, newHandScore.middle.type);
+        const highlightBackValues = this.getValuesHighlight(newHand.back, newHandScore.back.type);
+
+        return {
+            front: highlightFrontValues,
+            middle: highlightMiddleValues,
+            back: highlightBackValues,
+        };
     }
 
     private getValuesHighlight(cards: number[], type: pusoy.HandTypeRank) {
@@ -169,11 +199,16 @@ export class Arrangement extends ObserverComponent {
         return cards;
     }
 
-    changeType(container: Node, type: pusoy.HandTypeRank, isCrack: boolean, highlightValues: number[], playAnimation = false) {
+    changeType(container: Node, type: pusoy.HandTypeRank, isCrack: boolean) {
         const segmentComponent = container.getComponent(Segment);
         segmentComponent.segmentType = type;
         segmentComponent.isRightPosition = !isCrack;
-        segmentComponent.highlightCards(highlightValues, playAnimation);
+    }
+
+    highlightCards({ front, middle, back }: pusoy.Hand<number[]>, playAnimation = { front: false, middle: false, back: false }) {
+        this.front.getComponent(Segment).changeState(front, playAnimation.front);
+        this.middle.getComponent(Segment).changeState(middle, playAnimation.middle);
+        this.back.getComponent(Segment).changeState(back, playAnimation.back);
     }
 
     @render(gc.GamePusoy.Arrangement.ArrangementStore, (store) => store.isShowArrangement)

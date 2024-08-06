@@ -76,7 +76,7 @@ export class Segment extends Component {
         return this.segmentContainer.children.map((c) => c.getComponent(CardContainer).getCardValue());
     }
 
-    highlightCards(highlightValues: number[], playAnimation = false) {
+    changeState(highlightValues: number[], playAnimation = false) {
         for (let i = 0; i < this.segmentContainer.children.length; i++) {
             const card = this.segmentContainer.children[i].getComponent(CardContainer);
             const frame = card.draggableCardNode.getComponent(CardFrame);
