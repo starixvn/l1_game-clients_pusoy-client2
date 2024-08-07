@@ -74,16 +74,27 @@ export class Hand extends Component {
         this.activeCards(true, true);
     }
 
-    async playSettleAnimation(settlements: Record<string, { name: string; win: boolean }>) {
+    setWins(hands: Record<string, boolean>) {
         for (const segment of this.segments) {
-            const { name, win } = settlements[segment.node.name];
+            segment.win = hands[segment.node.name];
+        }
+    }
+
+    setRanks(ranks: Record<string, string>) {
+        for (const segment of this.segments) {
+            segment.rank = ranks[segment.node.name];
+        }
+    }
+
+    async playSettleAnimation() {
+        for (const segment of this.segments) {
             const cards = segment.getComponentsInChildren(HandCard);
 
             for (const card of cards) {
                 card.back && card.flip();
             }
 
-            await new Promise((resolve) => segment.playSettleAnimation(name, win, resolve));
+            await new Promise((resolve) => segment.playSettleAnimation(resolve));
         }
     }
 
@@ -109,6 +120,7 @@ export class Hand extends Component {
                         card.node.setRotationFromEuler(v3(0, 0, 90));
                         card.node.setScale(v3(0.5, 0.5, 1));
                         card.node.setWorldPosition(dealerPosition);
+                        card.disable = false;
                         card.node.active = true;
                     })
                     .to(0.1, { scale: v3(1, 1, 1), rotation: targetRotation, worldPosition: targetPosition })

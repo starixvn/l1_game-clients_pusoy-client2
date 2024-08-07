@@ -1,4 +1,5 @@
 import { _decorator, Color, Component, Label, Node, sp, tween, v3, Vec3 } from "cc";
+import { LocalizedLabel } from "db://i18n/LocalizedLabel";
 import { GradientNode } from "db://shared-components/shared/common-components/custom-materials/components/gradient-node";
 import { HandCard } from "./hand-card";
 
@@ -67,6 +68,36 @@ export class HandSegment extends Component {
     @property(Node)
     protected rankNode: Node = null;
 
+    public set rank(value: string) {
+        if (!this.isValidProperties()) {
+            return;
+        }
+
+        const label = this.rankNode.getComponentInChildren(LocalizedLabel);
+
+        label.key = value;
+        label.updateLabel();
+    }
+
+    public set win(value: boolean) {
+        if (!this.isValidProperties()) {
+            return;
+        }
+
+        const gradient = this.rankNode.getComponentInChildren(GradientNode);
+        const skeleton = this.rankNode.getComponentInChildren(sp.Skeleton);
+
+        if (value) {
+            gradient.topColor = new Color("FFEC9F");
+            gradient.bottomColor = new Color("FFE14600");
+        } else {
+            gradient.topColor = new Color("FFFFFF");
+            gradient.bottomColor = new Color("A2A2A200");
+        }
+
+        skeleton.node.active = value;
+    }
+
     public addCard(cards: Node[]) {
         if (!this.isValidProperties()) {
             return;
@@ -87,13 +118,12 @@ export class HandSegment extends Component {
         });
     }
 
-    public playSettleAnimation(rank: string, win: boolean, done: Function = () => ({})) {
+    public playSettleAnimation(done: Function = () => ({})) {
         if (!this.cardsNode.children) {
             return;
         }
 
         this.rankNode.active = false;
-        this.setRankData(rank, win);
 
         const steps = this.getAnimationSteps();
         const cards = this.cardsNode.children.map(this.createCardTween(steps));

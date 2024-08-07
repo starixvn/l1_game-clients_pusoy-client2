@@ -1,3 +1,4 @@
+import pusoy from "@rd/pusoy-rules";
 import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
@@ -30,6 +31,19 @@ const RankMap = [
     CardRank.ACE,
 ];
 
+const SegmentRankMap = {
+    [pusoy.HandTypeRank.HighCard]: "pusoy.high_card",
+    [pusoy.HandTypeRank.OnePair]: "pusoy.one_pair",
+    [pusoy.HandTypeRank.TwoPairs]: "pusoy.two_pairs",
+    [pusoy.HandTypeRank.ThreeOfAKind]: "pusoy.three_of_a_kind",
+    [pusoy.HandTypeRank.Straight]: "pusoy.straight",
+    [pusoy.HandTypeRank.Flush]: "pusoy.flush",
+    [pusoy.HandTypeRank.FullHouse]: "pusoy.full_house",
+    [pusoy.HandTypeRank.FourOfAKind]: "pusoy.four_of_a_kind",
+    [pusoy.HandTypeRank.StraightFlush]: "pusoy.straight_flush",
+    [pusoy.HandTypeRank.RoyalFlush]: "pusoy.royal_flush",
+};
+
 @ccclass
 export class CardConverter extends ObserverComponent {
     suitMap: CardSuit[] = [];
@@ -44,6 +58,12 @@ export class CardConverter extends ObserverComponent {
             middle: hand.middle.map(this.convert.bind(this)),
             front: hand.front.map(this.convert.bind(this)),
         };
+    }
+
+    convertRank(hand: gc.GamePusoy.Hand<number[]>): Record<string, string> {
+        const entries = Object.entries(hand).map(([key, cards]) => ({ [key]: SegmentRankMap[pusoy.calculateSegmentScore(cards).type] }));
+
+        return Object.assign({}, ...entries);
     }
 
     @render(gc.GamePusoy.GameConfigs.GameConfigStore, (store) => store.suitesMapper)
