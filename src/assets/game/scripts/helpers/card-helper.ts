@@ -42,7 +42,7 @@ export const sortSegment = (cards: number[], increase = true) => {
     const kind: number[] = sortIntegers([...statistic.keys()]);
     const result: number[] = [];
     for (let i = 0; i < kind.length; i++) {
-        result.push(...statistic.get(kind[i]));
+        result.push(...sortIntegers(statistic.get(kind[i])));
     }
     return result;
 };

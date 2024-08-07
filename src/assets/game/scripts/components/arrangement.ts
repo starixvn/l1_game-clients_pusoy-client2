@@ -42,7 +42,12 @@ export class Arrangement extends ObserverComponent {
             return;
         }
         const cardConverter = this.getComponent(CardConverter);
-        const { hand } = data;
+        const { hand: rawHand } = data;
+        const hand = {
+            front: sortSegment(rawHand.front),
+            middle: sortSegment(rawHand.middle),
+            back: sortSegment(rawHand.back),
+        };
         this._hand = hand;
         const handData = cardConverter.convertHand(hand);
         this.renderHandHandler.forEach((handler) => {
