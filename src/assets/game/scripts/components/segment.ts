@@ -1,23 +1,9 @@
 import pusoy from "@rd/pusoy-rules";
-import { _decorator, CCBoolean, Component, Enum, Label, Node, Sprite, SpriteAtlas } from "cc";
+import { _decorator, CCBoolean, CCString, Component, Enum, Label, Node, Sprite, SpriteAtlas } from "cc";
 import { CardContainer } from "./card-container";
 import { CardFrame, CardState } from "./card-frame";
+import { LocalizedLabel } from "../../../../extensions/i18n/assets/LocalizedLabel";
 const { ccclass, property } = _decorator;
-
-Enum(pusoy.HandTypeRank);
-
-const SegmentDict = {
-    [pusoy.HandTypeRank.HighCard]: "High Card",
-    [pusoy.HandTypeRank.OnePair]: "One Pair",
-    [pusoy.HandTypeRank.TwoPairs]: "Two Pairs",
-    [pusoy.HandTypeRank.ThreeOfAKind]: "Three Of A Kind",
-    [pusoy.HandTypeRank.Straight]: "Straight",
-    [pusoy.HandTypeRank.Flush]: "Flush",
-    [pusoy.HandTypeRank.FullHouse]: "Full House",
-    [pusoy.HandTypeRank.FourOfAKind]: "Four Of A Kind",
-    [pusoy.HandTypeRank.StraightFlush]: "Straight Flush",
-    [pusoy.HandTypeRank.RoyalFlush]: "Royal Flush",
-};
 
 const IconName = {
     right: "changecard-icon-right",
@@ -54,15 +40,15 @@ export class Segment extends Component {
         }
     }
 
-    private _segmentType: pusoy.HandTypeRank;
+    private _segmentType: string;
     public get segmentType() {
         return this._segmentType;
     }
-    @property({ type: pusoy.HandTypeRank })
-    public set segmentType(value: pusoy.HandTypeRank) {
+    @property(CCString)
+    public set segmentType(value: string) {
         this._segmentType = value;
-        const label = this.segmentTypeLabel.getComponent(Label);
-        label.string = SegmentDict[value];
+        const label = this.segmentTypeLabel.getComponent(LocalizedLabel);
+        label._key = value;
     }
 
     fillCards(cards: { value: number; rank: number; suit: number }[]) {

@@ -32,16 +32,16 @@ const RankMap = [
 ];
 
 const SegmentRankMap = {
-    [pusoy.HandTypeRank.HighCard]: "pusoy.high_card",
-    [pusoy.HandTypeRank.OnePair]: "pusoy.one_pair",
-    [pusoy.HandTypeRank.TwoPairs]: "pusoy.two_pairs",
-    [pusoy.HandTypeRank.ThreeOfAKind]: "pusoy.three_of_a_kind",
-    [pusoy.HandTypeRank.Straight]: "pusoy.straight",
-    [pusoy.HandTypeRank.Flush]: "pusoy.flush",
-    [pusoy.HandTypeRank.FullHouse]: "pusoy.full_house",
-    [pusoy.HandTypeRank.FourOfAKind]: "pusoy.four_of_a_kind",
-    [pusoy.HandTypeRank.StraightFlush]: "pusoy.straight_flush",
-    [pusoy.HandTypeRank.RoyalFlush]: "pusoy.royal_flush",
+    [pusoy.HandTypeRank.HighCard]: "Pusoy.high_card",
+    [pusoy.HandTypeRank.OnePair]: "Pusoy.one_pair",
+    [pusoy.HandTypeRank.TwoPairs]: "Pusoy.two_pairs",
+    [pusoy.HandTypeRank.ThreeOfAKind]: "Pusoy.three_of_a_kind",
+    [pusoy.HandTypeRank.Straight]: "Pusoy.straight",
+    [pusoy.HandTypeRank.Flush]: "Pusoy.flush",
+    [pusoy.HandTypeRank.FullHouse]: "Pusoy.full_house",
+    [pusoy.HandTypeRank.FourOfAKind]: "Pusoy.four_of_a_kind",
+    [pusoy.HandTypeRank.StraightFlush]: "Pusoy.straight_flush",
+    [pusoy.HandTypeRank.RoyalFlush]: "Pusoy.royal_flush",
 };
 
 @ccclass
@@ -61,9 +61,15 @@ export class CardConverter extends ObserverComponent {
     }
 
     convertRank(hand: gc.GamePusoy.Hand<number[]>): Record<string, string> {
-        const entries = Object.entries(hand).map(([key, cards]) => ({ [key]: SegmentRankMap[pusoy.calculateSegmentScore(cards).type] }));
+        const entries = Object.entries(hand).map(([key, cards]) => ({
+            [key]: this.getSegmentRank(pusoy.calculateSegmentScore(cards).type),
+        }));
 
         return Object.assign({}, ...entries);
+    }
+
+    getSegmentRank(segmentScore: pusoy.HandTypeRank) {
+        return SegmentRankMap[segmentScore];
     }
 
     @render(gc.GamePusoy.GameConfigs.GameConfigStore, (store) => store.suitesMapper)

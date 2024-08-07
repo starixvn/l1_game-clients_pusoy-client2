@@ -52,22 +52,34 @@ export class CardFrame extends Component {
         }
     }
 
+    private _highlightFrameTimeout: NodeJS.Timeout = null;
+    private _highlightStarTimeout: NodeJS.Timeout = null;
+
     playHighlight() {
+        if (this._highlightFrameTimeout) {
+            clearTimeout(this._highlightFrameTimeout);
+            this.highlightFrame.active = false;
+        }
+        if (this._highlightStarTimeout) {
+            clearTimeout(this._highlightStarTimeout);
+            this.highlighStar.active = false;
+        }
         this.highlightFrame.active = true;
         this.highlighStar.active = true;
+
         if (this.highlighStar.active) {
             const star = this.highlighStar.getComponent(sp.Skeleton);
             star.setAnimation(0, ANIMATION.star[Math.floor(Math.random() * 5)], false);
         }
         if (this.highlightFrame.active) {
             const frame = this.highlightFrame.getComponent(sp.Skeleton);
-            frame.setAnimation(0, "active", false);
+            frame.setAnimation(0, ANIMATION.frame[0], false);
         }
 
-        setTimeout(() => {
+        this._highlightFrameTimeout = setTimeout(() => {
             this.highlightFrame.active = false;
         }, 1000);
-        setTimeout(() => {
+        this._highlightStarTimeout = setTimeout(() => {
             this.highlighStar.active = false;
         }, 1200);
     }

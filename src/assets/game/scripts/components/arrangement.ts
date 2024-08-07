@@ -36,6 +36,10 @@ export class Arrangement extends ObserverComponent {
         back: [],
     };
 
+    onLoad() {
+        super.onLoad();
+    }
+
     @render(gc.GamePusoy.Rounds.RoundStore, (store) => store.initPlayerHand)
     renderHand(data: { hand: pusoy.Hand<number[]> }) {
         if (!data?.hand) {
@@ -205,7 +209,8 @@ export class Arrangement extends ObserverComponent {
 
     changeType(container: Node, type: pusoy.HandTypeRank, isCrack: boolean) {
         const segmentComponent = container.getComponent(Segment);
-        segmentComponent.segmentType = type;
+        const cardConverter = this.getComponent(CardConverter);
+        segmentComponent.segmentType = cardConverter.getSegmentRank(type);
         segmentComponent.isRightPosition = !isCrack;
     }
 
