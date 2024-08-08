@@ -116,13 +116,13 @@ export default class Game extends GameComponent {
 
         handsData.forEach((data, index) => {
             const component = handsComponent[index];
-            const wins = {
-                back: data.normal.back + data.royalty.back.units > 0,
-                front: data.normal.front + data.royalty.front.units > 0,
-                middle: data.normal.middle + data.royalty.middle.units > 0,
+            const payout = {
+                back: data.normal.back + data.royalty.back.units,
+                front: data.normal.front + data.royalty.front.units,
+                middle: data.normal.middle + data.royalty.middle.units,
             };
 
-            component.setWins(wins);
+            component.setPayout(payout);
         });
     }
 

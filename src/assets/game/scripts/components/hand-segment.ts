@@ -1,9 +1,12 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Color, Component, Label, Node, sp, tween, v3, Vec3 } from "cc";
 import { LocalizedLabel } from "db://i18n/LocalizedLabel";
 import { GradientNode } from "db://shared-components/shared/common-components/custom-materials/components/gradient-node";
+import { AnimationUtils } from "db://shared-components/shared/utils";
 import { HandCard } from "./hand-card";
 
 const { ccclass, property } = _decorator;
+const { FormatUtils } = gc;
 
 const ANIMATION_STEPS = [
     {
@@ -62,11 +65,21 @@ type AnimationStep = {
 
 @ccclass
 export class HandSegment extends Component {
+    private _win = false;
+
     @property(Node)
     protected cardsNode: Node = null;
 
     @property(Node)
     protected rankNode: Node = null;
+
+    @property(Node)
+    protected payoutNode: Node = null;
+
+    onLoad() {
+        this.rankNode.active = false;
+        this.payoutNode.active = false;
+    }
 
     public set rank(value: string) {
         if (!this.isValidProperties()) {
@@ -79,23 +92,49 @@ export class HandSegment extends Component {
         label.updateLabel();
     }
 
+    public get win() {
+        return this._win;
+    }
+
     public set win(value: boolean) {
         if (!this.isValidProperties()) {
             return;
         }
 
-        const gradient = this.rankNode.getComponentInChildren(GradientNode);
-        const skeleton = this.rankNode.getComponentInChildren(sp.Skeleton);
+        this._win = value;
+
+        const rankLabel = this.rankNode.getComponentInChildren(GradientNode);
+        const payoutLabel = this.payoutNode.getComponentInChildren(GradientNode);
 
         if (value) {
-            gradient.topColor = new Color("FFEC9F");
-            gradient.bottomColor = new Color("FFE14600");
+            const topColor = new Color("FFEC9F");
+            const bottomColor = new Color("FFE14600");
+
+            rankLabel.topColor = topColor;
+            rankLabel.bottomColor = bottomColor;
+
+            payoutLabel.topColor = topColor;
+            payoutLabel.bottomColor = bottomColor;
         } else {
-            gradient.topColor = new Color("FFFFFF");
-            gradient.bottomColor = new Color("A2A2A200");
+            const topColor = new Color("FFFFFF");
+            const bottomColor = new Color("A2A2A200");
+
+            rankLabel.topColor = topColor;
+            rankLabel.bottomColor = bottomColor;
+
+            payoutLabel.topColor = topColor;
+            payoutLabel.bottomColor = bottomColor;
         }
 
-        skeleton.node.active = value;
+        rankLabel.onLoad();
+        payoutLabel.onLoad();
+    }
+
+    public set payout(value: number) {
+        const labelValue = `${value > 0 ? "+" : ""}` + FormatUtils.numberWithCommas(value, 2);
+        const label = this.payoutNode.getComponentInChildren(Label);
+
+        label.string = labelValue;
     }
 
     public addCard(cards: Node[]) {
@@ -128,8 +167,10 @@ export class HandSegment extends Component {
         const steps = this.getAnimationSteps();
         const cards = this.cardsNode.children.map(this.createCardTween(steps));
         const rankTween = this.createRankTween(this.rankNode, steps);
+        const payoutTween = this.createPayoutTween(this.payoutNode, steps);
 
         cards.forEach((card) => card.start());
+        payoutTween.start();
         rankTween.call(done).start();
     }
 
@@ -176,6 +217,9 @@ export class HandSegment extends Component {
     private createRankTween(node: Node, steps: AnimationStep[]) {
         const animation = tween(node).call(() => {
             node.active = true;
+            const spine = node.getComponentInChildren(sp.Skeleton);
+
+            AnimationUtils.playSpine(spine, this.win ? "win" : "lose");
         });
 
         for (const { duration, rank } of steps) {
@@ -187,29 +231,21 @@ export class HandSegment extends Component {
         });
     }
 
-    private setRankData(rank: string, win: boolean) {
-        if (!this.isValidProperties()) {
-            return;
+    private createPayoutTween(node: Node, steps: AnimationStep[]) {
+        const animation = tween(node).call(() => {
+            node.active = true;
+        });
+
+        for (const { duration, rank } of steps) {
+            animation.to(duration, rank);
         }
 
-        const gradient = this.rankNode.getComponentInChildren(GradientNode);
-        const label = this.rankNode.getComponentInChildren(Label);
-        const skeleton = this.rankNode.getComponentInChildren(sp.Skeleton);
-
-        label.string = rank;
-
-        if (win) {
-            gradient.topColor = new Color("FFEC9F");
-            gradient.bottomColor = new Color("FFE14600");
-        } else {
-            gradient.topColor = new Color("FFFFFF");
-            gradient.bottomColor = new Color("A2A2A200");
-        }
-
-        skeleton.node.active = win;
+        return animation.call(() => {
+            node.active = false;
+        });
     }
 
     private isValidProperties() {
-        return !!this.cardsNode && !!this.rankNode;
+        return !!this.cardsNode && !!this.rankNode && !!this.payoutNode;
     }
 }

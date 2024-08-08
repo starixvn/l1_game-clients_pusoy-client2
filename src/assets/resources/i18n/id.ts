@@ -170,6 +170,7 @@ export const languages = {
         "win_loss": "Menang Kalah",
         "you_reach_max_win": "Anda mencapai Maksimal Menang"
     },
+    "CommonPoker": {},
     "Pusoy": {}
 };
 

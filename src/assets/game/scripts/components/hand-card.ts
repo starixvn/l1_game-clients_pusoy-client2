@@ -26,7 +26,7 @@ export class HandCard extends Component {
         this.card!.rank = rank;
     }
 
-    flip(duration = 0.5, keepBack = false, done = () => ({})) {
+    flip(duration = 0.32, keepBack = false, done = () => ({})) {
         const halfDuration = duration / 2;
 
         tween(this.node)

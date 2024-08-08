@@ -170,6 +170,18 @@ export const languages = {
         "win_loss": "Win Loss",
         "you_reach_max_win": "You reached the max win"
     },
+    "CommonPoker": {
+        "flush": "Flush",
+        "four_of_a_kind": "Four Of A Kind",
+        "full_house": "Full House",
+        "high_card": "High Card",
+        "one_pair": "One Pair",
+        "royal_flush": "Royal Flush",
+        "straight": "Straight",
+        "straight_flush": "Straight Flush",
+        "three_of_a_kind": "Three Of A Kind",
+        "two_pairs": "Two Pairs"
+    },
     "Pusoy": {
         "game_name": "Pusoy"
     }

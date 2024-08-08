@@ -170,6 +170,7 @@ export const languages = {
         "win_loss": "赢 输",
         "you_reach_max_win": "您达到了最大胜利"
     },
+    "CommonPoker": {},
     "Pusoy": {}
 };
 

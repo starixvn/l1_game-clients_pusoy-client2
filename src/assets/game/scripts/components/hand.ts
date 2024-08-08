@@ -74,15 +74,16 @@ export class Hand extends Component {
         this.activeCards(true, true);
     }
 
-    setWins(hands: Record<string, boolean>) {
-        for (const segment of this.segments) {
-            segment.win = hands[segment.node.name];
-        }
-    }
-
     setRanks(ranks: Record<string, string>) {
         for (const segment of this.segments) {
             segment.rank = ranks[segment.node.name];
+        }
+    }
+
+    setPayout(payout: Record<string, number>) {
+        for (const segment of this.segments) {
+            segment.payout = payout[segment.node.name];
+            segment.win = payout[segment.node.name] > 0;
         }
     }
 

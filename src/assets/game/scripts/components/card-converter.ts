@@ -32,16 +32,16 @@ const RankMap = [
 ];
 
 const SegmentRankMap = {
-    [pusoy.HandTypeRank.HighCard]: "Pusoy.high_card",
-    [pusoy.HandTypeRank.OnePair]: "Pusoy.one_pair",
-    [pusoy.HandTypeRank.TwoPairs]: "Pusoy.two_pairs",
-    [pusoy.HandTypeRank.ThreeOfAKind]: "Pusoy.three_of_a_kind",
-    [pusoy.HandTypeRank.Straight]: "Pusoy.straight",
-    [pusoy.HandTypeRank.Flush]: "Pusoy.flush",
-    [pusoy.HandTypeRank.FullHouse]: "Pusoy.full_house",
-    [pusoy.HandTypeRank.FourOfAKind]: "Pusoy.four_of_a_kind",
-    [pusoy.HandTypeRank.StraightFlush]: "Pusoy.straight_flush",
-    [pusoy.HandTypeRank.RoyalFlush]: "Pusoy.royal_flush",
+    [pusoy.HandTypeRank.HighCard]: "CommonPoker.high_card",
+    [pusoy.HandTypeRank.OnePair]: "CommonPoker.one_pair",
+    [pusoy.HandTypeRank.TwoPairs]: "CommonPoker.two_pairs",
+    [pusoy.HandTypeRank.ThreeOfAKind]: "CommonPoker.three_of_a_kind",
+    [pusoy.HandTypeRank.Straight]: "CommonPoker.straight",
+    [pusoy.HandTypeRank.Flush]: "CommonPoker.flush",
+    [pusoy.HandTypeRank.FullHouse]: "CommonPoker.full_house",
+    [pusoy.HandTypeRank.FourOfAKind]: "CommonPoker.four_of_a_kind",
+    [pusoy.HandTypeRank.StraightFlush]: "CommonPoker.straight_flush",
+    [pusoy.HandTypeRank.RoyalFlush]: "CommonPoker.royal_flush",
 };
 
 @ccclass
