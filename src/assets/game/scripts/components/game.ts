@@ -11,12 +11,13 @@ import { sortSegment } from "../helpers/card-helper";
 import "./../../../resources/i18n";
 import { CardConverter } from "./card-converter";
 import { Hand } from "./hand";
+import { AnimationStage } from "@sg/game-client-base/dist/game-pusoy/settlements";
 
 startGame(settings.name, containerOptions, siteConfigs);
 
 const { ccclass, property } = _decorator;
-const { observer, render } = Observer;
-
+const { observer, render, handle } = Observer;
+const { ANIMATION_STAGES, SettlementHandlers } = gc.GamePusoy.Settlement;
 @ccclass
 @observer(settings.name)
 export default class Game extends GameComponent {
@@ -49,15 +50,58 @@ export default class Game extends GameComponent {
         }
     }
 
-    @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.remaining && store.in("animation"))
-    inSettlement(shouldShowAnimation: boolean) {
+    @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.crack])
+    updateAnimationCrack(showAnimation: boolean) {
+        if (showAnimation) {
+            console.log("show animation crack", showAnimation);
+
+            this.finishSettleAnimation(ANIMATION_STAGES.crack as AnimationStage);
+        }
+    }
+
+    @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.natural])
+    updateAnimationNatural(showAnimation: boolean) {
+        if (showAnimation) {
+            console.log("show animation natural", showAnimation);
+
+            this.finishSettleAnimation(ANIMATION_STAGES.natural as AnimationStage);
+        }
+    }
+
+    @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.mini])
+    updateAnimationMiniPusoy(showAnimation: boolean) {
+        if (showAnimation) {
+            console.log("show animation mini pusoy", showAnimation);
+
+            this.finishSettleAnimation(ANIMATION_STAGES.mini as AnimationStage);
+        }
+    }
+
+    @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.fullPusoy])
+    updateAnimationFullPusoy(showAnimation: boolean) {
+        if (showAnimation) {
+            console.log("show animation full pusoy", showAnimation);
+
+            this.finishSettleAnimation(ANIMATION_STAGES.fullPusoy as AnimationStage);
+        }
+    }
+
+    @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.normal])
+    async inSettlement(shouldShowAnimation: boolean) {
         if (shouldShowAnimation) {
+            console.log("show animation normal: ", shouldShowAnimation);
+
             const handsComponent = this.getComponentsInChildren(Hand);
 
-            for (const component of handsComponent) {
-                component.playSettleAnimation();
-            }
+            await Promise.all(handsComponent.map((component) => component.playSettleAnimation()));
+            this.finishSettleAnimation(ANIMATION_STAGES.normal as AnimationStage);
         }
+    }
+
+    @handle(SettlementHandlers, (handler, animation: AnimationStage) => handler.handleFinishAnimation(animation))
+    finishSettleAnimation(animation: AnimationStage) {
+        console.log("finish animation: ", animation);
+        return animation;
     }
 
     @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.settlementResult)

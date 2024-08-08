@@ -3,10 +3,11 @@ import { Node, Prefab, _decorator, instantiate, tween } from "cc";
 import Observer from "observer";
 import gc from "@sg/game-client-base";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
-const { SettlementStore } = gc.GamePusoy.Settlement;
+import { AnimationStage } from "@sg/game-client-base/dist/game-pusoy/settlements";
+const { SettlementStore, ANIMATION_STAGES, SettlementHandlers } = gc.GamePusoy.Settlement;
 
 const { ccclass, property } = _decorator;
-const { render } = Observer;
+const { render, handle } = Observer;
 
 const coinFlightDuration = 500;
 const numberOfCoins = 6;
@@ -33,6 +34,8 @@ export class players extends ObserverComponent {
     sumCoin: Node | null = null;
 
     coins: Record<string, Node>;
+    winners: SettlementResult[] = [];
+    losers: SettlementResult[] = [];
 
     onLoad() {
         super.onLoad();
@@ -41,21 +44,33 @@ export class players extends ObserverComponent {
     }
 
     @render(SettlementStore, (store) => store.settlementResult)
-    renderCoin(settlementResult: Record<string, SettlementResult>) {
+    setLosersAndWinners(settlementResult: Record<string, SettlementResult>) {
         const settlementResults = Object.values(settlementResult);
 
         if (!this.coins || settlementResults.length === 0) {
             return;
         }
 
-        const losers = settlementResults.filter((result) => result.sum < 0);
-        const winners = settlementResults.filter((result) => result.sum > 0);
+        this.losers = settlementResults.filter((result) => result.sum < 0);
+        this.winners = settlementResults.filter((result) => result.sum > 0);
+    }
 
-        this.losersAnimation(losers);
+    @render(SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.chipFly])
+    renderCoin(showAnimation: boolean) {
+        if (!this.coins || !this.winners.length || !this.losers.length) {
+            return;
+        }
 
-        setTimeout(() => {
-            this.winnersAnimation(winners);
-        }, coinFlightDuration * 2 + 200);
+        if (showAnimation) {
+            console.log("show animation fly chip: ", showAnimation);
+            this.losersAnimation(this.losers);
+
+            setTimeout(() => {
+                this.winnersAnimation(this.winners);
+            }, coinFlightDuration * 2 + 200);
+
+            this.finishSettleAnimation(ANIMATION_STAGES.chipFly as AnimationStage);
+        }
     }
 
     losersAnimation(losers: SettlementResult[]) {
@@ -99,5 +114,11 @@ export class players extends ObserverComponent {
                 newCoin.destroy();
             })
             .start();
+    }
+
+    @handle(SettlementHandlers, (handler, animation: AnimationStage) => handler.handleFinishAnimation(animation))
+    finishSettleAnimation(animation: AnimationStage) {
+        console.log("finishSettleAnimation: ", animation);
+        return animation;
     }
 }
