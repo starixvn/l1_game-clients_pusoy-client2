@@ -43,10 +43,12 @@ export default class Game extends GameComponent {
 
     @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.isInArrangementTime)
     inArrangement(inArrangement: boolean) {
-        const hands = this.getComponentsInChildren(Hand);
+        if (inArrangement) {
+            const hands = this.getComponentsInChildren(Hand);
 
-        for (const hand of hands) {
-            hand.activeCards(true);
+            for (const hand of hands) {
+                hand.activeCards(true);
+            }
         }
     }
 
