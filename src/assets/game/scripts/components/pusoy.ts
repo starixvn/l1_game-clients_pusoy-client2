@@ -55,9 +55,9 @@ export class Pusoy extends Component {
             earthquake.getComponent(Quake).play();
         });
         target.destroy();
-        setTimeout(() => {
+        this.scheduleOnce(() => {
             this.node.destroy();
-        }, 800);
+        }, 0.8);
     }
 
     playAnimation(source: Node, sourceSlot: string, target: Node, targetSlot: string, earthquake: Node[]) {
