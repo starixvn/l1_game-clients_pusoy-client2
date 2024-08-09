@@ -108,7 +108,7 @@
       "z": 1
     },
     "_mobility": 0,
-    "_layer": 33554432,
+    "_layer": 8388608,
     "_euler": {
       "__type__": "cc.Vec3",
       "x": 0,
@@ -161,7 +161,7 @@
       "z": 100
     },
     "_mobility": 0,
-    "_layer": 33554432,
+    "_layer": 8388608,
     "_euler": {
       "__type__": "cc.Vec3",
       "x": 0,
@@ -334,7 +334,7 @@
       "z": 1
     },
     "_mobility": 0,
-    "_layer": 1073741824,
+    "_layer": 8388608,
     "_euler": {
       "__type__": "cc.Vec3",
       "x": 0.264,
@@ -604,10 +604,7 @@
     "_renderMode": 3,
     "_velocityScale": 1,
     "_lengthScale": 1,
-    "_mesh": {
-      "__uuid__": "1263d74c-8167-4928-91a6-4e2672411f47@17020",
-      "__expectedType__": "cc.Mesh"
-    },
+    "_mesh": null,
     "_cpuMaterial": {
       "__uuid__": "ea7478b0-408d-4052-b703-f0d2355e095f",
       "__expectedType__": "cc.Material"

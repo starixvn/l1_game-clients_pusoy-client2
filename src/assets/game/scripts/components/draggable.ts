@@ -2,7 +2,7 @@ import { _decorator, Component, EventHandler, EventTouch, Node, NodeEventType, v
 const { ccclass, property } = _decorator;
 
 @ccclass("Draggable")
-export class draggable extends Component {
+export class Draggable extends Component {
     @property([EventHandler])
     dragStartHandlers: EventHandler[] = [];
 

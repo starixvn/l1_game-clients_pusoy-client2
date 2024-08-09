@@ -1,7 +1,7 @@
-import { _decorator, Component, EventHandler, instantiate, Node, Prefab, tween, Vec3 } from "cc";
+import { _decorator, Component, easing, EventHandler, instantiate, Node, Prefab, tween, Vec3 } from "cc";
 import { DragCardEvent } from "../custom-event";
 import { CardValue } from "./card-value";
-import { Collision } from "./collision";
+import { Draggable } from "./draggable";
 const { ccclass, property } = _decorator;
 
 @ccclass("CardContainer")
@@ -64,13 +64,13 @@ const replaceCard = (
                 0.05,
                 { position: new Vec3(0, 0, 0) },
                 {
-                    easing: "smooth",
+                    easing: easing.smooth,
                     onStart: () => {
-                        const draggable = currentCard.getComponent(Collision);
+                        const draggable = currentCard.getComponent(Draggable);
                         draggable.enabled = false;
                     },
                     onComplete: () => {
-                        const draggable = currentCard.getComponent(Collision);
+                        const draggable = currentCard.getComponent(Draggable);
                         draggable.enabled = true;
                     },
                 }
