@@ -34,7 +34,12 @@ export default class Game extends GameComponent {
     @property([Node])
     earthquakes: Node[] = [];
 
+    @property(Prefab)
+    crack: Prefab = null;
+
     private _pusoyPairs: { source: Node; soucreSlot: string; target: Node; targetSlot: string }[] = [];
+
+    private _crackNode: Node[] = [];
 
     override namespace = settings.name;
     override containerOptions = containerOptions;
@@ -62,11 +67,25 @@ export default class Game extends GameComponent {
     }
 
     @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.crack])
-    updateAnimationCrack(showAnimation: boolean) {
+    async updateAnimationCrack(showAnimation: boolean) {
         if (showAnimation) {
-            console.log("show animation crack", showAnimation);
+            console.log("show animation crack", showAnimation, new Date().getSeconds());
+            const crack = instantiate(this.crack);
+            await Promise.all(
+                this._crackNode.map(async (node) => {
+                    node.addChild(crack);
+                    return new Promise((resolve) => {
+                        this.scheduleOnce(() => {
+                            node.removeChild(crack);
+                            resolve(null);
+                        }, 0.8);
+                    });
+                })
+            );
 
             this.finishSettleAnimation(ANIMATION_STAGES.crack as AnimationStage);
+
+            this._crackNode = [];
         }
     }
 
@@ -118,7 +137,7 @@ export default class Game extends GameComponent {
 
     @handle(SettlementHandlers, (handler, animation: AnimationStage) => handler.handleFinishAnimation(animation))
     finishSettleAnimation(animation: AnimationStage) {
-        console.log("finish animation: ", animation);
+        console.log("finish animation: ", animation, new Date().getSeconds());
         return animation;
     }
 
@@ -147,6 +166,10 @@ export default class Game extends GameComponent {
                     });
                 }
             });
+
+            if (data.crack.isCrack) {
+                this._crackNode.push(component.node);
+            }
 
             component.setPayout(payout);
         });

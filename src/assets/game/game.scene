@@ -5226,6 +5226,10 @@
         "__id__": 13
       }
     ],
+    "crack": {
+      "__uuid__": "dd68aa47-1b16-4961-9506-d83d316c4cf3",
+      "__expectedType__": "cc.Prefab"
+    },
     "_id": "a5mppcr9xMh7eLStNdpO8s"
   },
   {
