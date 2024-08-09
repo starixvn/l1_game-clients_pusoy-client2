@@ -1,7 +1,7 @@
 import type { GamePusoy } from "@sg/game-client-base";
 
 import gc from "@sg/game-client-base";
-import { Label, _decorator, js } from "cc";
+import { Label, Prefab, _decorator, instantiate, Node } from "cc";
 import GameComponent from "db://shared-components/game/scripts/components/game-component";
 import { startGame } from "db://shared-components/shared/scripts/startup";
 import Observer from "observer";
@@ -12,6 +12,7 @@ import "./../../../resources/i18n";
 import { CardConverter } from "./card-converter";
 import { Hand } from "./hand";
 import { AnimationStage } from "@sg/game-client-base/dist/game-pusoy/settlements";
+import { Pusoy } from "./pusoy";
 
 startGame(settings.name, containerOptions, siteConfigs);
 
@@ -26,6 +27,14 @@ export default class Game extends GameComponent {
 
     @property({ type: Label, override: true, visible: false })
     lblMaxBet: Label = null;
+
+    @property(Prefab)
+    pusoy: Prefab = null;
+
+    @property([Node])
+    earthquakes: Node[] = [];
+
+    private _pusoyPairs: { source: Node; soucreSlot: string; target: Node; targetSlot: string }[] = [];
 
     override namespace = settings.name;
     override containerOptions = containerOptions;
@@ -75,6 +84,13 @@ export default class Game extends GameComponent {
         if (showAnimation) {
             console.log("show animation mini pusoy", showAnimation);
 
+            for (const pair of this._pusoyPairs) {
+                const pusoy = instantiate(this.pusoy);
+                this.node.addChild(pusoy);
+                pusoy.getComponent(Pusoy).playAnimation(pair.source, pair.soucreSlot, pair.target, pair.targetSlot, this.earthquakes);
+            }
+            this._pusoyPairs = [];
+
             this.finishSettleAnimation(ANIMATION_STAGES.mini as AnimationStage);
         }
     }
@@ -121,6 +137,16 @@ export default class Game extends GameComponent {
                 front: data.normal.front + data.royalty.front.units,
                 middle: data.normal.middle + data.royalty.middle.units,
             };
+            Object.entries(data.pusoy.mini).forEach(([key, value]) => {
+                if (value > 0) {
+                    this._pusoyPairs.push({
+                        source: component.node,
+                        soucreSlot: `${data.slot}`,
+                        target: handsComponent[Number(key)].node,
+                        targetSlot: key,
+                    });
+                }
+            });
 
             component.setPayout(payout);
         });

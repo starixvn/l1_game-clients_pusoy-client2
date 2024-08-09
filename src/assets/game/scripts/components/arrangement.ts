@@ -1,6 +1,6 @@
 import pusoy from "@rd/pusoy-rules";
 import gc from "@sg/game-client-base";
-import { _decorator, EventHandler, Node, Prefab } from "cc";
+import { _decorator, Color, easing, EventHandler, Node, Prefab, Sprite, tween, Vec3 } from "cc";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import Observer from "observer";
 import { isChangeSegment, sortSegment } from "../helpers/card-helper";
@@ -12,6 +12,9 @@ const { render, handle } = Observer;
 
 @ccclass
 export class Arrangement extends ObserverComponent {
+    @property(Node)
+    overlay: Node = null;
+
     @property(Node)
     front: Node = null;
 
@@ -36,8 +39,24 @@ export class Arrangement extends ObserverComponent {
         back: [],
     };
 
-    onLoad() {
-        super.onLoad();
+    protected start(): void {}
+
+    setVisibilityBackground(isHide: boolean) {
+        const background = this.overlay.getComponent(Sprite);
+        const { r, g, b } = background.color;
+        background.color = new Color(r, g, b, isHide ? 0 : 255);
+    }
+
+    onEnable(): void {
+        this.node.scale = new Vec3(0, 0, 0);
+        this.setVisibilityBackground(false);
+        tween(this.node)
+            .to(0.5, { scale: new Vec3(1, 1, 1) }, { easing: easing.cubicOut })
+            .start();
+    }
+
+    onDisable() {
+        this.setVisibilityBackground(true);
     }
 
     @render(gc.GamePusoy.Rounds.RoundStore, (store) => store.initPlayerHand)
