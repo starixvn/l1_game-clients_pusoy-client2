@@ -139,6 +139,7 @@ export class players extends ObserverComponent {
     private setWinStyles(totalWin: Node, winValue: number) {
         const label = totalWin.getComponent(Label);
         const gradient = totalWin.getComponent(GradientNode);
+        totalWin.setScale(new Vec3(0.1, 0.1, 0.1));
 
         const labelValue = `${winValue > 0 ? "+" : ""}` + FormatUtils.numberWithCommas(winValue, 2);
         label.string = labelValue;
@@ -169,10 +170,15 @@ export class players extends ObserverComponent {
     }
 
     private handleTotalWinAnimation(totalWin: Node) {
+        const uiOpacity = totalWin.getComponent(UIOpacity);
+
         tween(totalWin)
-            .to(1, { scale: new Vec3(2.5, 2.5, 2.5) }, { easing: "quadInOut" })
-            .to(1, { scale: new Vec3(1.2, 1.2, 1.2) }, { easing: "quadInOut" })
-            .destroySelf()
+            .to(0.5, { scale: new Vec3(1.5, 1.5, 1.5) }, { easing: "quadInOut" })
+            .to(0.5, { scale: new Vec3(1, 1, 1) }, { easing: "quadInOut" })
+            .delay(0.5)
+            .call(() => {
+                tween(uiOpacity).to(2, { opacity: 0 }).start();
+            })
             .start();
     }
 
