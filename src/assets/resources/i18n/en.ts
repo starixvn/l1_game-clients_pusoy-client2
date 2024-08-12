@@ -183,7 +183,11 @@ export const languages = {
         "two_pairs": "Two Pairs"
     },
     "Pusoy": {
-        "game_name": "Pusoy"
+        "dragon": "Dragon",
+        "game_name": "Pusoy",
+        "six_pairs": "Six\nPairs",
+        "three_flushes": "Three\nFlushes",
+        "three_straights": "Three\nStraights"
     }
 };
 

@@ -1,0 +1,20 @@
+
+effect-text-natural.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+halo
+  rotate: false
+  xy: 2, 2
+  size: 434, 434
+  orig: 434, 434
+  offset: 0, 0
+  index: -1
+halo-2
+  rotate: true
+  xy: 438, 49
+  size: 387, 372
+  orig: 387, 372
+  offset: 0, 0
+  index: -1
