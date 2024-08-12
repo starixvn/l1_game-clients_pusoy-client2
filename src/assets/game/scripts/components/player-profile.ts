@@ -23,8 +23,18 @@ export default class PlayerProfile extends ObserverComponent {
     @property(CCInteger)
     slotIndex: number = 0;
 
+    private _totalWin = 0;
+
     onLoad() {
         super.onLoad();
+    }
+
+    public setTotalWin(totalWin: number) {
+        this._totalWin = totalWin;
+    }
+
+    public getTotalWin() {
+        return this._totalWin;
     }
 
     setPlayerName(text: string) {

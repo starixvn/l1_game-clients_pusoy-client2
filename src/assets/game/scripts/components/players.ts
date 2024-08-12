@@ -1,45 +1,39 @@
 import { SettlementResult } from "@sg/game-client-base/dist/game-pusoy";
-import { Node, Prefab, _decorator, instantiate, tween } from "cc";
+import { Color, Label, Node, Prefab, UIOpacity, Vec3, _decorator, instantiate, tween } from "cc";
 import Observer from "observer";
 import gc from "@sg/game-client-base";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import { AnimationStage } from "@sg/game-client-base/dist/game-pusoy/settlements";
+import PlayerProfile from "./player-profile";
+import { GradientNode } from "db://shared-components/shared/common-components/custom-materials/components/gradient-node";
 const { SettlementStore, ANIMATION_STAGES, SettlementHandlers } = gc.GamePusoy.Settlement;
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
+const { FormatUtils } = gc;
 
-const coinFlightDuration = 500;
-const numberOfCoins = 6;
-const delayBetweenCoins = coinFlightDuration / (numberOfCoins - 1);
+const COIN_FLIGHT_DURATION = 0.5;
+const NUMBER_OF_COINS = 6;
+const DELAY_BETWEEN_COINS = COIN_FLIGHT_DURATION / (NUMBER_OF_COINS - 1);
 
 @ccclass
 export class players extends ObserverComponent {
     @property({ type: Prefab })
     coinPrefab: Prefab | null = null;
 
-    @property({ type: Node })
-    playerCoin: Node | null = null;
-
-    @property({ type: Node })
-    leftCoin: Node | null = null;
-
-    @property({ type: Node })
-    rightCoin: Node | null = null;
-
-    @property({ type: Node })
-    centerCoin: Node | null = null;
+    @property({ type: Prefab })
+    winPrefab: Prefab | null = null;
 
     @property({ type: Node })
     sumCoin: Node | null = null;
 
-    coins: Record<string, Node>;
+    coins: Record<string, Node> = {};
     winners: SettlementResult[] = [];
     losers: SettlementResult[] = [];
 
     onLoad() {
         super.onLoad();
-        this.coins = { slot0: this.playerCoin, slot1: this.leftCoin, slot2: this.centerCoin, slot3: this.rightCoin };
+
         this.sumCoin.active = false;
     }
 
@@ -47,72 +41,138 @@ export class players extends ObserverComponent {
     setLosersAndWinners(settlementResult: Record<string, SettlementResult>) {
         const settlementResults = Object.values(settlementResult);
 
-        if (!this.coins || settlementResults.length === 0) {
+        if (settlementResults.length === 0) {
             return;
         }
+
+        this.mapPlayerProfilesToCoins();
 
         this.losers = settlementResults.filter((result) => result.sum < 0);
         this.winners = settlementResults.filter((result) => result.sum > 0);
     }
 
+    private mapPlayerProfilesToCoins() {
+        const playerProfileComponents = this.getComponentsInChildren(PlayerProfile);
+
+        playerProfileComponents.forEach((playerProfile) => {
+            const coin = playerProfile.node.getChildByPath("name/background/coin");
+            this.coins[`slot${playerProfile.slotIndex}`] = coin;
+        });
+    }
+
     @render(SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.chipFly])
     renderCoin(showAnimation: boolean) {
-        if (!this.coins || !this.winners.length || !this.losers.length) {
+        if (!showAnimation || !this.winners.length || !this.losers.length) {
             return;
         }
 
-        if (showAnimation) {
-            console.log("show animation fly chip: ", showAnimation);
-            this.losersAnimation(this.losers);
+        console.log("show animation fly chip: ", showAnimation);
+        this.animateLosers(this.losers);
 
-            setTimeout(() => {
-                this.winnersAnimation(this.winners);
-            }, coinFlightDuration * 2 + 200);
+        this.scheduleOnce(() => {
+            this.animateWinners(this.winners);
+        }, COIN_FLIGHT_DURATION * 2 + 0.2);
 
-            this.finishSettleAnimation(ANIMATION_STAGES.chipFly as AnimationStage);
-        }
+        this.scheduleOnce(() => {
+            this.animateShowTotalWin();
+        }, COIN_FLIGHT_DURATION * 2 + 0.2);
+
+        this.finishSettleAnimation(ANIMATION_STAGES.chipFly as AnimationStage);
     }
 
-    losersAnimation(losers: SettlementResult[]) {
+    animateLosers(losers: SettlementResult[]) {
         losers.forEach((loser) => {
             const coin = this.coins[`slot${loser.slot}`];
-            this.flyCoinAnimation(coin, this.sumCoin);
+            this.animateCoinFly(coin, this.sumCoin);
         });
 
-        setTimeout(() => {
+        this.scheduleOnce(() => {
             this.sumCoin.active = true;
-        }, coinFlightDuration);
+        }, COIN_FLIGHT_DURATION);
     }
 
-    winnersAnimation(winners: SettlementResult[]) {
+    animateWinners(winners: SettlementResult[]) {
         winners.forEach((winner) => {
             const coin = this.coins[`slot${winner.slot}`];
-            this.flyCoinAnimation(this.sumCoin, coin);
+            this.animateCoinFly(this.sumCoin, coin);
         });
 
-        setTimeout(() => {
+        this.scheduleOnce(() => {
             this.sumCoin.active = false;
-        }, coinFlightDuration);
+        }, COIN_FLIGHT_DURATION);
     }
 
-    flyCoinAnimation(sourceCoin: Node, targetCoin: Node) {
-        for (let i = 0; i < numberOfCoins; i++) {
-            setTimeout(() => {
-                this.flyCoin(sourceCoin, targetCoin);
-            }, delayBetweenCoins * i);
+    animateCoinFly(sourceCoin: Node, targetCoin: Node) {
+        for (let i = 0; i < NUMBER_OF_COINS; i++) {
+            this.scheduleOnce(() => {
+                this.flyCoins(sourceCoin, targetCoin);
+            }, DELAY_BETWEEN_COINS * i);
         }
     }
 
-    flyCoin(sourceCoin: Node, targetCoin: Node) {
+    flyCoins(sourceCoin: Node, targetCoin: Node) {
         const newCoin = instantiate(this.coinPrefab);
         this.node.addChild(newCoin);
         newCoin.setWorldPosition(sourceCoin.worldPosition);
 
-        tween(newCoin)
-            .to(coinFlightDuration / 1000, { worldPosition: targetCoin.worldPosition })
-            .call(() => {
-                newCoin.destroy();
-            })
+        tween(newCoin).to(COIN_FLIGHT_DURATION, { worldPosition: targetCoin.worldPosition }).destroySelf().start();
+    }
+
+    animateShowTotalWin() {
+        const playerProfileComponents = this.getComponentsInChildren(PlayerProfile);
+
+        playerProfileComponents.forEach(async (playerProfile) => {
+            const playerAvatar = playerProfile.node.getChildByName("avatar");
+            const totalWin = instantiate(this.winPrefab);
+            const winValue = playerProfile.getTotalWin();
+
+            this.setWinStyles(totalWin, winValue);
+
+            this.handleAvatarWinAnimation(playerAvatar, winValue);
+
+            playerAvatar.addChild(totalWin);
+
+            this.handleTotalWinAnimation(totalWin);
+        });
+    }
+
+    private setWinStyles(totalWin: Node, winValue: number) {
+        const label = totalWin.getComponent(Label);
+        const gradient = totalWin.getComponent(GradientNode);
+
+        const labelValue = `${winValue > 0 ? "+" : ""}` + FormatUtils.numberWithCommas(winValue, 2);
+        label.string = labelValue;
+
+        if (winValue > 0) {
+            gradient.topColor = new Color("FFEC9F");
+            gradient.bottomColor = new Color("FFE14600");
+        } else {
+            gradient.topColor = new Color("FFFFFF");
+            gradient.bottomColor = new Color("A2A2A200");
+        }
+    }
+
+    private handleAvatarWinAnimation(playerAvatar: Node, winValue: number) {
+        if (winValue > 0) {
+            const avatarBorderWin = playerAvatar.getChildByName("border-win");
+            const uiOpacity = avatarBorderWin.getComponent(UIOpacity);
+
+            const embedTween = tween(uiOpacity).to(0.4, { opacity: 255 }).to(0.4, { opacity: 10 });
+
+            tween(uiOpacity)
+                .repeat(5, embedTween)
+                .call(() => {
+                    uiOpacity.opacity = 0;
+                })
+                .start();
+        }
+    }
+
+    private handleTotalWinAnimation(totalWin: Node) {
+        tween(totalWin)
+            .to(1, { scale: new Vec3(2.5, 2.5, 2.5) }, { easing: "quadInOut" })
+            .to(1, { scale: new Vec3(1.2, 1.2, 1.2) }, { easing: "quadInOut" })
+            .destroySelf()
             .start();
     }
 

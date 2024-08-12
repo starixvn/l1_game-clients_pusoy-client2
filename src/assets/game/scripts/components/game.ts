@@ -15,6 +15,7 @@ import { AnimationStage } from "@sg/game-client-base/dist/game-pusoy/settlements
 import { Pusoy } from "./pusoy";
 import { AutoDestroySpine } from "./auto-destroy-spine";
 import { Quake } from "./quake";
+import PlayerProfile from "./player-profile";
 
 startGame(settings.name, containerOptions, siteConfigs);
 
@@ -213,10 +214,13 @@ export default class Game extends GameComponent {
             return;
         }
         const handsData = Object.values(result).sort((a, b) => a.slot - b.slot);
-        const handsComponent = this.getComponentsInChildren(Hand);
+        const handComponents = this.getComponentsInChildren(Hand);
+        const playerProfileComponents = this.getComponentsInChildren(PlayerProfile).sort((a, b) => a.slotIndex - b.slotIndex);
 
         handsData.forEach((data, index) => {
-            const component = handsComponent[index];
+            const handComponent = handComponents[index];
+            const playerProfileComponent = playerProfileComponents[index];
+
             const payout = {
                 back: data.normal.back + data.royalty.back.units,
                 front: data.normal.front + data.royalty.front.units,
@@ -225,24 +229,25 @@ export default class Game extends GameComponent {
             Object.entries(data.pusoy.mini).forEach(([key, value]) => {
                 if (value > 0) {
                     this._pusoyPairs.push({
-                        source: component.node,
+                        source: handComponent.node,
                         sourceSlot: `${data.slot}`,
-                        target: handsComponent[Number(key)].node,
+                        target: handComponents[Number(key)].node,
                         targetSlot: key,
                     });
                 }
             });
 
             if (data.crack.isCrack) {
-                this._crackNode.push(component.node);
+                this._crackNode.push(handComponent.node);
             }
 
             if (data.pusoy.full) {
-                this._superPusoy.source = component.node;
+                this._superPusoy.source = handComponent.node;
                 this._superPusoy.sourceSlot = `${data.slot}`;
             }
 
-            component.setPayout(payout);
+            handComponent.setPayout(payout);
+            playerProfileComponent.setTotalWin(data.sum);
         });
     }
 
