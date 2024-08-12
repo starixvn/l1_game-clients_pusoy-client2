@@ -33,7 +33,7 @@
         "_value": true
       },
       "particle": {
-        "_value": false
+        "_value": true
       },
       "physics": {
         "_value": false,
@@ -132,6 +132,7 @@
       "base",
       "gfx-webgl",
       "intersection-2d",
+      "particle",
       "particle-2d",
       "physics-2d-builtin",
       "profiler",
