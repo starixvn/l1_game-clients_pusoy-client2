@@ -1,6 +1,5 @@
-import { _decorator, Component, Node, sp, Vec3 } from "cc";
+import { _decorator, Component, Node, Vec3 } from "cc";
 import { Rocket } from "./rocket";
-import { Quake } from "./quake";
 const { ccclass, property } = _decorator;
 
 const ROTATE_SOURCE = {
@@ -38,29 +37,20 @@ export class Pusoy extends Component {
     @property(Node)
     rocket: Node;
 
-    @property(Node)
-    exlosion: Node;
+    private _onDestroyHandlers: Function[] = [];
 
-    @property([Node])
-    earthquakes: Node[] = [];
-
-    onLoad(): void {
-        this.exlosion.active = false;
+    addDestroyHandler(handler: Function) {
+        this._onDestroyHandlers.push(handler);
     }
 
-    afterFly(target: Node) {
-        this.exlosion.active = true;
-        this.exlosion.getComponent(sp.Skeleton).setAnimation(0, "active", false);
-        this.earthquakes.forEach((earthquake) => {
-            earthquake.getComponent(Quake).play();
-        });
-        target.destroy();
-        this.scheduleOnce(() => {
+    afterFly(_: Node) {
+        this._onDestroyHandlers.forEach((handler) => {
+            handler();
             this.node.destroy();
-        }, 0.8);
+        });
     }
 
-    playAnimation(source: Node, sourceSlot: string, target: Node, targetSlot: string, earthquake: Node[]) {
+    playAnimation(source: Node, sourceSlot: string, target: Node, targetSlot: string) {
         const randomRotation = Math.floor(Math.random() * 50) * 10 + 360;
         const rotationSource = ROTATE_SOURCE[sourceSlot];
         const rotationTarget = ROTATE_TARGET[targetSlot];
@@ -70,7 +60,5 @@ export class Pusoy extends Component {
         );
         const rotationVec = new Vec3(rotation.x, rotation.y, rotation.y != 0 ? randomRotation : 0);
         this.rocket.getComponent(Rocket).fly(source.worldPosition, target.worldPosition, rotationVec);
-        this.exlosion.worldPosition = target.worldPosition;
-        this.earthquakes = earthquake;
     }
 }

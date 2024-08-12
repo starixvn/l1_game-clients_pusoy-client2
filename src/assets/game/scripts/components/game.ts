@@ -1,7 +1,7 @@
 import type { GamePusoy } from "@sg/game-client-base";
 
 import gc from "@sg/game-client-base";
-import { Label, Prefab, _decorator, instantiate, Node } from "cc";
+import { Label, Prefab, _decorator, instantiate, Node, sp, v3 } from "cc";
 import GameComponent from "db://shared-components/game/scripts/components/game-component";
 import { startGame } from "db://shared-components/shared/scripts/startup";
 import Observer from "observer";
@@ -13,6 +13,8 @@ import { CardConverter } from "./card-converter";
 import { Hand } from "./hand";
 import { AnimationStage } from "@sg/game-client-base/dist/game-pusoy/settlements";
 import { Pusoy } from "./pusoy";
+import { AutoDestroySpine } from "./auto-destroy-spine";
+import { Quake } from "./quake";
 
 startGame(settings.name, containerOptions, siteConfigs);
 
@@ -31,13 +33,27 @@ export default class Game extends GameComponent {
     @property(Prefab)
     pusoy: Prefab = null;
 
+    @property(Prefab)
+    pusoyExplosion: Prefab = null;
+
+    @property(Prefab)
+    pusoyEmoji: Prefab = null;
+
     @property([Node])
     earthquakes: Node[] = [];
 
     @property(Prefab)
     crack: Prefab = null;
 
-    private _pusoyPairs: { source: Node; soucreSlot: string; target: Node; targetSlot: string }[] = [];
+    @property(Prefab)
+    superPusoy: Prefab = null;
+
+    private _pusoyPairs: { source: Node; sourceSlot: string; target: Node; targetSlot: string }[] = [];
+
+    private _superPusoy: { source: Node; sourceSlot: string } = {
+        source: null,
+        sourceSlot: "",
+    };
 
     private _crackNode: Node[] = [];
 
@@ -70,21 +86,24 @@ export default class Game extends GameComponent {
     async updateAnimationCrack(showAnimation: boolean) {
         if (showAnimation) {
             console.log("show animation crack", showAnimation, new Date().getSeconds());
-            const crack = instantiate(this.crack);
             await Promise.all(
                 this._crackNode.map(async (node) => {
+                    const crack = instantiate(this.crack);
                     node.addChild(crack);
                     return new Promise((resolve) => {
-                        this.scheduleOnce(() => {
-                            node.removeChild(crack);
-                            resolve(null);
-                        }, 0.8);
+                        const autoDestroySpine = crack.getComponent(AutoDestroySpine);
+                        autoDestroySpine.node.position = v3(0, 20);
+                        autoDestroySpine.addDestroyHandler({
+                            onDestroy: () => {
+                                resolve(null);
+                            },
+                        });
+                        autoDestroySpine.play();
                     });
                 })
             );
 
             this.finishSettleAnimation(ANIMATION_STAGES.crack as AnimationStage);
-
             this._crackNode = [];
         }
     }
@@ -99,18 +118,65 @@ export default class Game extends GameComponent {
     }
 
     @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.mini])
-    updateAnimationMiniPusoy(showAnimation: boolean) {
+    async updateAnimationMiniPusoy(showAnimation: boolean) {
         if (showAnimation) {
             console.log("show animation mini pusoy", showAnimation);
+            const pusoyTargets: { [key: string]: Node } = {};
+            await Promise.all(
+                this._pusoyPairs.map(async (pair) => {
+                    pusoyTargets[pair.targetSlot] = pair.target;
+                    const pusoy = instantiate(this.pusoy);
+                    this.node.addChild(pusoy);
+                    const pusoyComponent = pusoy.getComponent(Pusoy);
+                    return new Promise((resolve) => {
+                        pusoyComponent.addDestroyHandler(() => {
+                            resolve(null);
+                        });
+                        pusoyComponent.playAnimation(pair.source, pair.sourceSlot, pair.target, pair.targetSlot);
+                    });
+                })
+            );
 
-            for (const pair of this._pusoyPairs) {
-                const pusoy = instantiate(this.pusoy);
-                this.node.addChild(pusoy);
-                pusoy.getComponent(Pusoy).playAnimation(pair.source, pair.soucreSlot, pair.target, pair.targetSlot, this.earthquakes);
-            }
+            await Promise.all(
+                Object.values(pusoyTargets).map(async (target) => {
+                    const pusoyExplosion = instantiate(this.pusoyExplosion);
+                    target.addChild(pusoyExplosion);
+                    return new Promise((resolve) => {
+                        const autoDestroySpine = pusoyExplosion.getComponent(AutoDestroySpine);
+                        autoDestroySpine.addDestroyHandler({
+                            onStart: () => {
+                                this.earthquakes.forEach((earthquake) => {
+                                    earthquake.getComponent(Quake).play();
+                                });
+                            },
+                            onDestroy: () => {
+                                resolve(null);
+                            },
+                        });
+                        autoDestroySpine.play();
+                    });
+                })
+            );
+
+            await Promise.all(
+                Object.values(pusoyTargets).map(async (target) => {
+                    const pusoyEmoji = instantiate(this.pusoyEmoji);
+                    target.addChild(pusoyEmoji);
+                    return new Promise((resolve) => {
+                        const autoDestroySpine = pusoyEmoji.getComponent(AutoDestroySpine);
+                        autoDestroySpine.addDestroyHandler({
+                            onDestroy: () => {
+                                resolve(null);
+                            },
+                        });
+                        autoDestroySpine.play();
+                    });
+                })
+            );
+
             this._pusoyPairs = [];
-
             this.finishSettleAnimation(ANIMATION_STAGES.mini as AnimationStage);
+            console.log("finish animation mini pusoy", showAnimation, new Date().getSeconds());
         }
     }
 
@@ -160,7 +226,7 @@ export default class Game extends GameComponent {
                 if (value > 0) {
                     this._pusoyPairs.push({
                         source: component.node,
-                        soucreSlot: `${data.slot}`,
+                        sourceSlot: `${data.slot}`,
                         target: handsComponent[Number(key)].node,
                         targetSlot: key,
                     });
@@ -169,6 +235,11 @@ export default class Game extends GameComponent {
 
             if (data.crack.isCrack) {
                 this._crackNode.push(component.node);
+            }
+
+            if (data.pusoy.full) {
+                this._superPusoy.source = component.node;
+                this._superPusoy.sourceSlot = `${data.slot}`;
             }
 
             component.setPayout(payout);
