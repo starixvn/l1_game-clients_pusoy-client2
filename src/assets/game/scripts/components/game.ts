@@ -81,6 +81,16 @@ export default class Game extends GameComponent {
 
             for (const hand of hands) {
                 hand.activeCards(true);
+                if (!hand.mine) {
+                    hand.showSwapCards(true);
+                }
+            }
+        } else {
+            const hands = this.getComponentsInChildren(Hand);
+            for (const hand of hands) {
+                if (!hand.mine) {
+                    hand.showSwapCards(false);
+                }
             }
         }
     }
@@ -262,7 +272,6 @@ export default class Game extends GameComponent {
                 this._superPusoy.source = handComponent.node;
                 this._superPusoy.sourceSlot = `${data.slot}`;
             }
-
             handComponent.setPayout(payout);
             playerProfileComponent.setTotalWin(data.sum);
         });

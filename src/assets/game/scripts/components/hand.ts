@@ -1,4 +1,4 @@
-import { _decorator, Component, instantiate, Node, Prefab, tween, v3 } from "cc";
+import { _decorator, Component, easing, instantiate, Node, Prefab, Tween, tween, v3, Vec3 } from "cc";
 import { HandCard } from "./hand-card";
 import { HandSegment } from "./hand-segment";
 
@@ -14,6 +14,17 @@ export class Hand extends Component {
 
     @property([HandSegment])
     protected segments: HandSegment[] = [];
+
+    private _swappingTween: {
+        node: Node;
+        tween: Tween<Node>;
+        target: {
+            worldPosition: Vec3;
+            eulerAngles: Vec3;
+        };
+    }[] = [];
+
+    private _shouldSwap = false;
 
     @property
     mine = false;
@@ -60,9 +71,96 @@ export class Hand extends Component {
         }
     }
 
+    showSwapCards(showSwapCards: boolean) {
+        this._shouldSwap = showSwapCards;
+
+        if (showSwapCards) {
+            this.schedule(() => {
+                const random = Math.random();
+                if (this._shouldSwap && random < 0.5 && this._swappingTween.length === 0) {
+                    this.randomSwapCards();
+                }
+            }, 2);
+        } else {
+            this.stopAllSwapping();
+        }
+    }
+
+    randomSwapCards() {
+        let pickCards: Node[] = [];
+        for (const segment of this.segments) {
+            const cards = segment.getComponentsInChildren(HandCard);
+            const nodes = cards.map((c) => c.node);
+            pickCards.push(...nodes);
+        }
+
+        const randomIndex = Math.floor(Math.random() * pickCards.length);
+        const card1 = pickCards[randomIndex];
+        pickCards = pickCards.filter((c) => c != card1);
+
+        const randomIndex2 = Math.floor(Math.random() * pickCards.length);
+        const card2 = pickCards[randomIndex2];
+
+        this.swap(card1, card2);
+    }
+
+    swap(from: Node, to: Node) {
+        const { parent, worldPosition, eulerAngles } = from;
+        const fromSiblingIndex = from.getSiblingIndex();
+        const { worldPosition: toPosition, eulerAngles: toEulerAngles } = to;
+
+        from.setParent(to.parent);
+        from.setWorldPosition(worldPosition);
+        from.setSiblingIndex(to.getSiblingIndex());
+
+        to.setParent(parent);
+        to.setWorldPosition(toPosition);
+        to.setSiblingIndex(fromSiblingIndex);
+        const targetFrom = { worldPosition: new Vec3(worldPosition), eulerAngles: new Vec3(eulerAngles) };
+        const targetTo = { worldPosition: new Vec3(toPosition), eulerAngles: new Vec3(toEulerAngles) };
+
+        const t1 = tween(to)
+            .to(0.5, targetFrom, { easing: easing.smooth })
+            .call(() => {
+                this._swappingTween = this._swappingTween.filter(({ node }) => node.uuid !== to.uuid);
+                console.log("swap 1", this._swappingTween.length);
+            });
+        const t2 = tween(from)
+            .to(0.5, targetTo, { easing: easing.smooth })
+            .call(() => {
+                this._swappingTween = this._swappingTween.filter(({ node }) => node.uuid !== from.uuid);
+                console.log("swap 2", this._swappingTween.length);
+            });
+        this._swappingTween.push(
+            {
+                node: to,
+                tween: t1,
+                target: targetFrom,
+            },
+            {
+                node: from,
+                tween: t2,
+                target: targetTo,
+            }
+        );
+        console.log("swap", this._swappingTween.length);
+        t1.start();
+        t2.start();
+    }
+
+    stopAllSwapping() {
+        console.log("stopAllSwapping");
+        this._swappingTween.forEach(({ node, tween, target }) => {
+            tween.stop();
+            console.log(node.worldPosition, target.worldPosition);
+            node.setWorldPosition(target.worldPosition);
+            node.setRotationFromEuler(target.eulerAngles);
+        });
+        this._swappingTween = [];
+    }
+
     activeCards(active: boolean, showCards = false) {
         const cards = this.segments.reduce((result, segment) => result.concat(segment.getComponentsInChildren(HandCard)), [] as HandCard[]);
-
         for (const card of cards) {
             card.node.active = active;
             card.back = !showCards;
