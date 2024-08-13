@@ -21,7 +21,7 @@
         "_value": false
       },
       "3d": {
-        "_value": false
+        "_value": true
       },
       "2d": {
         "_value": true
@@ -127,6 +127,7 @@
     },
     "includeModules": [
       "2d",
+      "3d",
       "animation",
       "audio",
       "base",

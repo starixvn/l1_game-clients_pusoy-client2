@@ -56,7 +56,9 @@ export default class Game extends GameComponent {
         sourceSlot: "",
     };
 
-    private _crackNode: Node[] = [];
+    private _looseSuperPusoy: { target: Node; targetSlot: string }[] = [];
+
+    private _crackHand: Hand[] = [];
 
     override namespace = settings.name;
     override containerOptions = containerOptions;
@@ -86,14 +88,13 @@ export default class Game extends GameComponent {
     @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.crack])
     async updateAnimationCrack(showAnimation: boolean) {
         if (showAnimation) {
-            console.log("show animation crack", showAnimation, new Date().getSeconds());
             await Promise.all(
-                this._crackNode.map(async (node) => {
+                this._crackHand.map(async (hand) => {
                     const crack = instantiate(this.crack);
-                    node.addChild(crack);
+                    hand.node.addChild(crack);
                     return new Promise((resolve) => {
                         const autoDestroySpine = crack.getComponent(AutoDestroySpine);
-                        autoDestroySpine.node.position = v3(0, 20);
+                        autoDestroySpine.node.position = hand.mine ? v3(0, 25) : v3(0, 0);
                         autoDestroySpine.addDestroyHandler({
                             onDestroy: () => {
                                 resolve(null);
@@ -105,7 +106,7 @@ export default class Game extends GameComponent {
             );
 
             this.finishSettleAnimation(ANIMATION_STAGES.crack as AnimationStage);
-            this._crackNode = [];
+            this._crackHand = [];
         }
     }
 
@@ -121,71 +122,82 @@ export default class Game extends GameComponent {
     @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.mini])
     async updateAnimationMiniPusoy(showAnimation: boolean) {
         if (showAnimation) {
-            console.log("show animation mini pusoy", showAnimation);
-            const pusoyTargets: { [key: string]: Node } = {};
-            await Promise.all(
-                this._pusoyPairs.map(async (pair) => {
-                    pusoyTargets[pair.targetSlot] = pair.target;
-                    const pusoy = instantiate(this.pusoy);
-                    this.node.addChild(pusoy);
-                    const pusoyComponent = pusoy.getComponent(Pusoy);
-                    return new Promise((resolve) => {
-                        pusoyComponent.addDestroyHandler(() => {
-                            resolve(null);
-                        });
-                        pusoyComponent.playAnimation(pair.source, pair.sourceSlot, pair.target, pair.targetSlot);
-                    });
-                })
-            );
-
-            await Promise.all(
-                Object.values(pusoyTargets).map(async (target) => {
-                    const pusoyExplosion = instantiate(this.pusoyExplosion);
-                    target.addChild(pusoyExplosion);
-                    return new Promise((resolve) => {
-                        const autoDestroySpine = pusoyExplosion.getComponent(AutoDestroySpine);
-                        autoDestroySpine.addDestroyHandler({
-                            onStart: () => {
-                                this.earthquakes.forEach((earthquake) => {
-                                    earthquake.getComponent(Quake).play();
-                                });
-                            },
-                            onDestroy: () => {
-                                resolve(null);
-                            },
-                        });
-                        autoDestroySpine.play();
-                    });
-                })
-            );
-
-            await Promise.all(
-                Object.values(pusoyTargets).map(async (target) => {
-                    const pusoyEmoji = instantiate(this.pusoyEmoji);
-                    target.addChild(pusoyEmoji);
-                    return new Promise((resolve) => {
-                        const autoDestroySpine = pusoyEmoji.getComponent(AutoDestroySpine);
-                        autoDestroySpine.addDestroyHandler({
-                            onDestroy: () => {
-                                resolve(null);
-                            },
-                        });
-                        autoDestroySpine.play();
-                    });
-                })
-            );
-
+            await this.pusoyAnimation(this._pusoyPairs);
             this._pusoyPairs = [];
             this.finishSettleAnimation(ANIMATION_STAGES.mini as AnimationStage);
-            console.log("finish animation mini pusoy", showAnimation, new Date().getSeconds());
         }
     }
 
-    @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.fullPusoy])
-    updateAnimationFullPusoy(showAnimation: boolean) {
-        if (showAnimation) {
-            console.log("show animation full pusoy", showAnimation);
+    private async pusoyAnimation(pusoyPairs: { source: Node; sourceSlot: string; target: Node; targetSlot: string }[]) {
+        const pusoyTargets: { [key: string]: Node } = {};
+        await Promise.all(
+            pusoyPairs.map(async (pair) => {
+                pusoyTargets[pair.targetSlot] = pair.target;
+                const pusoy = instantiate(this.pusoy);
+                this.node.addChild(pusoy);
+                const pusoyComponent = pusoy.getComponent(Pusoy);
+                return new Promise((resolve) => {
+                    pusoyComponent.addDestroyHandler(() => {
+                        resolve(null);
+                    });
+                    pusoyComponent.playAnimation(pair.source, pair.sourceSlot, pair.target, pair.targetSlot);
+                });
+            })
+        );
 
+        await Promise.all(
+            Object.values(pusoyTargets).map(async (target) => {
+                const pusoyExplosion = instantiate(this.pusoyExplosion);
+                target.addChild(pusoyExplosion);
+                return new Promise((resolve) => {
+                    const autoDestroySpine = pusoyExplosion.getComponent(AutoDestroySpine);
+                    autoDestroySpine.addDestroyHandler({
+                        onStart: () => {
+                            this.earthquakes.forEach((earthquake) => {
+                                earthquake.getComponent(Quake).play();
+                            });
+                        },
+                        onDestroy: () => {
+                            resolve(null);
+                        },
+                    });
+                    autoDestroySpine.play();
+                });
+            })
+        );
+
+        await Promise.all(
+            Object.values(pusoyTargets).map(async (target) => {
+                const pusoyEmoji = instantiate(this.pusoyEmoji);
+                target.addChild(pusoyEmoji);
+                return new Promise((resolve) => {
+                    const autoDestroySpine = pusoyEmoji.getComponent(AutoDestroySpine);
+                    autoDestroySpine.addDestroyHandler({
+                        onDestroy: () => {
+                            resolve(null);
+                        },
+                    });
+                    autoDestroySpine.play();
+                });
+            })
+        );
+    }
+
+    @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.fullPusoy])
+    async updateAnimationFullPusoy(showAnimation: boolean) {
+        if (showAnimation) {
+            const pusoyPairs = this._looseSuperPusoy.map((loosePusoy) => ({
+                source: this._superPusoy.source,
+                sourceSlot: this._superPusoy.sourceSlot,
+                target: loosePusoy.target,
+                targetSlot: loosePusoy.targetSlot,
+            }));
+            await this.pusoyAnimation(pusoyPairs);
+            this._looseSuperPusoy = [];
+            this._superPusoy = {
+                source: null,
+                sourceSlot: "",
+            };
             this.finishSettleAnimation(ANIMATION_STAGES.fullPusoy as AnimationStage);
         }
     }
@@ -234,14 +246,19 @@ export default class Game extends GameComponent {
                         target: handComponents[Number(key)].node,
                         targetSlot: key,
                     });
+                } else if (value == 0) {
+                    this._looseSuperPusoy.push({
+                        target: handComponent.node,
+                        targetSlot: `${data.slot}`,
+                    });
                 }
             });
 
             if (data.crack.isCrack) {
-                this._crackNode.push(handComponent.node);
+                this._crackHand.push(handComponent);
             }
 
-            if (data.pusoy.full) {
+            if (data.pusoy.full > 0) {
                 this._superPusoy.source = handComponent.node;
                 this._superPusoy.sourceSlot = `${data.slot}`;
             }
