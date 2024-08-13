@@ -1,4 +1,4 @@
-import { _decorator, Component, Enum, Node, sp, Sprite, SpriteAtlas } from "cc";
+import { _decorator, Component, Enum, Node, Size, sp, Sprite, SpriteAtlas, UITransform } from "cc";
 import { DragCardEvent } from "../custom-event";
 const { ccclass, property } = _decorator;
 
@@ -17,8 +17,20 @@ const ANIMATION = {
 
 const CardStateMap = {
     [CardState.Normal]: "",
-    [CardState.Selected]: "changecard-bg-blue",
-    [CardState.Highlight]: "changecard-bg-yellow",
+    [CardState.Selected]: {
+        name: "changecard-bg-blue",
+        transform: {
+            x: 130,
+            y: 173,
+        },
+    },
+    [CardState.Highlight]: {
+        name: "changecard-bg-yellow",
+        transform: {
+            x: 122,
+            y: 166,
+        },
+    },
 };
 
 @ccclass("CardFrame")
@@ -47,8 +59,10 @@ export class CardFrame extends Component {
             this.frame.active = false;
         } else {
             this.frame.active = true;
-            const sprite = this.atlas.getSpriteFrame(CardStateMap[value]);
+            const info = CardStateMap[value];
+            const sprite = this.atlas.getSpriteFrame(CardStateMap[value].name);
             this.frame.getComponent(Sprite).spriteFrame = sprite;
+            this.frame.getComponent(UITransform).setContentSize(new Size(info.transform.x, info.transform.y));
         }
     }
 

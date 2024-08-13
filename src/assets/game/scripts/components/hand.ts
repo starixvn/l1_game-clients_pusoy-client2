@@ -148,7 +148,6 @@ export class Hand extends Component {
     stopAllSwapping() {
         this._swappingTween.forEach(({ node, tween, target }) => {
             tween.stop();
-            console.log(node.worldPosition, target.worldPosition);
             node.setWorldPosition(target.worldPosition);
             node.setRotationFromEuler(target.eulerAngles);
         });
