@@ -123,13 +123,11 @@ export class Hand extends Component {
             .to(0.5, targetFrom, { easing: easing.smooth })
             .call(() => {
                 this._swappingTween = this._swappingTween.filter(({ node }) => node.uuid !== to.uuid);
-                console.log("swap 1", this._swappingTween.length);
             });
         const t2 = tween(from)
             .to(0.5, targetTo, { easing: easing.smooth })
             .call(() => {
                 this._swappingTween = this._swappingTween.filter(({ node }) => node.uuid !== from.uuid);
-                console.log("swap 2", this._swappingTween.length);
             });
         this._swappingTween.push(
             {
@@ -143,13 +141,11 @@ export class Hand extends Component {
                 target: targetTo,
             }
         );
-        console.log("swap", this._swappingTween.length);
         t1.start();
         t2.start();
     }
 
     stopAllSwapping() {
-        console.log("stopAllSwapping");
         this._swappingTween.forEach(({ node, tween, target }) => {
             tween.stop();
             console.log(node.worldPosition, target.worldPosition);
