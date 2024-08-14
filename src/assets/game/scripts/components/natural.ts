@@ -1,6 +1,7 @@
-import { _decorator, Component, Node } from "cc";
+import { _decorator, Component, Node, tween, v3 } from "cc";
 import { LocalizedLabel } from "db://i18n/LocalizedLabel";
 import { Card } from "./card";
+import { Hand } from "./hand";
 const { ccclass, property } = _decorator;
 
 @ccclass
@@ -10,6 +11,9 @@ export class Natural extends Component {
 
     @property(Node)
     protected cardsNode: Node = null;
+
+    @property([Node])
+    protected withoutCardsNode: Node[] = [];
 
     set type(value: string) {
         this.label!.key = `Pusoy.${value}`;
@@ -26,5 +30,64 @@ export class Natural extends Component {
         }
     }
 
-    async playAnimation() {}
+    protected start(): void {
+        this.node.active = false;
+    }
+
+    async playAnimation(hand: Hand) {
+        if (!hand.natural) {
+            return;
+        }
+
+        this.withoutCardsNode.forEach((node) => (node.active = true));
+        this.node.active = true;
+
+        const duration = 2;
+        const cardFlyingDuration = 0.05;
+        const cards = hand.cards;
+
+        const originalWorldPosition = cards.map((card) => card.node.getWorldPosition());
+        const originalPosition = cards.map((card) => card.node.getPosition());
+        const originalRotation = cards.map((card) => card.node.getRotation());
+        const originalParent = cards.map((card) => card.node.parent);
+
+        const naturalPosition = this.cardsNode.children.map((node) => node.getWorldPosition());
+
+        this.type = hand.natural.replace(/([a-z])([A-Z])/g, "$1_$2").toLowerCase();
+
+        const animation = tween(this.node)
+            .call(() => {
+                for (const [index, card] of cards.entries()) {
+                    card.back = false;
+
+                    card.node.setParent(this.cardsNode.children[index]);
+                    card.node.setWorldPosition(naturalPosition[index]);
+                    card.node.setRotationFromEuler(v3(0, 0, 0));
+                }
+            })
+            .delay(duration / 2)
+            .call(async () => {
+                this.withoutCardsNode.forEach((node) => (node.active = false));
+
+                for (const [index, card] of cards.entries()) {
+                    await new Promise((resolve) => {
+                        tween(card.node)
+                            .to(cardFlyingDuration, {
+                                worldPosition: originalWorldPosition[index],
+                                rotation: originalRotation[index],
+                                scale: v3(1, 1, 1),
+                            })
+                            .call(() => {
+                                card.node.parent = originalParent[index];
+                                card.node.setPosition(originalPosition[index]);
+                                resolve(true);
+                            })
+                            .start();
+                    });
+                }
+            })
+            .delay(duration / 2);
+
+        return new Promise((resolve) => animation.call(resolve).start());
+    }
 }

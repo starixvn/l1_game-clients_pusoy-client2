@@ -38,6 +38,23 @@ export class Hand extends Component {
     @property
     mine = false;
 
+    natural = "";
+
+    crack = false;
+
+    get cards(): HandCard[] {
+        const result = [];
+        const segments = [...this.segments].reverse();
+
+        for (const segment of segments) {
+            const components = segment.getComponentsInChildren(HandCard);
+
+            result.push(...components);
+        }
+
+        return result;
+    }
+
     protected onLoad(): void {
         this.loadComponents();
 
@@ -195,6 +212,12 @@ export class Hand extends Component {
 
             for (const card of cards) {
                 card.back && card.flip();
+
+                card.disable = !!this.natural || this.crack;
+            }
+
+            if (this.natural || this.crack) {
+                continue;
             }
 
             await new Promise((resolve) => segment.playSettleAnimation(resolve));

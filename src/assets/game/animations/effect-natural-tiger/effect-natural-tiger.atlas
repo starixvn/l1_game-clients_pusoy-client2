@@ -1,0 +1,55 @@
+
+effect-natural-tiger.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+screen_BW_arm_L
+  rotate: false
+  xy: 2, 2
+  size: 158, 134
+  orig: 158, 134
+  offset: 0, 0
+  index: -1
+screen_BW_arm_R
+  rotate: false
+  xy: 327, 209
+  size: 235, 300
+  orig: 235, 300
+  offset: 0, 0
+  index: -1
+screen_BW_arm_R_finger
+  rotate: false
+  xy: 288, 95
+  size: 32, 41
+  orig: 32, 41
+  offset: 0, 0
+  index: -1
+screen_BW_body
+  rotate: false
+  xy: 2, 138
+  size: 323, 371
+  orig: 323, 371
+  offset: 0, 0
+  index: -1
+screen_BW_glasses
+  rotate: true
+  xy: 225, 10
+  size: 126, 61
+  orig: 126, 61
+  offset: 0, 0
+  index: -1
+screen_BW_mouth
+  rotate: true
+  xy: 162, 8
+  size: 128, 61
+  orig: 128, 61
+  offset: 0, 0
+  index: -1
+screen_BW_tail
+  rotate: false
+  xy: 327, 9
+  size: 139, 198
+  orig: 139, 198
+  offset: 0, 0
+  index: -1

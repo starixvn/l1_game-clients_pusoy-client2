@@ -1,5 +1,9 @@
-import gc from "@sg/game-client-base";
 import type { GamePusoy } from "@sg/game-client-base";
+
+import "./../../../resources/i18n";
+
+import gc from "@sg/game-client-base";
+import { AnimationStage } from "@sg/game-client-base/dist/game-pusoy/settlements";
 import { _decorator, instantiate, Label, Node, Prefab, v3 } from "cc";
 import GameComponent from "db://shared-components/game/scripts/components/game-component";
 import { startGame } from "db://shared-components/shared/scripts/startup";
@@ -7,14 +11,13 @@ import Observer from "observer";
 import { siteConfigs } from "../../../scripts/site-configs";
 import { containerOptions, settings } from "../game-settings";
 import { sortSegment } from "../helpers/card-helper";
-import "./../../../resources/i18n";
 import { AutoDestroySpine } from "./auto-destroy-spine";
 import { CardConverter } from "./card-converter";
 import { Hand } from "./hand";
+import { Natural } from "./natural";
 import PlayerProfile from "./player-profile";
 import { Pusoy } from "./pusoy";
 import { Quake } from "./quake";
-import { AnimationStage } from "@sg/game-client-base/dist/game-pusoy/settlements";
 import { ReadyLabel } from "./ready-label";
 
 startGame(settings.name, containerOptions, siteConfigs);
@@ -116,9 +119,14 @@ export default class Game extends GameComponent {
     }
 
     @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.natural])
-    updateAnimationNatural(showAnimation: boolean) {
+    async updateAnimationNatural(showAnimation: boolean) {
         if (showAnimation) {
-            console.log("show animation natural", showAnimation);
+            const hands = this.getComponentsInChildren(Hand);
+            const natural = this.getComponentInChildren(Natural);
+
+            for (const hand of hands) {
+                await natural.playAnimation(hand);
+            }
 
             this.finishSettleAnimation(ANIMATION_STAGES.natural as AnimationStage);
         }
@@ -210,13 +218,10 @@ export default class Game extends GameComponent {
     @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.normal])
     async inSettlement(shouldShowAnimation: boolean) {
         if (shouldShowAnimation) {
-            console.log("show animation normal: ", shouldShowAnimation);
-
             const handsComponent = this.getComponentsInChildren(Hand);
-            const handsComponentNeedShow = handsComponent.filter((component) => this._crackHand.indexOf(component) < 0);
             this._crackHand = [];
 
-            await Promise.all(handsComponentNeedShow.map((component) => component.playSettleAnimation()));
+            await Promise.all(handsComponent.map((component) => component.playSettleAnimation()));
             this.finishSettleAnimation(ANIMATION_STAGES.normal as AnimationStage);
         }
     }
@@ -269,6 +274,9 @@ export default class Game extends GameComponent {
                 this._superPusoy.source = handComponent.node;
                 this._superPusoy.sourceSlot = `${data.slot}`;
             }
+
+            handComponent.natural = data.natural.name;
+            handComponent.crack = data.crack.isCrack;
             handComponent.setPayout(payout);
             playerProfileComponent.setTotalWin(data.sum);
         });
