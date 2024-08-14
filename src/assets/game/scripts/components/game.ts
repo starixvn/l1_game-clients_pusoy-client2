@@ -60,6 +60,7 @@ export default class Game extends GameComponent {
     private _looseSuperPusoy: { target: Node; targetSlot: string }[] = [];
 
     private _crackHand: Hand[] = [];
+    private _crackNode: Node[] = [];
 
     override namespace = settings.name;
     override containerOptions = containerOptions;
@@ -96,20 +97,19 @@ export default class Game extends GameComponent {
                 this._crackHand.map(async (hand) => {
                     const crack = instantiate(this.crack);
                     hand.node.addChild(crack);
+                    this._crackNode.push(crack);
                     return new Promise((resolve) => {
                         const autoDestroySpine = crack.getComponent(AutoDestroySpine);
-                        autoDestroySpine.node.position = hand.mine ? v3(0, 25) : v3(0, 0);
+                        autoDestroySpine.node.position = hand.mine ? v3(0, 26) : v3(0, 0);
                         autoDestroySpine.addDestroyHandler({
                             onDestroy: () => {
                                 resolve(null);
                             },
                         });
-                        autoDestroySpine.play();
+                        autoDestroySpine.play(false);
                     });
                 })
             );
-
-            this._crackHand = [];
 
             this.finishSettleAnimation(ANIMATION_STAGES.crack as AnimationStage);
         }
@@ -213,10 +213,10 @@ export default class Game extends GameComponent {
             console.log("show animation normal: ", shouldShowAnimation);
 
             const handsComponent = this.getComponentsInChildren(Hand);
-            //const handsComponentNeedShow = handsComponent.filter((component) => this._crackHand.indexOf(component) < 0);
-            //this._crackHand = [];
+            const handsComponentNeedShow = handsComponent.filter((component) => this._crackHand.indexOf(component) < 0);
+            this._crackHand = [];
 
-            await Promise.all(handsComponent.map((component) => component.playSettleAnimation()));
+            await Promise.all(handsComponentNeedShow.map((component) => component.playSettleAnimation()));
             this.finishSettleAnimation(ANIMATION_STAGES.normal as AnimationStage);
         }
     }
@@ -367,5 +367,13 @@ export default class Game extends GameComponent {
                 mainPlayer.node.parent.getComponent(ReadyLabel).destroyInstance();
             }
         }
+    }
+
+    @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.chipFly])
+    handleAfterSettle() {
+        this._crackNode.forEach((node) => {
+            node.destroy();
+        });
+        this._crackNode = [];
     }
 }

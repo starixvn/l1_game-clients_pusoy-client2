@@ -9,7 +9,7 @@ export class AutoDestroySpine extends Component {
         this._autoDestroySpineHandler.push(handler);
     }
 
-    play(animation: string = "active") {
+    play(shouldDestroy = true, animation: string = "active") {
         const skeleton = this.node.getComponent(sp.Skeleton);
         skeleton.setAnimation(0, animation, false);
         this._autoDestroySpineHandler.forEach((handler) => {
@@ -30,7 +30,9 @@ export class AutoDestroySpine extends Component {
                     handler.onDestroy({});
                 }
             });
-            this.node.destroy();
+            if (shouldDestroy) {
+                this.node.destroy();
+            }
         });
     }
 }
