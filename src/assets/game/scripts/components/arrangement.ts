@@ -1,6 +1,6 @@
 import pusoy from "@rd/pusoy-rules";
 import gc from "@sg/game-client-base";
-import { _decorator, Color, easing, EventHandler, Node, Prefab, Sprite, tween, Vec3 } from "cc";
+import { _decorator, Color, easing, EventHandler, isValid, Node, Prefab, Sprite, tween, Vec3 } from "cc";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import Observer from "observer";
 import { isChangeSegment, sortSegment } from "../helpers/card-helper";
@@ -74,12 +74,16 @@ export class Arrangement extends ObserverComponent {
         this._hand = hand;
         const handData = cardConverter.convertHand(hand);
         this.renderHandHandler.forEach((handler) => {
-            if (handData.front.length === 3 && handData.middle.length === 5 && handData.back.length === 5) {
+            if (this.isValidHand(hand)) {
                 handler.emit([handData]);
             }
         });
 
         this.loadHand(handData);
+    }
+
+    isValidHand<T>(hand: pusoy.Hand<T[]>) {
+        return hand.front.length === 3 && hand.middle.length === 5 && hand.back.length === 5;
     }
 
     loadHand(hand: {
@@ -88,18 +92,19 @@ export class Arrangement extends ObserverComponent {
         back: { value: number; rank: number; suit: number }[];
     }) {
         const { front, middle, back } = hand;
-        if (front.length !== 3 || middle.length !== 5 || back.length !== 5) {
+        if (!this.isValidHand(hand)) {
             return;
         }
-        this.fillCards(this.front, hand.front);
-        this.fillCards(this.middle, hand.middle);
-        this.fillCards(this.back, hand.back);
+
+        this.fillCards(this.front, front);
+        this.fillCards(this.middle, middle);
+        this.fillCards(this.back, back);
 
         this.renderType(
             {
-                front: hand.front.map((c) => c.value),
-                middle: hand.middle.map((c) => c.value),
-                back: hand.back.map((c) => c.value),
+                front: front.map((c) => c.value),
+                middle: middle.map((c) => c.value),
+                back: back.map((c) => c.value),
             },
             false
         );
@@ -147,6 +152,20 @@ export class Arrangement extends ObserverComponent {
             },
             isChangeSegment: changeSegment,
         };
+    }
+
+    private emitChangeCards() {
+        if (!this.isValidHand(this._hand)) {
+            return;
+        }
+
+        const cardConverter = this.getComponent(CardConverter);
+        const hand = {
+            front: sortSegment(this._hand.front),
+            middle: sortSegment(this._hand.middle),
+            back: sortSegment(this._hand.back),
+        };
+        this.submitHandler.forEach((handler) => handler.emit([cardConverter.convertHand(hand)]));
     }
 
     private renderType(newHand: { front: number[]; middle: number[]; back: number[] }, isPlayAnimation = false) {
@@ -242,19 +261,16 @@ export class Arrangement extends ObserverComponent {
     @render(gc.GamePusoy.Arrangement.ArrangementStore, (store) => store.isShowArrangement)
     setVisibility(isShowArrangement: boolean) {
         this.node.active = isShowArrangement;
+        if (!isShowArrangement) {
+            this.emitChangeCards();
+        }
     }
 
     @handle(gc.GamePusoy.Arrangement.ArrangementHandler, (handler, hand: pusoy.Hand<number[]>) =>
         handler.sendArrangementToServer(hand, true)
     )
     submitHand() {
-        const cardConverter = this.getComponent(CardConverter);
-        const hand = {
-            front: sortSegment(this._hand.front),
-            middle: sortSegment(this._hand.middle),
-            back: sortSegment(this._hand.back),
-        };
-        this.submitHandler.forEach((handler) => handler.emit([cardConverter.convertHand(hand)]));
+        this.emitChangeCards();
         return this._hand;
     }
 }

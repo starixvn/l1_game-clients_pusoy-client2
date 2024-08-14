@@ -1,7 +1,6 @@
-import type { GamePusoy } from "@sg/game-client-base";
-
 import gc from "@sg/game-client-base";
-import { Label, Prefab, _decorator, instantiate, Node, sp, v3 } from "cc";
+import type { GamePusoy } from "@sg/game-client-base";
+import { _decorator, instantiate, Label, Node, Prefab, v3 } from "cc";
 import GameComponent from "db://shared-components/game/scripts/components/game-component";
 import { startGame } from "db://shared-components/shared/scripts/startup";
 import Observer from "observer";
@@ -9,19 +8,20 @@ import { siteConfigs } from "../../../scripts/site-configs";
 import { containerOptions, settings } from "../game-settings";
 import { sortSegment } from "../helpers/card-helper";
 import "./../../../resources/i18n";
+import { AutoDestroySpine } from "./auto-destroy-spine";
 import { CardConverter } from "./card-converter";
 import { Hand } from "./hand";
-import { AnimationStage } from "@sg/game-client-base/dist/game-pusoy/settlements";
-import { Pusoy } from "./pusoy";
-import { AutoDestroySpine } from "./auto-destroy-spine";
-import { Quake } from "./quake";
 import PlayerProfile from "./player-profile";
+import { Pusoy } from "./pusoy";
+import { Quake } from "./quake";
+import { AnimationStage } from "@sg/game-client-base/dist/game-pusoy/settlements";
 
 startGame(settings.name, containerOptions, siteConfigs);
 
 const { ccclass, property } = _decorator;
 const { observer, render, handle } = Observer;
 const { ANIMATION_STAGES, SettlementHandlers } = gc.GamePusoy.Settlement;
+
 @ccclass
 @observer(settings.name)
 export default class Game extends GameComponent {
@@ -85,13 +85,6 @@ export default class Game extends GameComponent {
                     hand.showSwapCards(true);
                 }
             }
-        } else {
-            const hands = this.getComponentsInChildren(Hand);
-            for (const hand of hands) {
-                if (!hand.mine) {
-                    hand.showSwapCards(false);
-                }
-            }
         }
     }
 
@@ -115,8 +108,9 @@ export default class Game extends GameComponent {
                 })
             );
 
-            this.finishSettleAnimation(ANIMATION_STAGES.crack as AnimationStage);
             this._crackHand = [];
+
+            this.finishSettleAnimation(ANIMATION_STAGES.crack as AnimationStage);
         }
     }
 
@@ -218,6 +212,8 @@ export default class Game extends GameComponent {
             console.log("show animation normal: ", shouldShowAnimation);
 
             const handsComponent = this.getComponentsInChildren(Hand);
+            //const handsComponentNeedShow = handsComponent.filter((component) => this._crackHand.indexOf(component) < 0);
+            //this._crackHand = [];
 
             await Promise.all(handsComponent.map((component) => component.playSettleAnimation()));
             this.finishSettleAnimation(ANIMATION_STAGES.normal as AnimationStage);
@@ -316,9 +312,46 @@ export default class Game extends GameComponent {
     showHandMainPlayer(mainPlayerSubmitted: boolean) {
         if (mainPlayerSubmitted) {
             const hands = this.getComponentsInChildren(Hand);
+
             for (const hand of hands) {
                 if (hand.mine) {
                     hand.activeCards(true, true);
+                    hand.handleSubmittedHand();
+                }
+            }
+        }
+    }
+
+    @render(gc.GamePusoy.Rounds.RoundStore, (store) => store.submittedPlayers)
+    playerSubmitted(submittedPlayers: gc.GamePusoy.PusoyServiceMessages.SubmittedPlayer[]) {
+        if (submittedPlayers.length === 0) {
+            return;
+        }
+
+        const hands = this.getComponentsInChildren(Hand);
+        const submittedPlayersMap: Record<number, gc.GamePusoy.PusoyServiceMessages.SubmittedPlayer> = {};
+
+        for (const submittedPlayer of submittedPlayers) {
+            submittedPlayersMap[submittedPlayer.slot] = submittedPlayer;
+        }
+        for (const hand of hands) {
+            if (submittedPlayersMap[hand.getSlotIndex()]) {
+                hand.handleSubmittedHand();
+                hand.showSwapCards(false);
+            }
+        }
+    }
+
+    @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.settleAnimation)
+    handleBeforeSettle(animations: string[]) {
+        if (animations.length > 0) {
+            const hands = this.getComponentsInChildren(Hand);
+            for (const hand of hands) {
+                hand.handleBeforeSettle();
+                if (hand.mine) {
+                    hand.activeCards(true, true);
+                } else {
+                    hand.showSwapCards(false);
                 }
             }
         }
