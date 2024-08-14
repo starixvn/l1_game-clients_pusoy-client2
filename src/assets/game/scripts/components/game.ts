@@ -114,6 +114,8 @@ export default class Game extends GameComponent {
                 })
             );
 
+            this._crackHand = [];
+
             this.finishSettleAnimation(ANIMATION_STAGES.crack as AnimationStage);
         }
     }
@@ -219,7 +221,6 @@ export default class Game extends GameComponent {
     async inSettlement(shouldShowAnimation: boolean) {
         if (shouldShowAnimation) {
             const handsComponent = this.getComponentsInChildren(Hand);
-            this._crackHand = [];
 
             await Promise.all(handsComponent.map((component) => component.playSettleAnimation()));
             this.finishSettleAnimation(ANIMATION_STAGES.normal as AnimationStage);
