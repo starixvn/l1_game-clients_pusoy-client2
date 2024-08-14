@@ -11,6 +11,8 @@ const { RoundTimeStore } = gc.GamePusoy.Rounds;
 const changeColorTime = 10;
 @ccclass
 export default class BetTimer extends TwoDigitsTimer {
+    enableSound = false;
+
     @render(RoundTimeStore, (store) => store.remaining)
     setTime(time: number) {
         super.setTime(time);
@@ -30,7 +32,10 @@ export default class BetTimer extends TwoDigitsTimer {
     @render(RoundTimeStore, (store) => store.remaining)
     playCountDownSound(remainingTime: number) {
         if (remainingTime <= changeColorTime && remainingTime > 0) {
-            this.playClockSound();
+            if (!this.enableSound) {
+                this.playClockSound();
+                this.enableSound = true;
+            }
         }
     }
 
