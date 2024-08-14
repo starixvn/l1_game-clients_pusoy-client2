@@ -15,6 +15,7 @@ import PlayerProfile from "./player-profile";
 import { Pusoy } from "./pusoy";
 import { Quake } from "./quake";
 import { AnimationStage } from "@sg/game-client-base/dist/game-pusoy/settlements";
+import { ReadyLabel } from "./ready-label";
 
 startGame(settings.name, containerOptions, siteConfigs);
 
@@ -316,8 +317,13 @@ export default class Game extends GameComponent {
             for (const hand of hands) {
                 if (hand.mine) {
                     hand.activeCards(true, true);
-                    hand.handleSubmittedHand();
                 }
+            }
+
+            const playerProfiles = this.getComponentsInChildren(PlayerProfile);
+            const mainPlayer = playerProfiles.find((profile) => profile.slotIndex === 0);
+            if (mainPlayer) {
+                mainPlayer.node.parent.getComponent(ReadyLabel).init(v3(0, 30));
             }
         }
     }
@@ -336,7 +342,7 @@ export default class Game extends GameComponent {
         }
         for (const hand of hands) {
             if (submittedPlayersMap[hand.getSlotIndex()]) {
-                hand.handleSubmittedHand();
+                hand.node.getComponent(ReadyLabel).init();
                 hand.showSwapCards(false);
             }
         }
@@ -347,12 +353,18 @@ export default class Game extends GameComponent {
         if (animations.length > 0) {
             const hands = this.getComponentsInChildren(Hand);
             for (const hand of hands) {
-                hand.handleBeforeSettle();
+                hand.node.getComponent(ReadyLabel).destroyInstance();
                 if (hand.mine) {
                     hand.activeCards(true, true);
                 } else {
                     hand.showSwapCards(false);
                 }
+            }
+
+            const playerProfiles = this.getComponentsInChildren(PlayerProfile);
+            const mainPlayer = playerProfiles.find((profile) => profile.slotIndex === 0);
+            if (mainPlayer) {
+                mainPlayer.node.parent.getComponent(ReadyLabel).destroyInstance();
             }
         }
     }

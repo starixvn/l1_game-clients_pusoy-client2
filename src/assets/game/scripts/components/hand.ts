@@ -12,9 +12,6 @@ export class Hand extends Component {
     @property(Prefab)
     protected cardPrefab: Prefab = null;
 
-    @property(Prefab)
-    protected readyPrefab: Prefab = null;
-
     @property(CCInteger)
     protected slotIndex: number = -1;
 
@@ -80,21 +77,6 @@ export class Hand extends Component {
 
                 component.value(rank, suit);
             });
-        }
-    }
-
-    handleSubmittedHand() {
-        if (this.readyNode == null) {
-            const ready = instantiate(this.readyPrefab);
-            this.node.addChild(ready);
-            this.readyNode = ready;
-        }
-    }
-
-    handleBeforeSettle() {
-        if (this.readyNode !== null) {
-            this.readyNode.destroy();
-            this.readyNode = null;
         }
     }
 
