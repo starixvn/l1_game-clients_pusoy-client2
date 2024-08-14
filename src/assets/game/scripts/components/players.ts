@@ -84,6 +84,7 @@ export class players extends ObserverComponent {
         losers.forEach((loser) => {
             const coin = this.coins[`slot${loser.slot}`];
             this.animateCoinFly(coin, this.sumCoin);
+            this.playSoundSingleChip();
         });
 
         this.scheduleOnce(() => {
@@ -95,6 +96,7 @@ export class players extends ObserverComponent {
         winners.forEach((winner) => {
             const coin = this.coins[`slot${winner.slot}`];
             this.animateCoinFly(this.sumCoin, coin);
+            this.playSoundSingleChip();
         });
 
         this.scheduleOnce(() => {
@@ -186,5 +188,10 @@ export class players extends ObserverComponent {
     finishSettleAnimation(animation: AnimationStage) {
         console.log("finishSettleAnimation: ", animation);
         return animation;
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundSingleChip() {
+        return gc.Audios.AudioIds.SINGLE_CHIP;
     }
 }

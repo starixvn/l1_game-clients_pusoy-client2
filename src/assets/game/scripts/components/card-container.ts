@@ -1,11 +1,18 @@
 import { _decorator, Component, easing, EventHandler, instantiate, Node, Prefab, tween, Vec3 } from "cc";
+import gc from "@sg/game-client-base";
+import Observer from "observer";
 import { DragCardEvent } from "../custom-event";
 import { CardValue } from "./card-value";
 import { Draggable } from "./draggable";
+import { AudioIds } from "../constanst/audio-ids";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
+
 const { ccclass, property } = _decorator;
 
+const { handle } = Observer;
+
 @ccclass("CardContainer")
-export class CardContainer extends Component {
+export class CardContainer extends ObserverComponent {
     @property([EventHandler])
     changeArrangementHandlers: EventHandler[] = [];
 
@@ -45,6 +52,16 @@ export class CardContainer extends Component {
             handler.emit([]);
         });
     }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playDragCardStartSound() {
+        return AudioIds.ARRANGE_CARD_START;
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playDragCardEndSound() {
+        return AudioIds.ARRANGE_CARD_END;
+    }
 }
 
 const replaceCard = (
@@ -70,6 +87,7 @@ const replaceCard = (
                         draggable.enabled = false;
                     },
                     onComplete: () => {
+                        newContainerComponent.playDragCardEndSound();
                         const draggable = currentCard.getComponent(Draggable);
                         draggable.enabled = true;
                     },

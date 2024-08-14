@@ -19,6 +19,7 @@ import PlayerProfile from "./player-profile";
 import { Pusoy } from "./pusoy";
 import { Quake } from "./quake";
 import { ReadyLabel } from "./ready-label";
+import { AudioIds } from "../constanst/audio-ids";
 
 startGame(settings.name, containerOptions, siteConfigs);
 
@@ -72,6 +73,7 @@ export default class Game extends GameComponent {
     deals(shouldDeals: boolean) {
         if (shouldDeals) {
             const hands = this.getComponentsInChildren(Hand);
+            this.playSound(AudioIds.DEAL_CARDS);
 
             for (const hand of hands) {
                 hand.playDealsAnimation();
@@ -107,6 +109,11 @@ export default class Game extends GameComponent {
                         autoDestroySpine.addDestroyHandler({
                             onDestroy: () => {
                                 resolve(null);
+                            },
+                            onStart: () => {
+                                this.scheduleOnce(() => {
+                                    this.playSound(AudioIds.CRACK_EXPLOSION);
+                                }, 0.83);
                             },
                         });
                         autoDestroySpine.play(false);
@@ -170,6 +177,9 @@ export default class Game extends GameComponent {
                         onStart: () => {
                             this.earthquakes.forEach((earthquake) => {
                                 earthquake.getComponent(Quake).play();
+                            });
+                            this.scheduleOnce(() => {
+                                this.playSound(AudioIds.ROCKET_EXPLOSION);
                             });
                         },
                         onDestroy: () => {

@@ -1,6 +1,14 @@
-import { _decorator, Component, Enum, Node, Size, sp, Sprite, SpriteAtlas, UITransform } from "cc";
+import { _decorator, Enum, Node, Size, sp, Sprite, SpriteAtlas, UITransform } from "cc";
 import { DragCardEvent } from "../custom-event";
+import gc from "@sg/game-client-base";
+import Observer from "observer";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
+
+import { AudioIds } from "../constanst/audio-ids";
+
 const { ccclass, property } = _decorator;
+
+const { handle } = Observer;
 
 export enum CardState {
     Normal = 0,
@@ -34,7 +42,7 @@ const CardStateMap = {
 };
 
 @ccclass("CardFrame")
-export class CardFrame extends Component {
+export class CardFrame extends ObserverComponent {
     @property(Node)
     frame: Node = null;
 
@@ -80,6 +88,8 @@ export class CardFrame extends Component {
         }
         this.highlightFrame.active = true;
         this.highlighStar.active = true;
+
+        this.playArrangeComboSound();
 
         if (this.highlighStar.active) {
             const star = this.highlighStar.getComponent(sp.Skeleton);
@@ -128,4 +138,9 @@ export class CardFrame extends Component {
     }
 
     update(deltaTime: number) {}
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playArrangeComboSound() {
+        return AudioIds.ARRANGE_COMBO;
+    }
 }

@@ -1,11 +1,18 @@
-import { _decorator, Component, Node, tween, v3 } from "cc";
+import { _decorator, Node, tween, v3 } from "cc";
+import gc from "@sg/game-client-base";
+import Observer from "observer";
 import { LocalizedLabel } from "db://i18n/LocalizedLabel";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import { Card } from "./card";
 import { Hand } from "./hand";
+import { AudioIds } from "../constanst/audio-ids";
+
 const { ccclass, property } = _decorator;
 
+const { handle } = Observer;
+
 @ccclass
-export class Natural extends Component {
+export class Natural extends ObserverComponent {
     @property(LocalizedLabel)
     protected label: LocalizedLabel = null;
 
@@ -67,6 +74,7 @@ export class Natural extends Component {
             })
             .delay(duration / 2)
             .call(async () => {
+                this.playCongratsSound();
                 this.withoutCardsNode.forEach((node) => (node.active = false));
 
                 for (const [index, card] of cards.entries()) {
@@ -89,5 +97,10 @@ export class Natural extends Component {
             .delay(duration / 2);
 
         return new Promise((resolve) => animation.call(resolve).start());
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playCongratsSound() {
+        return AudioIds.NATURAL_CONGRATS;
     }
 }

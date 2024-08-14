@@ -1,12 +1,18 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Color, Component, Label, Node, sp, tween, v3, Vec3 } from "cc";
+import { _decorator, Color, Label, Node, sp, tween, v3, Vec3 } from "cc";
 import { LocalizedLabel } from "db://i18n/LocalizedLabel";
 import { GradientNode } from "db://shared-components/shared/common-components/custom-materials/components/gradient-node";
 import { AnimationUtils } from "db://shared-components/shared/utils";
 import { HandCard } from "./hand-card";
+import Observer from "observer";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
+import { AudioIds } from "../constanst/audio-ids";
 
 const { ccclass, property } = _decorator;
+
+const { handle } = Observer;
 const { FormatUtils } = gc;
+const { AudioHandler } = gc.Audios;
 
 const ANIMATION_STEPS = [
     {
@@ -64,7 +70,7 @@ type AnimationStep = {
 };
 
 @ccclass
-export class HandSegment extends Component {
+export class HandSegment extends ObserverComponent {
     private _win = false;
 
     @property(Node)
@@ -170,6 +176,7 @@ export class HandSegment extends Component {
         const payoutTween = this.createPayoutTween(this.payoutNode, steps);
 
         cards.forEach((card) => card.start());
+
         payoutTween.start();
         rankTween.call(done).start();
     }
@@ -218,8 +225,9 @@ export class HandSegment extends Component {
         const animation = tween(node).call(() => {
             node.active = true;
             const spine = node.getComponentInChildren(sp.Skeleton);
-
             AnimationUtils.playSpine(spine, this.win ? "win" : "lose");
+
+            this.playSegmentSettleSound();
         });
 
         for (const { duration, rank } of steps) {
@@ -247,5 +255,10 @@ export class HandSegment extends Component {
 
     private isValidProperties() {
         return !!this.cardsNode && !!this.rankNode && !!this.payoutNode;
+    }
+
+    @handle(AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSegmentSettleSound() {
+        return AudioIds.SEGMENT_SETTLE;
     }
 }
