@@ -168,17 +168,24 @@ export class HandSegment extends ObserverComponent {
             return;
         }
 
-        this.rankNode.active = false;
+        this.rankNode.active = true;
 
         const steps = this.getAnimationSteps();
         const cards = this.cardsNode.children.map(this.createCardTween(steps));
-        const rankTween = this.createRankTween(this.rankNode, steps);
         const payoutTween = this.createPayoutTween(this.payoutNode, steps);
 
-        cards.forEach((card) => card.start());
+        const spine = this.rankNode.getComponentInChildren(sp.Skeleton);
 
+        this.playSegmentSettleSound();
+
+        cards.forEach((card) => card.start());
         payoutTween.start();
-        rankTween.call(done).start();
+
+        AnimationUtils.playSpine(spine, this.win ? "win" : "lose", false, 2).then(() => {
+            this.rankNode.active = false;
+
+            done();
+        });
     }
 
     private getDefaultPositions() {
@@ -219,24 +226,6 @@ export class HandSegment extends ObserverComponent {
 
             return animation;
         };
-    }
-
-    private createRankTween(node: Node, steps: AnimationStep[]) {
-        const animation = tween(node).call(() => {
-            node.active = true;
-            const spine = node.getComponentInChildren(sp.Skeleton);
-            AnimationUtils.playSpine(spine, this.win ? "win" : "lose");
-
-            this.playSegmentSettleSound();
-        });
-
-        for (const { duration, rank } of steps) {
-            animation.to(duration, rank);
-        }
-
-        return animation.call(() => {
-            node.active = false;
-        });
     }
 
     private createPayoutTween(node: Node, steps: AnimationStep[]) {
