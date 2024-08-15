@@ -15,6 +15,8 @@ export class ReadyLabel extends Component {
             this.instance = ready;
             this.instance.position = position;
         }
+
+        return this;
     }
 
     destroyInstance() {

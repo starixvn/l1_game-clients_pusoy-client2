@@ -66,6 +66,8 @@ export default class Game extends GameComponent {
     private _crackHand: Hand[] = [];
     private _crackNode: Node[] = [];
 
+    private _readyLabelMap: { [playerName: string]: ReadyLabel } = {};
+
     override namespace = settings.name;
     override containerOptions = containerOptions;
 
@@ -342,13 +344,14 @@ export default class Game extends GameComponent {
             const playerProfiles = this.getComponentsInChildren(PlayerProfile);
             const mainPlayer = playerProfiles.find((profile) => profile.slotIndex === 0);
             if (mainPlayer) {
-                mainPlayer.node.parent.getComponent(ReadyLabel).init(v3(0, 30));
+                this._readyLabelMap[mainPlayer.playerName.string] = mainPlayer.node.parent.getComponent(ReadyLabel).init(v3(0, 30));
             }
         }
     }
 
     @render(gc.GamePusoy.Rounds.RoundStore, (store) => store.submittedPlayers)
-    playerSubmitted(submittedPlayers: gc.GamePusoy.PusoyServiceMessages.SubmittedPlayer[]) {
+    handlePlayerSubmitted(submittedPlayers: gc.GamePusoy.PusoyServiceMessages.SubmittedPlayer[]) {
+        this.handleRearrangePlayer(submittedPlayers);
         if (submittedPlayers.length === 0) {
             return;
         }
@@ -359,18 +362,30 @@ export default class Game extends GameComponent {
         for (const submittedPlayer of submittedPlayers) {
             submittedPlayersMap[submittedPlayer.slot] = submittedPlayer;
         }
+
         for (const hand of hands) {
-            if (submittedPlayersMap[hand.getSlotIndex()]) {
-                hand.node.getComponent(ReadyLabel).init();
+            const submittedPlayer = submittedPlayersMap[hand.getSlotIndex()];
+            if (submittedPlayer) {
+                this._readyLabelMap[submittedPlayer.name] = hand.node.getComponent(ReadyLabel).init();
                 hand.showSwapCards(false);
             }
         }
+    }
+
+    handleRearrangePlayer(submittedPlayers: GamePusoy.PusoyServiceMessages.SubmittedPlayer[]) {
+        const playerNames = submittedPlayers.map((player) => player.name);
+        Object.keys(this._readyLabelMap).forEach((key) => {
+            if (!playerNames.includes(key)) {
+                this._readyLabelMap[key].destroyInstance();
+            }
+        });
     }
 
     @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.settleAnimation)
     handleBeforeSettle(animations: string[]) {
         if (animations.length > 0) {
             const hands = this.getComponentsInChildren(Hand);
+            this._readyLabelMap = {};
             for (const hand of hands) {
                 hand.node.getComponent(ReadyLabel).destroyInstance();
                 if (hand.mine) {
