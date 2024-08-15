@@ -48,6 +48,7 @@ export class Natural extends ObserverComponent {
 
         this.withoutCardsNode.forEach((node) => (node.active = true));
         this.node.active = true;
+        this.playSound(AudioIds.NATURAL_CONGRATS);
 
         const duration = 2;
         const cardFlyingDuration = 0.05;
@@ -74,7 +75,8 @@ export class Natural extends ObserverComponent {
             })
             .delay(duration / 2)
             .call(async () => {
-                this.playCongratsSound();
+                this.playSound(AudioIds.COLLECT_CARDS);
+
                 this.withoutCardsNode.forEach((node) => (node.active = false));
 
                 for (const [index, card] of cards.entries()) {
@@ -100,7 +102,7 @@ export class Natural extends ObserverComponent {
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
-    playCongratsSound() {
-        return AudioIds.NATURAL_CONGRATS;
+    playSound(soundId: string) {
+        return soundId;
     }
 }

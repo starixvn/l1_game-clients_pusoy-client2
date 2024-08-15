@@ -1,16 +1,16 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Color, Label, Node, sp, tween, v3, Vec3 } from "cc";
+import { _decorator, Color, Component, Label, Node, sp, tween, v3, Vec3 } from "cc";
 import { LocalizedLabel } from "db://i18n/LocalizedLabel";
 import { GradientNode } from "db://shared-components/shared/common-components/custom-materials/components/gradient-node";
 import { AnimationUtils } from "db://shared-components/shared/utils";
 import { HandCard } from "./hand-card";
 import Observer from "observer";
-import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import { AudioIds } from "../constanst/audio-ids";
+import { settings } from "../game-settings";
 
 const { ccclass, property } = _decorator;
 
-const { handle } = Observer;
+const { handle, observer } = Observer;
 const { FormatUtils } = gc;
 const { AudioHandler } = gc.Audios;
 
@@ -70,7 +70,8 @@ type AnimationStep = {
 };
 
 @ccclass
-export class HandSegment extends ObserverComponent {
+@observer(settings.name)
+export class HandSegment extends Component {
     private _win = false;
 
     @property(Node)
@@ -163,7 +164,7 @@ export class HandSegment extends ObserverComponent {
         });
     }
 
-    public playSettleAnimation(done: Function = () => ({})) {
+    public playSettleAnimation(done: Function = () => ({}), mine: boolean, playerNaturalOrCrack: boolean) {
         if (!this.cardsNode.children) {
             return;
         }
@@ -176,9 +177,13 @@ export class HandSegment extends ObserverComponent {
 
         const spine = this.rankNode.getComponentInChildren(sp.Skeleton);
 
-        this.playSegmentSettleSound();
-
         cards.forEach((card) => card.start());
+        mine && this.playPlayerSettleSound();
+
+        if (playerNaturalOrCrack) {
+            this.playOtherPlayerSettleSound();
+        }
+
         payoutTween.start();
 
         AnimationUtils.playSpine(spine, this.win ? "win" : "lose", false, 2).then(() => {
@@ -247,7 +252,12 @@ export class HandSegment extends ObserverComponent {
     }
 
     @handle(AudioHandler, (handle, id: string) => handle.playSFX(id))
-    playSegmentSettleSound() {
-        return AudioIds.SEGMENT_SETTLE;
+    playPlayerSettleSound() {
+        return this.win ? AudioIds.REVEAL_WINNING_HANDS : AudioIds.REVEAL_HANDS;
+    }
+
+    @handle(AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playOtherPlayerSettleSound() {
+        return AudioIds.REVEAL_HANDS;
     }
 }

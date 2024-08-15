@@ -17,7 +17,7 @@ export class Rocket extends ObserverComponent {
     fly(start: Vec3, end: Vec3, rotation: Vec3) {
         this.node.worldPosition = start;
 
-        this.playRocketFlySound();
+        this.playRocketAnimationSound();
 
         const t1 = tween(this.node).to(
             0.8,
@@ -42,7 +42,7 @@ export class Rocket extends ObserverComponent {
     update(deltaTime: number) {}
 
     @handle(AudioHandler, (handle, id: string) => handle.playSFX(id))
-    playRocketFlySound() {
-        return AudioIds.ROCKET_WHOOSH;
+    playRocketAnimationSound() {
+        return AudioIds.PUSOY;
     }
 }

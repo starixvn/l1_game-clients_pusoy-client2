@@ -54,13 +54,8 @@ export class CardContainer extends ObserverComponent {
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
-    playDragCardStartSound() {
-        return AudioIds.ARRANGE_CARD_START;
-    }
-
-    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playDragCardEndSound() {
-        return AudioIds.ARRANGE_CARD_END;
+        return AudioIds.MOVE_CARD;
     }
 }
 

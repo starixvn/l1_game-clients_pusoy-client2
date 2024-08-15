@@ -42,6 +42,8 @@ export class Hand extends Component {
 
     crack = false;
 
+    playerNaturalOrCrack = false;
+
     get cards(): HandCard[] {
         const result = [];
         const segments = [...this.segments].reverse();
@@ -220,7 +222,7 @@ export class Hand extends Component {
                 continue;
             }
 
-            await new Promise((resolve) => segment.playSettleAnimation(resolve));
+            await new Promise((resolve) => segment.playSettleAnimation(resolve, this.mine, this.playerNaturalOrCrack));
         }
     }
 

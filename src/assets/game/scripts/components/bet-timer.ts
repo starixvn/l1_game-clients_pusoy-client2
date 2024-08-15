@@ -8,7 +8,7 @@ const { ccclass } = _decorator;
 const { render, handle } = Observer;
 const { RoundTimeStore } = gc.GamePusoy.Rounds;
 
-const changeColorTime = 10;
+const changeColorTime = 5;
 @ccclass
 export default class BetTimer extends TwoDigitsTimer {
     enableSound = false;
@@ -36,11 +36,21 @@ export default class BetTimer extends TwoDigitsTimer {
                 this.playClockSound();
                 this.enableSound = true;
             }
+        } else {
+            if (this.enableSound) {
+                this.enableSound = false;
+                this.stopClockSound();
+            }
         }
     }
 
-    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playStoppableSFX(id))
     playClockSound() {
-        return AudioIds.CLOCK_TICK_TOCK;
+        return AudioIds.COUNT_DOWN;
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.stopStoppableSFX(id))
+    stopClockSound() {
+        return AudioIds.COUNT_DOWN;
     }
 }

@@ -141,6 +141,6 @@ export class CardFrame extends ObserverComponent {
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playArrangeComboSound() {
-        return AudioIds.ARRANGE_COMBO;
+        return AudioIds.MATCH_COMBINATION;
     }
 }

@@ -16,5 +16,11 @@ export class ButtonReArrange extends ObserverComponent {
     @handle(gc.GamePusoy.Arrangement.ArrangementHandler, (handler) => handler.sendRearrangeToServer())
     handleClickReArrange() {
         this.node.active = true;
+        this.playClickSound();
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playClickSound() {
+        return gc.Audios.AudioIds.CLICK;
     }
 }

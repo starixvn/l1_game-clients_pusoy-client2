@@ -113,9 +113,7 @@ export default class Game extends GameComponent {
                                 resolve(null);
                             },
                             onStart: () => {
-                                this.scheduleOnce(() => {
-                                    this.playSound(AudioIds.CRACK_EXPLOSION);
-                                }, 0.83);
+                                this.playSound(AudioIds.CRACKS);
                             },
                         });
                         autoDestroySpine.play(false);
@@ -179,9 +177,6 @@ export default class Game extends GameComponent {
                         onStart: () => {
                             this.earthquakes.forEach((earthquake) => {
                                 earthquake.getComponent(Quake).play();
-                            });
-                            this.scheduleOnce(() => {
-                                this.playSound(AudioIds.ROCKET_EXPLOSION);
                             });
                         },
                         onDestroy: () => {
@@ -254,6 +249,8 @@ export default class Game extends GameComponent {
         const handComponents = this.getComponentsInChildren(Hand);
         const playerProfileComponents = this.getComponentsInChildren(PlayerProfile).sort((a, b) => a.slotIndex - b.slotIndex);
 
+        const playerNaturalOrCrack = handsData[0].crack.isCrack || Boolean(handsData[0].natural.name);
+
         handsData.forEach((data, index) => {
             const handComponent = handComponents[index];
             const playerProfileComponent = playerProfileComponents[index];
@@ -290,6 +287,7 @@ export default class Game extends GameComponent {
 
             handComponent.natural = data.natural.name;
             handComponent.crack = data.crack.isCrack;
+            handComponent.playerNaturalOrCrack = playerNaturalOrCrack;
             handComponent.setPayout(payout);
             playerProfileComponent.setTotalWin(data.sum);
         });

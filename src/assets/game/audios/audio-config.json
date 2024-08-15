@@ -38,44 +38,48 @@
         "bundle": "resources",
         "path": "pusoy/deal-cards"
     },
-    "crack-explosion": {
+    "cracks": {
         "bundle": "resources",
-        "path": "pusoy/explosion-2"
+        "path": "pusoy/cracks"
     },
-    "rocket-whoosh": {
+    "collect-cards": {
         "bundle": "resources",
-        "path": "pusoy/rocket-whoosh"
+        "path": "pusoy/collect-cards"
     },
-    "rocket-explosion": {
+    "match-combination": {
         "bundle": "resources",
-        "path": "pusoy/explosion-4"
+        "path": "pusoy/match-combination"
     },
-    "natural-congrats-2": {
+    "move-card": {
         "bundle": "resources",
-        "path": "pusoy/congrats-2"
+        "path": "pusoy/move-card"
     },
-    "natural-congrats-3": {
+    "count-down": {
         "bundle": "resources",
-        "path": "pusoy/congrats-3"
+        "path": "pusoy/count-down"
     },
-    "natural-congrats-4": {
+    "congrats-natural": {
         "bundle": "resources",
-        "path": "pusoy/congrats-4"
+        "path": "pusoy/congrats-natural"
     },
-    "arrange-combo": {
+    "pusoy": {
         "bundle": "resources",
-        "path": "pusoy/arrange-combo"
+        "path": "pusoy/pusoy"
     },
-    "arrange-card-start": {
+    "reveal-hands": {
         "bundle": "resources",
-        "path": "pusoy/draw-card"
+        "path": "pusoy/reveal-hands"
     },
-    "arrange-card-end": {
+    "reveal-winning-hands": {
         "bundle": "resources",
-        "path": "pusoy/draw-card"
+        "path": "pusoy/reveal-winning-hands"
     },
-    "clock-tick-tock": {
+    "chips-fly-winners": {
         "bundle": "resources",
-        "path": "pusoy/tick-tock"
+        "path": "pusoy/chips-fly-winners"
+    },
+    "chips-fly-losers": {
+        "bundle": "resources",
+        "path": "pusoy/chips-fly-losers"
     }
 }

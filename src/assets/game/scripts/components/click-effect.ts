@@ -1,8 +1,13 @@
-import { _decorator, Component, easing, Node, Tween, tween, v3 } from "cc";
-const { ccclass, property } = _decorator;
+import { _decorator, easing, Node, Tween, tween, v3 } from "cc";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
+import Observer from "observer";
+import gc from "@sg/game-client-base";
+
+const { handle } = Observer;
+const { ccclass } = _decorator;
 
 @ccclass("ClickEffect")
-export class ClickEffect extends Component {
+export class ClickEffect extends ObserverComponent {
     private _tweenStart: Tween<Node> | null = null;
     private _tweenEnd: Tween<Node> | null = null;
 
@@ -28,6 +33,8 @@ export class ClickEffect extends Component {
     }
 
     onTouchEnd() {
+        this.playClickSound();
+
         if (this._tweenEnd) {
             this._tweenEnd.stop();
             this.node.scale = v3(1, 1, 1);
@@ -36,5 +43,10 @@ export class ClickEffect extends Component {
                 .to(0.1, { scale: v3(1, 1, 1) }, { easing: easing.smooth })
                 .start();
         }
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playClickSound() {
+        return gc.Audios.AudioIds.CLICK;
     }
 }

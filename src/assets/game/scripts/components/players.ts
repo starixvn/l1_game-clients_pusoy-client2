@@ -6,6 +6,7 @@ import { ObserverComponent } from "db://shared-components/shared/common-componen
 import { AnimationStage } from "@sg/game-client-base/dist/game-pusoy/settlements";
 import PlayerProfile from "./player-profile";
 import { GradientNode } from "db://shared-components/shared/common-components/custom-materials/components/gradient-node";
+import { AudioIds } from "../constanst/audio-ids";
 const { SettlementStore, ANIMATION_STAGES, SettlementHandlers } = gc.GamePusoy.Settlement;
 
 const { ccclass, property } = _decorator;
@@ -84,7 +85,7 @@ export class players extends ObserverComponent {
         losers.forEach((loser) => {
             const coin = this.coins[`slot${loser.slot}`];
             this.animateCoinFly(coin, this.sumCoin);
-            this.playSoundSingleChip();
+            this.playSound(AudioIds.CHIPS_FLY_LOSERS);
         });
 
         this.scheduleOnce(() => {
@@ -96,7 +97,7 @@ export class players extends ObserverComponent {
         winners.forEach((winner) => {
             const coin = this.coins[`slot${winner.slot}`];
             this.animateCoinFly(this.sumCoin, coin);
-            this.playSoundSingleChip();
+            this.playSound(AudioIds.CHIPS_FLY_WINNERS);
         });
 
         this.scheduleOnce(() => {
@@ -191,7 +192,7 @@ export class players extends ObserverComponent {
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
-    playSoundSingleChip() {
-        return gc.Audios.AudioIds.SINGLE_CHIP;
+    playSound(soundId: string) {
+        return soundId;
     }
 }
