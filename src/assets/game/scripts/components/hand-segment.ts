@@ -1,16 +1,16 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Color, Component, Label, Node, sp, tween, v3, Vec3 } from "cc";
+import { _decorator, Color, Label, Node, sp, tween, v3, Vec3 } from "cc";
 import { LocalizedLabel } from "db://i18n/LocalizedLabel";
 import { GradientNode } from "db://shared-components/shared/common-components/custom-materials/components/gradient-node";
 import { AnimationUtils } from "db://shared-components/shared/utils";
 import { HandCard } from "./hand-card";
 import Observer from "observer";
 import { AudioIds } from "../constanst/audio-ids";
-import { settings } from "../game-settings";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 
 const { ccclass, property } = _decorator;
 
-const { handle, observer } = Observer;
+const { handle } = Observer;
 const { FormatUtils } = gc;
 const { AudioHandler } = gc.Audios;
 
@@ -70,8 +70,7 @@ type AnimationStep = {
 };
 
 @ccclass
-@observer(settings.name)
-export class HandSegment extends Component {
+export class HandSegment extends ObserverComponent {
     private _win = false;
 
     @property(Node)
@@ -84,6 +83,8 @@ export class HandSegment extends Component {
     protected payoutNode: Node = null;
 
     onLoad() {
+        super.onLoad();
+
         this.rankNode.active = false;
         this.payoutNode.active = false;
     }
