@@ -1,11 +1,15 @@
 import { _decorator, CCInteger, Component, easing, instantiate, Label, Node, Prefab, Tween, tween, v3, Vec3 } from "cc";
 import { HandCard } from "./hand-card";
 import { HandSegment } from "./hand-segment";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
+import Observer from "observer";
+import gc from "@sg/game-client-base";
 
 const { ccclass, property } = _decorator;
+const { handle, render } = Observer;
 
 @ccclass
-export class Hand extends Component {
+export class Hand extends ObserverComponent {
     @property(Node)
     protected dealerNode: Node = null;
 
@@ -57,7 +61,8 @@ export class Hand extends Component {
         return result;
     }
 
-    protected onLoad(): void {
+    onLoad(): void {
+        super.onLoad();
         this.loadComponents();
 
         const cards = [
@@ -267,5 +272,15 @@ export class Hand extends Component {
 
     private loadComponents() {
         this.segments = this.node.getComponentsInChildren(HandSegment);
+    }
+
+    @render(gc.GamePusoy.Rounds.RoundStore, (store) => store.otherPlayers)
+    renderSlotIndex(otherPlayers: { avatarId: number; name: string; slot: number }[]) {
+        const player = otherPlayers.find((p) => p.slot === this.slotIndex);
+        if (player) {
+            this.node.active = true;
+        } else if (this.slotIndex > 0) {
+            this.node.active = false;
+        }
     }
 }
