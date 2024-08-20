@@ -40,6 +40,10 @@ export class players extends ObserverComponent {
 
     @render(SettlementStore, (store) => store.settlementResult)
     setLosersAndWinners(settlementResult: Record<string, SettlementResult>) {
+        if (!settlementResult) {
+            return;
+        }
+
         const settlementResults = Object.values(settlementResult);
 
         if (settlementResults.length === 0) {
