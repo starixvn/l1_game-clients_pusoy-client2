@@ -71,7 +71,6 @@ export class players extends ObserverComponent {
             return;
         }
 
-        console.log("show animation fly chip: ", showAnimation);
         this.animateLosers(this.losers);
 
         this.scheduleOnce(() => {
@@ -168,15 +167,28 @@ export class players extends ObserverComponent {
 
     private handleAvatarWinAnimation(playerAvatar: Node, winValue: number) {
         if (winValue > 0) {
+            const avatarBorderAnimationWin = playerAvatar.getChildByName("border-win-animation");
+
+            this.scheduleOnce(() => {
+                avatarBorderAnimationWin.active = true;
+
+                tween(borderUiOpacity)
+                    .to(3, { opacity: 0 })
+                    .call(() => {
+                        avatarBorderAnimationWin.active = false;
+                    })
+                    .start();
+            }, 1);
+
             const avatarBorderWin = playerAvatar.getChildByName("border-win");
-            const uiOpacity = avatarBorderWin.getComponent(UIOpacity);
+            const borderUiOpacity = avatarBorderWin.getComponent(UIOpacity);
 
-            const embedTween = tween(uiOpacity).to(0.4, { opacity: 255 }).to(0.4, { opacity: 10 });
+            const embedTween = tween(borderUiOpacity).to(0.4, { opacity: 255 }).to(0.4, { opacity: 10 });
 
-            tween(uiOpacity)
+            tween(borderUiOpacity)
                 .repeat(5, embedTween)
                 .call(() => {
-                    uiOpacity.opacity = 0;
+                    borderUiOpacity.opacity = 0;
                 })
                 .start();
         }
@@ -197,7 +209,6 @@ export class players extends ObserverComponent {
 
     @handle(SettlementHandlers, (handler, animation: AnimationStage) => handler.handleFinishAnimation(animation))
     finishSettleAnimation(animation: AnimationStage) {
-        console.log("finishSettleAnimation: ", animation);
         return animation;
     }
 

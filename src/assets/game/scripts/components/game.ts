@@ -236,7 +236,6 @@ export default class Game extends GameComponent {
 
     @handle(SettlementHandlers, (handler, animation: AnimationStage) => handler.handleFinishAnimation(animation))
     finishSettleAnimation(animation: AnimationStage) {
-        console.log("finish animation: ", animation, new Date().getSeconds());
         return animation;
     }
 

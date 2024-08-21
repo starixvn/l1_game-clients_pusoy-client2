@@ -27,6 +27,9 @@ export default class PlayerProfile extends ObserverComponent {
 
     onLoad() {
         super.onLoad();
+
+        const avatarBorderAnimationWin = this.node.getChildByName("avatar").getChildByName("border-win-animation");
+        avatarBorderAnimationWin.active = false;
     }
 
     public setTotalWin(totalWin: number) {
