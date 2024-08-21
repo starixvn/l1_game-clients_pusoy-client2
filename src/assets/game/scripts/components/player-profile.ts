@@ -70,7 +70,7 @@ export default class PlayerProfile extends ObserverComponent {
         this.setPlayerName(name);
     }
 
-    @render(RoundStore, (store) => store.otherPlayers)
+    @render(gc.GamePusoy.OtherPlayers.OtherPlayersStore, (store) => store.otherPlayers)
     renderSlotIndex(otherPlayers: { avatarId: number; name: string; slot: number }[]) {
         const player = otherPlayers.find((p) => p.slot === this.slotIndex);
         if (player) {

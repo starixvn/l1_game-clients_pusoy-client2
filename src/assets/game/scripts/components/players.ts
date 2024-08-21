@@ -133,6 +133,12 @@ export class players extends ObserverComponent {
             const totalWin = instantiate(this.winPrefab);
             const winValue = playerProfile.getTotalWin();
 
+            if (winValue === 0) {
+                return;
+            }
+
+            playerProfile.setTotalWin(0);
+
             this.setWinStyles(totalWin, winValue);
 
             this.handleAvatarWinAnimation(playerAvatar, winValue);
