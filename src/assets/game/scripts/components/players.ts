@@ -190,7 +190,7 @@ export class players extends ObserverComponent {
             .to(0.5, { scale: new Vec3(1, 1, 1) }, { easing: "quadInOut" })
             .delay(0.5)
             .call(() => {
-                tween(uiOpacity).to(2, { opacity: 0 }).start();
+                tween(uiOpacity).to(1, { opacity: 0 }).start();
             })
             .start();
     }
