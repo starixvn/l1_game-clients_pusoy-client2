@@ -297,11 +297,13 @@ export default class Game extends GameComponent {
             return;
         }
 
-        const handsData = Object.values(result).sort((a, b) => a.slot - b.slot);
-        const handsComponent = this.getComponentsInChildren(Hand);
+        const handsData = Object.values(result);
+        const handComponents = this.getComponentsInChildren(Hand);
         const converter = this.getComponent(CardConverter);
 
-        handsData.forEach((data, index) => {
+        handsData.forEach((data) => {
+            const handComponent = handComponents.find((component) => component.getSlotIndex() === data.slot);
+
             const hand = {
                 front: sortSegment(data.hand.front),
                 middle: sortSegment(data.hand.middle),
@@ -310,8 +312,8 @@ export default class Game extends GameComponent {
             const cards = converter.convertHand(hand);
             const ranks = converter.convertRank(hand);
 
-            handsComponent[index].setRanks(ranks);
-            handsComponent[index].renderCards(cards);
+            handComponent.setRanks(ranks);
+            handComponent.renderCards(cards);
         });
     }
 
