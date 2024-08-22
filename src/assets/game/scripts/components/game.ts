@@ -71,7 +71,7 @@ export default class Game extends GameComponent {
     override namespace = settings.name;
     override containerOptions = containerOptions;
 
-    @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.remaining && store.at("deal"))
+    @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.isAtDealTime)
     deals(shouldDeals: boolean) {
         if (shouldDeals) {
             const hands = this.getComponentsInChildren(Hand);
