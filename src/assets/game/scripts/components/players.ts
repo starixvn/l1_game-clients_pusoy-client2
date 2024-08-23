@@ -51,6 +51,7 @@ export class players extends ObserverComponent {
         }
 
         this.mapPlayerProfilesToCoins();
+        this.setPlayerProfileTotalWin(settlementResults);
 
         this.losers = settlementResults.filter((result) => result.sum < 0);
         this.winners = settlementResults.filter((result) => result.sum > 0);
@@ -62,6 +63,16 @@ export class players extends ObserverComponent {
         playerProfileComponents.forEach((playerProfile) => {
             const coin = playerProfile.node.getChildByPath("name/background/coin");
             this.coins[`slot${playerProfile.slotIndex}`] = coin;
+        });
+    }
+
+    private setPlayerProfileTotalWin(settlementResults: SettlementResult[]) {
+        const playerProfileComponents = this.getComponentsInChildren(PlayerProfile);
+
+        settlementResults.forEach((result) => {
+            const playerProfile = playerProfileComponents.find((profile) => profile.slotIndex === result.slot);
+
+            playerProfile.setTotalWin(result.sum);
         });
     }
 

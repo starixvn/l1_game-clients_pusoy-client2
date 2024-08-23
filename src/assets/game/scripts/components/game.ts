@@ -250,12 +250,10 @@ export default class Game extends GameComponent {
         }
         const handsData = Object.values(result).sort((a, b) => a.slot - b.slot);
         const handComponents = this.getComponentsInChildren(Hand);
-        const playerProfileComponents = this.getComponentsInChildren(PlayerProfile);
         const playerNaturalOrCrack = handsData[0].crack.isCrack || Boolean(handsData[0].natural.name);
 
         handsData.forEach((data) => {
             const handComponent = handComponents.find((component) => component.getSlotIndex() === data.slot);
-            const playerProfileComponent = playerProfileComponents.find((component) => component.slotIndex === data.slot);
 
             const payout = {
                 back: data.normal.back + data.royalty.back.units,
@@ -291,7 +289,6 @@ export default class Game extends GameComponent {
             handComponent.crack = data.crack.isCrack;
             handComponent.playerNaturalOrCrack = playerNaturalOrCrack;
             handComponent.setPayout(payout);
-            playerProfileComponent.setTotalWin(data.sum);
         });
     }
 
