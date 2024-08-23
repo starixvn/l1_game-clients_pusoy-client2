@@ -79,6 +79,7 @@ export class players extends ObserverComponent {
     @render(SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.chipFly])
     renderCoin(showAnimation: boolean) {
         if (!showAnimation || !this.winners.length || !this.losers.length) {
+            this.finishSettleAnimation(ANIMATION_STAGES.chipFly as AnimationStage);
             return;
         }
 
