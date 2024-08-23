@@ -74,6 +74,7 @@ export default class Game extends GameComponent {
     @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.isAtDealTime)
     deals(shouldDeals: boolean) {
         if (shouldDeals) {
+            this.alreadyDealt();
             const hands = this.getComponentsInChildren(Hand);
             this.playSound(AudioIds.DEAL_CARDS);
 
@@ -82,6 +83,9 @@ export default class Game extends GameComponent {
             }
         }
     }
+
+    @handle(gc.GamePusoy.Rounds.RoundTimeHandlers, (handler) => handler.handleAlreadyDealt())
+    alreadyDealt() {}
 
     @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.isInArrangementTime)
     inArrangement(inArrangement: boolean) {
