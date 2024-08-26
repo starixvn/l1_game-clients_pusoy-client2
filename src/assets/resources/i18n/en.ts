@@ -6,7 +6,6 @@ export const languages = {
         "bet_amount_of_any_choice_incorrect": "Invalid Bet Amount",
         "bet_choice": "Bet Choice",
         "bet_detail": "Bet Details",
-        "bet_details_classic_slot_non_winning_payline": "Non-winning Paylines",
         "bet_history": "Bet History",
         "bet_limit": "Bet Limit",
         "bet_option_even": "Even",
@@ -106,6 +105,7 @@ export const languages = {
         "min_bet_hand": "Min bet for this hand is %{minBet}",
         "name_invalid": "The entered nickname is invalid, please try again",
         "nickname_requirement": "Note:\n      + Nickname must be between 3 and 14 characters long.\n      + Cannot contain spaces, special characters, and non-English characters. \n      + Cannot change the nickname after submitting.",
+        "non_winning_payline": "Non-winning Paylines",
         "not_enough_money": "Your account has insufficient funds.",
         "notice": "notice",
         "odds": "Odds",
@@ -185,6 +185,8 @@ export const languages = {
     "Pusoy": {
         "dragon": "Dragon",
         "game_name": "Pusoy",
+        "ready": "Ready",
+        "rearrange": "Rearrange",
         "six_pairs": "Six\nPairs",
         "three_flushes": "Three\nFlushes",
         "three_straights": "Three\nStraights"

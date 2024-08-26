@@ -6,7 +6,6 @@ export const languages = {
         "bet_amount_of_any_choice_incorrect": "投注金額無效",
         "bet_choice": "投注選擇",
         "bet_detail": "投注詳情",
-        "bet_details_classic_slot_non_winning_payline": "未獲勝支付線",
         "bet_history": "投注歷史",
         "bet_limit": "投注限額",
         "bet_option_even": "雙",
@@ -106,6 +105,7 @@ export const languages = {
         "min_bet_hand": "這手牌的最小下注是 %{minBet}",
         "name_invalid": "輸入的暱稱無效，請重試。",
         "nickname_requirement": "注意：\n+ 暱稱的長度必須在 3 到 14 個字符之間。\n+ 不能包含空格、特殊字符和非英文字符。\n+ 提交後不能更改暱稱。 ",
+        "non_winning_payline": "未獲勝支付線",
         "not_enough_money": "您的賬戶資金不足。",
         "notice": "注意",
         "odds": "賠率",
@@ -170,7 +170,18 @@ export const languages = {
         "win_loss": "贏 輸",
         "you_reach_max_win": "您達到了最大勝利"
     },
-    "CommonPoker": {},
+    "CommonPoker": {
+        "flush": "同花",
+        "four_of_a_kind": "四條",
+        "full_house": "葫蘆",
+        "high_card": "高牌",
+        "one_pair": "一對",
+        "royal_flush": "皇家同花順",
+        "straight": "順子",
+        "straight_flush": "同花順",
+        "three_of_a_kind": "三條",
+        "two_pairs": "兩對"
+    },
     "Pusoy": {}
 };
 
