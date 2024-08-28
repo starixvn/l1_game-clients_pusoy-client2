@@ -1,16 +1,16 @@
+import { values } from "lodash-es";
 import gc from "@sg/game-client-base";
-import { CCInteger, Label, Sprite, SpriteFrame, _decorator } from "cc";
+import { CCInteger, Label, Sprite, SpriteFrame, _decorator, Node, Vec3, Color } from "cc";
 import { bundleManager } from "db://shared-components/shared/common-components/bundle-magager/bundle-manager";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import Observer from "observer";
+import { GradientNode } from "db://shared-components/shared/common-components/custom-materials/components/gradient-node";
 
 const { ccclass, property } = _decorator;
 
-const { Player, GamePusoy } = gc;
+const { Player } = gc;
 const { render } = Observer;
 const { MainPlayerStore } = Player;
-const { Rounds } = GamePusoy;
-const { RoundStore } = Rounds;
 
 @ccclass
 export default class PlayerProfile extends ObserverComponent {
@@ -23,7 +23,11 @@ export default class PlayerProfile extends ObserverComponent {
     @property(CCInteger)
     slotIndex: number = 0;
 
+    @property(Label)
+    balance: Label = null;
+
     private _totalWin = 0;
+    private _balance = 0;
 
     onLoad() {
         super.onLoad();
@@ -40,12 +44,32 @@ export default class PlayerProfile extends ObserverComponent {
         return this._totalWin;
     }
 
+    public addBalance(amount: number) {
+        this._balance += amount;
+    }
+
     setPlayerName(text: string) {
         if (this.playerName) {
             this.playerName.string = text;
         }
 
         return this;
+    }
+
+    setPlayerBalance() {
+        if (this.balance) {
+            this.setBalanceStyles();
+            this.balance.string = this._balance.toString();
+        }
+
+        return this;
+    }
+
+    private setBalanceStyles() {
+        const gradient = this.balance.node.getComponent(GradientNode);
+
+        gradient.topColor = new Color("FFFFFF");
+        gradient.bottomColor = new Color("A2A2A200");
     }
 
     setPlayerAvatar(avatarId: number) {
@@ -73,12 +97,22 @@ export default class PlayerProfile extends ObserverComponent {
         this.setPlayerName(name);
     }
 
+    @render(gc.GamePusoy.Rounds.RoundStore, (store) => store.playerBalance)
+    renderMainPlayerBalance(balance: number) {
+        if (this.slotIndex === 0) {
+            this._balance = balance;
+            this.setPlayerBalance();
+        }
+    }
+
     @render(gc.GamePusoy.OtherPlayers.OtherPlayersStore, (store) => store.otherPlayers)
-    renderSlotIndex(otherPlayers: { avatarId: number; name: string; slot: number }[]) {
+    renderSlotIndex(otherPlayers: gc.GamePusoy.PusoyServiceMessages.OtherPlayer[]) {
         const player = otherPlayers.find((p) => p.slot === this.slotIndex);
         if (player) {
             this.setPlayerName(player.name);
             this.setPlayerAvatar(player.avatarId);
+            this._balance = player.balance;
+            this.setPlayerBalance();
             this.node.active = true;
         } else if (this.slotIndex > 0) {
             this.node.active = false;

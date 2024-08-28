@@ -61,7 +61,7 @@ export class players extends ObserverComponent {
         const playerProfileComponents = this.getComponentsInChildren(PlayerProfile);
 
         playerProfileComponents.forEach((playerProfile) => {
-            const coin = playerProfile.node.getChildByPath("name/background/coin");
+            const coin = playerProfile.node.getChildByPath("balance/background/coin");
             this.coins[`slot${playerProfile.slotIndex}`] = coin;
         });
     }
@@ -73,6 +73,19 @@ export class players extends ObserverComponent {
             const playerProfile = playerProfileComponents.find((profile) => profile.slotIndex === result.slot);
 
             playerProfile.setTotalWin(result.sum);
+            playerProfile.addBalance(result.sum);
+        });
+    }
+
+    setPlayerBalance(slots: number[]) {
+        const playerProfileComponents = this.getComponentsInChildren(PlayerProfile);
+
+        slots.forEach((slot) => {
+            const playerProfile = playerProfileComponents.find((profile) => profile.slotIndex === slot);
+
+            if (playerProfile) {
+                playerProfile.setPlayerBalance();
+            }
         });
     }
 
@@ -105,6 +118,8 @@ export class players extends ObserverComponent {
 
         this.scheduleOnce(() => {
             this.sumCoin.active = true;
+
+            this.setPlayerBalance(losers.map((loser) => loser.slot));
         }, COIN_FLIGHT_DURATION);
     }
 
@@ -117,6 +132,8 @@ export class players extends ObserverComponent {
 
         this.scheduleOnce(() => {
             this.sumCoin.active = false;
+
+            this.setPlayerBalance(winners.map((winner) => winner.slot));
         }, COIN_FLIGHT_DURATION);
     }
 

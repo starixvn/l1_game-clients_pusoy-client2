@@ -111,7 +111,7 @@ export default class Game extends GameComponent {
                     this._crackNode.push(crack);
                     return new Promise((resolve) => {
                         const autoDestroySpine = crack.getComponent(AutoDestroySpine);
-                        autoDestroySpine.node.position = hand.mine ? v3(0, 26) : v3(0, 0);
+                        autoDestroySpine.node.position = hand.mine ? v3(0, 40) : v3(0, 0);
                         autoDestroySpine.addDestroyHandler({
                             onDestroy: () => {
                                 resolve(null);
