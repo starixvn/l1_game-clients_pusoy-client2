@@ -93,9 +93,11 @@ export default class Game extends GameComponent {
             const hands = this.getComponentsInChildren(Hand);
 
             for (const hand of hands) {
-                hand.activeCards(true);
                 if (!hand.mine) {
                     hand.showSwapCards(true);
+                    hand.activeCards(true);
+                } else {
+                    hand.activeCards(true, true);
                 }
             }
         }
