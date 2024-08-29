@@ -323,6 +323,7 @@ export default class Game extends GameComponent {
     @render(gc.GamePusoy.Rounds.RoundTimeStore, (store) => store.isInTransitionTime)
     inTransitionTime(value: boolean) {
         if (value) {
+            this.handleClearCrack();
             const hands = this.getComponentsInChildren(Hand);
 
             for (const hand of hands) {
@@ -405,10 +406,18 @@ export default class Game extends GameComponent {
     }
 
     @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.chipFly])
-    handleAfterSettle() {
-        this._crackNode.forEach((node) => {
-            node.destroy();
-        });
-        this._crackNode = [];
+    handleAfterSettle(showAnimation: boolean) {
+        if (showAnimation) {
+            this.handleClearCrack();
+        }
+    }
+
+    handleClearCrack() {
+        if (this._crackNode.length > 0) {
+            this._crackNode.forEach((node) => {
+                node.destroy();
+            });
+            this._crackNode = [];
+        }
     }
 }
