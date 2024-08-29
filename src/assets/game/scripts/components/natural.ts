@@ -73,7 +73,7 @@ export class Natural extends ObserverComponent {
                     card.node.setRotationFromEuler(v3(0, 0, 0));
                 }
             })
-            .delay(duration / 2)
+            .delay(duration)
             .call(async () => {
                 this.playSound(AudioIds.COLLECT_CARDS);
 
