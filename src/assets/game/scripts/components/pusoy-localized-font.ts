@@ -17,7 +17,9 @@ export class PusoyLocalizedFont extends LocalizedFont {
         };
     }
 
-    loadFont(name: string) {
-        return bundleManager.loadSharedAsset<Font>(`fonts/${name}`, Font) ?? bundleManager.loadResourcesAsset<Font>(`fonts/${name}`, Font);
+    async loadFont(name: string) {
+        const fontFromResources = await bundleManager.loadResourcesAsset<Font>(`fonts/${name}`, Font);
+        const fontFromShared = await bundleManager.loadSharedAsset<Font>(`fonts/${name}`, Font);
+        return fontFromShared ?? fontFromResources;
     }
 }

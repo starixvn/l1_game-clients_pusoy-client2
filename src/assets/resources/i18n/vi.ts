@@ -179,10 +179,18 @@ export const languages = {
         "royal_flush": "Sảnh Rồng",
         "straight": "Sảnh",
         "straight_flush": "Thùng Phá Sảnh",
-        "three_of_a_kind": "Sám",
+        "three_of_a_kind": "Sám Cô",
         "two_pairs": "Hai Đôi"
     },
-    "Pusoy": {}
+    "Pusoy": {
+        "dragon": "Sảnh Rồng",
+        "game_name": "Mậu Binh",
+        "ready": "Xếp Xong",
+        "rearrange": "Xếp Lại",
+        "six_pairs": "6 Đôi",
+        "three_flushes": "3 Thùng",
+        "three_straights": "3 Sảnh"
+    }
 };
 
 if (!win.languages) {
