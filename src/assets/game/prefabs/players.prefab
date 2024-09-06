@@ -249,7 +249,7 @@
     "propertyPath": [
       "slotIndex"
     ],
-    "value": -1
+    "value": 0
   },
   {
     "__type__": "cc.TargetInfo",
@@ -1165,7 +1165,17 @@
     },
     "fileId": "20DbELkcpKso+UFuS/rczv",
     "instance": null,
-    "targetOverrides": null,
+    "targetOverrides": [
+      {
+        "__id__": 73
+      },
+      {
+        "__id__": 76
+      },
+      {
+        "__id__": 79
+      }
+    ],
     "nestedPrefabInstanceRoots": [
       {
         "__id__": 58
@@ -1182,6 +1192,96 @@
       {
         "__id__": 3
       }
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 3
+    },
+    "sourceInfo": {
+      "__id__": 74
+    },
+    "propertyPath": [
+      "playerName"
+    ],
+    "target": {
+      "__id__": 3
+    },
+    "targetInfo": {
+      "__id__": 75
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "8e2Kbrp19FSITWAppBOc3Q"
+    ]
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "efLFrGogFH5aeJ4OeNRcbj"
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 3
+    },
+    "sourceInfo": {
+      "__id__": 77
+    },
+    "propertyPath": [
+      "playerAvatar"
+    ],
+    "target": {
+      "__id__": 3
+    },
+    "targetInfo": {
+      "__id__": 78
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "8e2Kbrp19FSITWAppBOc3Q"
+    ]
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "40U0IJFFdMkrrmBFFIZMV0"
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 3
+    },
+    "sourceInfo": {
+      "__id__": 80
+    },
+    "propertyPath": [
+      "balance"
+    ],
+    "target": {
+      "__id__": 3
+    },
+    "targetInfo": {
+      "__id__": 81
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "8e2Kbrp19FSITWAppBOc3Q"
+    ]
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "6f7dGSsx9OBpoWLDXuSVkv"
     ]
   }
 ]
