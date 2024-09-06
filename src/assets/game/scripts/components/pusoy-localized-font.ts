@@ -8,8 +8,8 @@ const { ccclass } = _decorator;
 export class PusoyLocalizedFont extends LocalizedFont {
     initData() {
         this.fontBases = {
-            vi: "noto-serif-regular",
-            id: "noto-serif-regular",
+            vi: "Kodchasan-Medium",
+            id: "Poppins-Medium",
             en: "Poppins-Medium",
             th: "noto-serif-regular-thai",
             zh_cn: "noto-serif-regular-zhcn",

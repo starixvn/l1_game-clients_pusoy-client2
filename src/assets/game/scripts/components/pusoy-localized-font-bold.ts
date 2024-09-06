@@ -7,8 +7,8 @@ const { ccclass } = _decorator;
 export default class PusoyLocalizedFontBold extends PusoyLocalizedFont {
     initData() {
         this.fontBases = {
-            vi: "noto-serif-bold",
-            id: "noto-serif-bold",
+            vi: "Kodchasan-Bold",
+            id: "Poppins-Bold",
             en: "Poppins-Bold",
             th: "noto-serif-bold-thai",
             zh_cn: "noto-serif-bold-zhcn",
