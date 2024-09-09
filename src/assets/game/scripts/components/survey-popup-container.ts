@@ -3,10 +3,14 @@ import Observer from "observer";
 import gc from "@sg/game-client-base";
 import { AnimationUtils } from "../../../../extensions/shared-components/assets/shared/utils";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
+import { FunctionUtils } from "db://shared-components/shared/utils";
 
 const { bounceIn, bounceOut, fadeIn, fadeOut } = AnimationUtils;
 const { render, handle } = Observer;
 const { ccclass, property } = _decorator;
+
+const { Bet, Rounds, Shared } = gc;
+const { utils } = Shared;
 
 @ccclass("SurveyPopup")
 export class SurveyPopup extends ObserverComponent {
@@ -46,6 +50,13 @@ export class SurveyPopup extends ObserverComponent {
 
     @handle(gc.GamePusoy.Survey.SurveyHandler, (handler, payload: boolean) => handler.handleOpenSurveyPopup(payload))
     handleCloseSurveyPopup() {
+        utils.AnalyticsManager.trackEvent(utils.TrackingEvent.Button, {
+            location: FunctionUtils.getNamespace(),
+            action: utils.TrackingAction.Click,
+            object_name: "Wish_to_play_with_real_money",
+            game_name: FunctionUtils.getNamespace(),
+        });
+
         return false;
     }
 
