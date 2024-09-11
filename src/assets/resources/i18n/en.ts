@@ -187,7 +187,9 @@ export const languages = {
         "game_name": "Pusoy",
         "ready": "Ready",
         "rearrange": "Rearrange",
+        "royal_flush_pusoy": "Royal Flush",
         "six_pairs": "Six\nPairs",
+        "switch_to_real_mode": "Real Play will soon be available. Meanwhile, perfect your Pusoy skills in advanced. Thanks for your support!",
         "three_flushes": "Three\nFlushes",
         "three_straights": "Three\nStraights"
     }

@@ -187,7 +187,9 @@ export const languages = {
         "game_name": "Mậu Binh",
         "ready": "Xếp Xong",
         "rearrange": "Xếp Lại",
+        "royal_flush_pusoy": "Thùng Phá Sảnh Đế Vương",
         "six_pairs": "6 Đôi",
+        "switch_to_real_mode": "Chơi thật sẽ sớm trình làng, hãy luyện binh thật chuẩn trong lúc đợi nhé! Cảm ơn bạn đã quan tâm!",
         "three_flushes": "3 Thùng",
         "three_straights": "3 Sảnh"
     }

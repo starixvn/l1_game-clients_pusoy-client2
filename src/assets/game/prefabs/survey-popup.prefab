@@ -35,10 +35,13 @@
       },
       {
         "__id__": 70
+      },
+      {
+        "__id__": 72
       }
     ],
     "_prefab": {
-      "__id__": 72
+      "__id__": 74
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -884,6 +887,8 @@
       "__id__": 0
     },
     "fileId": "c7YIGYsJRFrKSbkkMyohdw",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -912,8 +917,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 185.532,
-      "y": 133.753,
+      "x": -2.985,
+      "y": -106.296,
       "z": 0
     },
     "_lrot": {
@@ -925,8 +930,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.8,
-      "y": 0.8,
+      "x": 0.5,
+      "y": 0.5,
       "z": 1
     },
     "_mobility": 0,
@@ -953,8 +958,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 80,
-      "height": 80
+      "width": 73,
+      "height": 73
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -990,7 +995,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@9ce49",
+      "__uuid__": "2d67d332-0b65-4c26-aacf-03f54c9217cc@95cc2",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -1062,10 +1067,7 @@
       "b": 124,
       "a": 255
     },
-    "_normalSprite": {
-      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@9ce49",
-      "__expectedType__": "cc.SpriteFrame"
-    },
+    "_normalSprite": null,
     "_hoverSprite": null,
     "_pressedSprite": null,
     "_disabledSprite": null,
@@ -1209,7 +1211,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "Do you want to play with real moeny",
+    "_string": "Real Play will soon be available. Meanwhile, perfect your Pusoy skills in advanced. Thanks for your support!",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
     "_actualFontSize": 20,
@@ -1244,7 +1246,7 @@
     "__prefab": {
       "__id__": 52
     },
-    "key": "Pusoy.play-with-real-money-para",
+    "key": "Pusoy.switch_to_real_mode",
     "_id": ""
   },
   {
@@ -1490,6 +1492,26 @@
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "0fTIaChC1Jop2SIHeYe8A8"
+  },
+  {
+    "__type__": "d93a7npeedJ8o6EmBLKD1Ek",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 73
+    },
+    "overrideFonts": [],
+    "enableCacheMode": false,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "fbBpa0PZ1Pm7ISbPoWJS7J"
   },
   {
     "__type__": "cc.PrefabInfo",
