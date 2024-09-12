@@ -182,7 +182,10 @@ export const languages = {
         "three_of_a_kind": "Three of a Kind",
         "two_pairs": "Dua Pair"
     },
-    "Pusoy": {}
+    "Pusoy": {
+        "royal_flush_pusoy": "Royal Flush",
+        "straight_flush_pusoy": "Straight Flush"
+    }
 };
 
 if (!win.languages) {

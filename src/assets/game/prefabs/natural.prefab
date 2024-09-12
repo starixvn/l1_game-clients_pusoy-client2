@@ -25,23 +25,23 @@
         "__id__": 10
       },
       {
-        "__id__": 91
+        "__id__": 94
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 97
+        "__id__": 100
       },
       {
-        "__id__": 99
+        "__id__": 102
       },
       {
-        "__id__": 101
+        "__id__": 104
       }
     ],
     "_prefab": {
-      "__id__": 103
+      "__id__": 106
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -85,13 +85,13 @@
         "__id__": 3
       },
       {
-        "__id__": 84
+        "__id__": 87
       }
     ],
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 90
+      "__id__": 93
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -141,7 +141,7 @@
       }
     ],
     "_prefab": {
-      "__id__": 83
+      "__id__": 86
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -285,10 +285,13 @@
       },
       {
         "__id__": 80
+      },
+      {
+        "__id__": 82
       }
     ],
     "_prefab": {
-      "__id__": 82
+      "__id__": 85
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -1886,6 +1889,35 @@
     "fileId": "6a4pHD7AxDnbhXOgcQPaEl"
   },
   {
+    "__type__": "d93a7npeedJ8o6EmBLKD1Ek",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 9
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 83
+    },
+    "overrideFonts": [
+      {
+        "__id__": 84
+      }
+    ],
+    "enableCacheMode": false,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "c9Nus8b1BDGpG1FVR4Tq+V"
+  },
+  {
+    "__type__": "LanguageFont",
+    "language": "en",
+    "name": "TitanOne-Regular"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -1923,14 +1955,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 85
+        "__id__": 88
       },
       {
-        "__id__": 87
+        "__id__": 90
       }
     ],
     "_prefab": {
-      "__id__": 89
+      "__id__": 92
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -1967,11 +1999,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 84
+      "__id__": 87
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 86
+      "__id__": 89
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -1995,11 +2027,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 84
+      "__id__": 87
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 88
+      "__id__": 91
     },
     "_customMaterial": null,
     "_srcBlendFactor": 2,
@@ -2073,14 +2105,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 92
+        "__id__": 95
       },
       {
-        "__id__": 94
+        "__id__": 97
       }
     ],
     "_prefab": {
-      "__id__": 96
+      "__id__": 99
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -2117,11 +2149,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 91
+      "__id__": 94
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 93
+      "__id__": 96
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -2145,11 +2177,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 91
+      "__id__": 94
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 95
+      "__id__": 98
     },
     "_customMaterial": null,
     "_srcBlendFactor": 2,
@@ -2208,7 +2240,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 98
+      "__id__": 101
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -2236,7 +2268,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 100
+      "__id__": 103
     },
     "_alignFlags": 45,
     "_target": null,
@@ -2272,7 +2304,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 102
+      "__id__": 105
     },
     "label": {
       "__id__": 80
@@ -2285,7 +2317,7 @@
         "__id__": 2
       },
       {
-        "__id__": 91
+        "__id__": 94
       },
       {
         "__id__": 9

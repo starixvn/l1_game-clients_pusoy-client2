@@ -183,12 +183,13 @@ export const languages = {
         "two_pairs": "Hai Đôi"
     },
     "Pusoy": {
-        "dragon": "Sảnh Rồng",
+        "dragon": "Sảnh Rồng Cuốn",
         "game_name": "Mậu Binh",
         "ready": "Xếp Xong",
         "rearrange": "Xếp Lại",
-        "royal_flush_pusoy": "Thùng Phá Sảnh Đế Vương",
+        "royal_flush_pusoy": "Thùng Phá Sảnh",
         "six_pairs": "6 Đôi",
+        "straight_flush_pusoy": "Sảnh Thùng",
         "switch_to_real_mode": "Chơi thật sẽ sớm trình làng, hãy luyện binh thật chuẩn trong lúc đợi nhé! Cảm ơn bạn đã quan tâm!",
         "three_flushes": "3 Thùng",
         "three_straights": "3 Sảnh"

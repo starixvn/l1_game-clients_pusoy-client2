@@ -182,7 +182,10 @@ export const languages = {
         "three_of_a_kind": "ไพ่ตอง",
         "two_pairs": "สองคู่"
     },
-    "Pusoy": {}
+    "Pusoy": {
+        "royal_flush_pusoy": "รอยัลฟลัช",
+        "straight_flush_pusoy": "สเตรทฟลัช"
+    }
 };
 
 if (!win.languages) {

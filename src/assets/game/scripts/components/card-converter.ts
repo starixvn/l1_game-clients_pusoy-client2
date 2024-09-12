@@ -40,7 +40,7 @@ const SegmentRankMap = {
     [pusoy.HandTypeRank.Flush]: "CommonPoker.flush",
     [pusoy.HandTypeRank.FullHouse]: "CommonPoker.full_house",
     [pusoy.HandTypeRank.FourOfAKind]: "CommonPoker.four_of_a_kind",
-    [pusoy.HandTypeRank.StraightFlush]: "CommonPoker.straight_flush",
+    [pusoy.HandTypeRank.StraightFlush]: "Pusoy.straight_flush_pusoy",
     [pusoy.HandTypeRank.RoyalFlush]: "Pusoy.royal_flush_pusoy",
 };
 

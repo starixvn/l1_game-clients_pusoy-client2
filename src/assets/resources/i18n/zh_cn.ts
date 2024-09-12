@@ -182,7 +182,10 @@ export const languages = {
         "three_of_a_kind": "三条",
         "two_pairs": "两对"
     },
-    "Pusoy": {}
+    "Pusoy": {
+        "royal_flush_pusoy": "皇家同花顺",
+        "straight_flush_pusoy": "同花順"
+    }
 };
 
 if (!win.languages) {
