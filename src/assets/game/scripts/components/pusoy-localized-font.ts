@@ -73,9 +73,9 @@ export class PusoyLocalizedFont extends Component {
             vi: "noto-serif-bold",
             id: "Poppins-Medium",
             en: "Poppins-Medium",
-            th: "noto-serif-regular-thai",
-            zh_cn: "noto-serif-regular-zhcn",
-            zh_tw: "noto-serif-regular-zhtw",
+            th: "Poppins-Medium",
+            zh_cn: "Poppins-Medium",
+            zh_tw: "Poppins-Medium",
         };
     }
 

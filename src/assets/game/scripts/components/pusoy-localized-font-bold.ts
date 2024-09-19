@@ -10,9 +10,9 @@ export default class PusoyLocalizedFontBold extends PusoyLocalizedFont {
             vi: "noto-serif-bold",
             id: "Poppins-Bold",
             en: "Poppins-Bold",
-            th: "noto-serif-bold-thai",
-            zh_cn: "noto-serif-bold-zhcn",
-            zh_tw: "noto-serif-bold-zhtw",
+            th: "Poppins-Bold",
+            zh_cn: "Poppins-Bold",
+            zh_tw: "Poppins-Bold",
         };
     }
 }

@@ -183,7 +183,7 @@ export const languages = {
         "two_pairs": "Hai Đôi"
     },
     "Pusoy": {
-        "dragon": "Sảnh Rồng Cuốn",
+        "dragon": "Sảnh Rồng",
         "game_name": "Mậu Binh",
         "ready": "Xếp Xong",
         "rearrange": "Xếp Lại",
