@@ -25,7 +25,3 @@
 .splash-container .splash_game_name_zh_tw {
     background-image: url("./game_name_zh_tw.png?v=4");
 }
-
-.splash_bg_game {
-    background-size: auto 71.76vh !important;
- }
