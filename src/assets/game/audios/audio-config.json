@@ -27,7 +27,7 @@
         "bundle": "resources",
         "type": "music",
         "isLazyLoad": true,
-        "path": "bgm-song5"
+        "path": "bgm-song1"
     },
     "bgm-song6": {
         "bundle": "resources",
