@@ -312,7 +312,7 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "005bc0+TtJHraxrdPo4rGru",
+    "_componentId": "b6822hxkWFHpbE9KzSb5jyQ",
     "handler": "hide",
     "customEventData": ""
   },
@@ -774,7 +774,7 @@
     "_overflow": 3,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "e9834399-6fff-4ed5-8415-f4bd2bfb88db",
+      "__uuid__": "4af764a8-9eb7-4735-aef5-20bde68d0123",
       "__expectedType__": "cc.TTFFont"
     },
     "_isSystemFontUsed": false,
@@ -1024,7 +1024,7 @@
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "eafa2091-5e1c-4e84-898b-b5c41696c7bf",
+      "__uuid__": "98fa3caa-8fd2-40b0-9339-7604dec83cab",
       "__expectedType__": "cc.TTFFont"
     },
     "_isSystemFontUsed": false,
@@ -1338,7 +1338,7 @@
     },
     "component": "",
     "_componentId": "b6822hxkWFHpbE9KzSb5jyQ",
-    "handler": "onCloseSurveyPopup",
+    "handler": "hide",
     "customEventData": ""
   },
   {
