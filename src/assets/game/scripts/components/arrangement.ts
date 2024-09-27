@@ -160,12 +160,20 @@ export class Arrangement extends ObserverComponent {
         }
 
         const cardConverter = this.getComponent(CardConverter);
+
         const hand = {
             front: sortSegment(this._hand.front),
             middle: sortSegment(this._hand.middle),
             back: sortSegment(this._hand.back),
         };
-        this.submitHandler.forEach((handler) => handler.emit([cardConverter.convertHand(hand)]));
+
+        this._hand = hand;
+
+        const handData = cardConverter.convertHand(hand);
+
+        this.submitHandler.forEach((handler) => handler.emit([handData]));
+
+        this.loadHand(handData);
     }
 
     private renderType(newHand: { front: number[]; middle: number[]; back: number[] }, isPlayAnimation = false) {
