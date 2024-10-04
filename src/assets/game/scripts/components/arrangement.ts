@@ -274,6 +274,13 @@ export class Arrangement extends ObserverComponent {
         }
     }
 
+    @render(gc.GamePusoy.Rounds.RoundStore, (store) => store.observingRound)
+    setObserve(observingRound: boolean) {
+        if (observingRound) {
+            this.node.active = false;
+        }
+    }
+
     @handle(gc.GamePusoy.Arrangement.ArrangementHandler, (handler, hand: pusoy.Hand<number[]>) =>
         handler.sendArrangementToServer(hand, true)
     )

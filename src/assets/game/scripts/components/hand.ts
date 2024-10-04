@@ -268,15 +268,12 @@ export class Hand extends ObserverComponent {
 
     observeOtherPlayers() {
         const cards = this.segments.reduce((result, segment) => result.concat(segment.getComponentsInChildren(HandCard)), [] as HandCard[]);
-
         for (const card of cards) {
             card.node.active = false;
         }
-
         for (const card of cards) {
             const targetPosition = card.node.getWorldPosition();
             const targetRotation = card.node.rotation.clone();
-
             card.node.setRotation(targetRotation);
             card.node.setWorldPosition(targetPosition);
             card.disable = false;
@@ -312,7 +309,10 @@ export class Hand extends ObserverComponent {
                 this.node.active = false;
             }
         } else {
-            this.node.active = true;
+            if (this.slotIndex === 0) {
+                this.node.active = true;
+                this.activeCards(false);
+            }
         }
     }
 }
