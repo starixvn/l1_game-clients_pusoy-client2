@@ -24,6 +24,8 @@ export class JoinNextGamePopup extends ObserverComponent {
     observeRound(observingRound: boolean) {
         if (observingRound) {
             this.startPopup();
+        } else {
+            this.node.active = false;
         }
     }
 }
