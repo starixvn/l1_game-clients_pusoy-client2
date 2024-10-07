@@ -11,4 +11,5 @@ export enum AudioIds {
     CHIPS_FLY_LOSERS = "chips-fly-losers",
     CRACKS = "cracks",
     COLLECT_CARDS = "collect-cards",
+    BUTTON_READY = "button-ready",
 }

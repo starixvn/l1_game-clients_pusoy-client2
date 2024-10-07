@@ -61,6 +61,10 @@
         "bundle": "resources",
         "path": "pusoy/move-card"
     },
+    "button-ready": {
+        "bundle": "resources",
+        "path": "pusoy/button_ready"
+    },
     "count-down": {
         "bundle": "resources",
         "path": "pusoy/count-down"

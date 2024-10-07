@@ -4,10 +4,13 @@ import Observer from "observer";
 import gc from "@sg/game-client-base";
 
 const { handle } = Observer;
-const { ccclass } = _decorator;
+const { ccclass, property } = _decorator;
 
 @ccclass("ClickEffect")
 export class ClickEffect extends ObserverComponent {
+    @property(String)
+    soundEffect: string = gc.Audios.AudioIds.CLICK;
+
     private _tweenStart: Tween<Node> | null = null;
     private _tweenEnd: Tween<Node> | null = null;
 
@@ -47,6 +50,6 @@ export class ClickEffect extends ObserverComponent {
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playClickSound() {
-        return gc.Audios.AudioIds.CLICK;
+        return this.soundEffect;
     }
 }

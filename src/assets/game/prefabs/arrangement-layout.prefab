@@ -2059,6 +2059,7 @@
     "__prefab": {
       "__id__": 151
     },
+    "soundEffect": "button-ready",
     "_id": ""
   },
   {
@@ -2261,6 +2262,7 @@
     "__prefab": {
       "__id__": 162
     },
+    "soundEffect": "click",
     "_id": ""
   },
   {
