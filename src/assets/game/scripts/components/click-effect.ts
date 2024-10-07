@@ -27,10 +27,10 @@ export class ClickEffect extends ObserverComponent {
     onTouchStart() {
         if (this._tweenStart) {
             this._tweenStart.stop();
-            this.node.scale = v3(0.8, 0.8, 0.8);
+            this.node.scale = v3(1.1, 1.1, 1.1);
         } else {
             this._tweenStart = tween(this.node)
-                .to(0.1, { scale: v3(0.8, 0.8, 0.8) }, { easing: easing.smooth })
+                .to(0.1, { scale: v3(1.1, 1.1, 1.1) }, { easing: easing.smooth })
                 .start();
         }
     }
