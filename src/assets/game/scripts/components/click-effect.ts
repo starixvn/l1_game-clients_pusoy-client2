@@ -16,11 +16,13 @@ export class ClickEffect extends ObserverComponent {
 
     onEnable() {
         this.node.on(Node.EventType.TOUCH_START, this.onTouchStart, this);
+        this.node.on(Node.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
         this.node.on(Node.EventType.TOUCH_END, this.onTouchEnd, this);
     }
 
     onDisable() {
         this.node.off(Node.EventType.TOUCH_START, this.onTouchStart, this);
+        this.node.on(Node.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
         this.node.off(Node.EventType.TOUCH_END, this.onTouchEnd, this);
     }
 
@@ -38,6 +40,17 @@ export class ClickEffect extends ObserverComponent {
     onTouchEnd() {
         this.playClickSound();
 
+        if (this._tweenEnd) {
+            this._tweenEnd.stop();
+            this.node.scale = v3(1, 1, 1);
+        } else {
+            this._tweenEnd = tween(this.node)
+                .to(0.1, { scale: v3(1, 1, 1) }, { easing: easing.smooth })
+                .start();
+        }
+    }
+
+    onTouchCancel() {
         if (this._tweenEnd) {
             this._tweenEnd.stop();
             this.node.scale = v3(1, 1, 1);

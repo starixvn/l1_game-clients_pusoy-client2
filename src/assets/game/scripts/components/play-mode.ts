@@ -16,6 +16,8 @@ export default class PlayMode extends ObserverComponent {
     @handle(gc.GamePusoy.Survey.SurveyHandler, (handler, payload: boolean) => handler.handleOpenSurveyPopup(payload))
     onChangeOpenSurveyPopup() {
         if (this.toggle.isChecked) {
+            this.playClickSound();
+
             utils.AnalyticsManager.trackEvent(utils.TrackingEvent.Button, {
                 location: FunctionUtils.getNamespace(),
                 action: utils.TrackingAction.Click,
@@ -33,5 +35,10 @@ export default class PlayMode extends ObserverComponent {
         if (this.toggle) {
             this.toggle.isChecked = visible;
         }
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playClickSound() {
+        return gc.Audios.AudioIds.CLICK;
     }
 }
