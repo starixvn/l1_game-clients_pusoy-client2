@@ -201,25 +201,10 @@ export class players extends ObserverComponent {
             this.scheduleOnce(() => {
                 avatarBorderAnimationWin.active = true;
 
-                tween(borderUiOpacity)
-                    .to(3, { opacity: 0 })
-                    .call(() => {
-                        avatarBorderAnimationWin.active = false;
-                    })
-                    .start();
+                this.scheduleOnce(() => {
+                    avatarBorderAnimationWin.active = false;
+                }, 3);
             }, 1);
-
-            const avatarBorderWin = playerAvatar.getChildByName("border-win");
-            const borderUiOpacity = avatarBorderWin.getComponent(UIOpacity);
-
-            const embedTween = tween(borderUiOpacity).to(0.4, { opacity: 255 }).to(0.4, { opacity: 10 });
-
-            tween(borderUiOpacity)
-                .repeat(5, embedTween)
-                .call(() => {
-                    borderUiOpacity.opacity = 0;
-                })
-                .start();
         }
     }
 
