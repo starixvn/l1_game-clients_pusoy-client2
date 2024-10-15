@@ -244,7 +244,9 @@ export class Hand extends ObserverComponent {
 
         for (const card of cards) {
             const dealerPosition = this.dealerNode.getWorldPosition();
-            const targetPosition = card.node.getWorldPosition();
+            const targetNode = new Node();
+            targetNode.parent = card.node.parent;
+            targetNode.setPosition(card.node.position);
             const targetRotation = card.node.rotation.clone();
 
             await new Promise((resolve) => {
@@ -256,10 +258,11 @@ export class Hand extends ObserverComponent {
                         card.disable = false;
                         card.node.active = true;
                     })
-                    .to(0.1, { scale: v3(1, 1, 1), rotation: targetRotation, worldPosition: targetPosition })
+                    .to(0.1, { scale: v3(1, 1, 1), rotation: targetRotation, position: targetNode.position })
                     .call(() => {
                         card.flip(0.32, !this.mine);
                         resolve(card);
+                        targetNode.destroy();
                     })
                     .start();
             });
@@ -268,14 +271,12 @@ export class Hand extends ObserverComponent {
 
     observeOtherPlayers() {
         const cards = this.segments.reduce((result, segment) => result.concat(segment.getComponentsInChildren(HandCard)), [] as HandCard[]);
+
         for (const card of cards) {
             card.node.active = false;
         }
+
         for (const card of cards) {
-            const targetPosition = card.node.getWorldPosition();
-            const targetRotation = card.node.rotation.clone();
-            card.node.setRotation(targetRotation);
-            card.node.setWorldPosition(targetPosition);
             card.disable = false;
             card.node.active = true;
             card.back = true;
