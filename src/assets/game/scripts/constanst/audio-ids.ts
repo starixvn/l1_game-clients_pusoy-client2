@@ -1,0 +1,15 @@
+export enum AudioIds {
+    DEAL_CARDS = "deal-cards",
+    NATURAL_CONGRATS = "congrats-natural",
+    MATCH_COMBINATION = "match-combination",
+    COUNT_DOWN = "count-down",
+    PUSOY = "pusoy",
+    REVEAL_HANDS = "reveal-hands",
+    REVEAL_WINNING_HANDS = "reveal-winning-hands",
+    MOVE_CARD = "move-card",
+    CHIPS_FLY_WINNERS = "chips-fly-winners",
+    CHIPS_FLY_LOSERS = "chips-fly-losers",
+    CRACKS = "cracks",
+    COLLECT_CARDS = "collect-cards",
+    BUTTON_READY = "button-ready",
+}

@@ -1,0 +1,97 @@
+
+effect-explosion.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: false
+  xy: 104, 806
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+10
+  rotate: false
+  xy: 2, 2
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+11
+  rotate: false
+  xy: 404, 2
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+12
+  rotate: false
+  xy: 806, 2
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 506, 806
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+3
+  rotate: false
+  xy: 908, 806
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+4
+  rotate: false
+  xy: 1310, 806
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+5
+  rotate: false
+  xy: 2, 404
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+6
+  rotate: false
+  xy: 404, 404
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+7
+  rotate: false
+  xy: 806, 404
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+8
+  rotate: false
+  xy: 1208, 404
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+9
+  rotate: false
+  xy: 1610, 404
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+eff_spot
+  rotate: false
+  xy: 2, 1106
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1

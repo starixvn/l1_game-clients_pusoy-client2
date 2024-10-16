@@ -1,4 +1,4 @@
-import { _decorator, Color, Component, Enum, Node, Sprite } from "cc";
+import { _decorator, Color, Component, Enum, Node, Sprite, UITransform } from "cc";
 
 const { ccclass, property } = _decorator;
 
@@ -83,6 +83,9 @@ export class Card extends Component {
     @property(Sprite)
     protected suitImage: Sprite = null;
 
+    @property(Node)
+    protected disableNode: Node = null;
+
     @property({ type: Enum(CardRank) })
     public get rank() {
         return this._rank;
@@ -109,20 +112,37 @@ export class Card extends Component {
     }
 
     public set back(value: boolean) {
-        this.backNode.active = value;
+        this.backNode!.active = value;
+    }
+
+    @property
+    public get disable() {
+        return this.disableNode.active;
+    }
+
+    public set disable(value: boolean) {
+        this.disableNode!.active = value;
+    }
+
+    @property
+    public get size() {
+        const ui = this.node.getComponent(UITransform);
+
+        return ui.width;
+    }
+
+    public set size(value: number) {
+        const ui = this.node.getComponent(UITransform);
+        const height = (value * 177) / 134;
+
+        ui.setContentSize(value, height);
     }
 
     protected render(): void {
-        if (this.back) {
-            this.backNode.active = true;
-        } else {
-            this.suitImage.spriteFrame = this.getSuitSpriteFrame();
-            this.rankImage.spriteFrame = this.getRankSpriteFrame();
+        this.suitImage.spriteFrame = this.getSuitSpriteFrame();
+        this.rankImage.spriteFrame = this.getRankSpriteFrame();
 
-            this.updateColor();
-
-            this.backNode.active = false;
-        }
+        this.updateColor();
     }
 
     protected getSuitSpriteFrame() {

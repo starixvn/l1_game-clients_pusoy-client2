@@ -1,0 +1,27 @@
+
+effect-confetti.png
+size: 128,64
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+red
+  rotate: false
+  xy: 2, 2
+  size: 38, 31
+  orig: 38, 31
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 42, 7
+  size: 54, 26
+  orig: 54, 26
+  offset: 0, 0
+  index: -1
+triangle
+  rotate: true
+  xy: 98, 5
+  size: 28, 27
+  orig: 28, 27
+  offset: 0, 0
+  index: -1

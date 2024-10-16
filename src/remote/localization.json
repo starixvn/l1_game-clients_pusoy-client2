@@ -1,18 +1,18 @@
 {
     "lobbyNames": {
-        "en": "Dragon Tiger Fight",
-        "id": "Tarung\nNaga Harimau",
-        "th": "เสือมังกรไฟท์",
-        "vi": "Đại Chiến Rồng Hổ",
-        "zh_cn": "龙虎斗",
-        "zh_tw": "龍虎鬥"
+        "en": "PUSOY",
+        "id": "PUSOY",
+        "th": "PUSOY",
+        "vi": "MẬU BINH",
+        "zh_cn": "PUSOY",
+        "zh_tw": "PUSOY"
     },
     "gameNames": {
-        "en": "Dragon Tiger Fight",
-        "id": "Tarung Naga Harimau",
-        "th": "เสือมังกรไฟท์",
-        "vi": "Đại Chiến Rồng Hổ",
-        "zh_cn": "龙虎斗",
-        "zh_tw": "龍虎鬥"
+        "en": "Pusoy",
+        "vi": "Mậu Binh",
+        "id": "Pusoy",
+        "th": "Pusoy",
+        "zh_cn": "Pusoy",
+        "zh_tw": "Pusoy"
     }
 }
