@@ -94,7 +94,7 @@ export default class Game extends GameComponent {
 
             for (const hand of hands) {
                 if (!hand.mine) {
-                    hand.showSwapCards(true);
+                    hand.showSwapCards();
                     hand.activeCards(true);
                 } else {
                     hand.activeCards(true, true);
@@ -369,7 +369,7 @@ export default class Game extends GameComponent {
             const submittedPlayer = submittedPlayersMap[hand.getSlotIndex()];
             if (submittedPlayer) {
                 this._readyLabelMap[submittedPlayer.name] = hand.node.getComponent(ReadyLabel).init();
-                hand.showSwapCards(false);
+                hand.stopAllSwapping();
             }
         }
     }
@@ -393,7 +393,7 @@ export default class Game extends GameComponent {
                 if (hand.mine) {
                     hand.activeCards(true, true);
                 } else {
-                    hand.showSwapCards(false);
+                    hand.stopAllSwapping();
                 }
             }
 

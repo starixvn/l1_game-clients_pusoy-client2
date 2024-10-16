@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, Component, easing, instantiate, Label, Node, Prefab, Tween, tween, v3, Vec3 } from "cc";
+import { _decorator, CCInteger, easing, instantiate, math, Node, Prefab, Tween, tween, v3, Vec3 } from "cc";
 import { HandCard } from "./hand-card";
 import { HandSegment } from "./hand-segment";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
@@ -6,7 +6,7 @@ import Observer from "observer";
 import gc from "@sg/game-client-base";
 
 const { ccclass, property } = _decorator;
-const { handle, render } = Observer;
+const { render } = Observer;
 
 @ccclass
 export class Hand extends ObserverComponent {
@@ -32,12 +32,10 @@ export class Hand extends ObserverComponent {
         node: Node;
         tween: Tween<Node>;
         target: {
-            worldPosition: Vec3;
-            eulerAngles: Vec3;
+            position: Vec3;
+            rotation: math.Quat;
         };
     }[] = [];
-
-    private _shouldSwap = false;
 
     @property
     mine = false;
@@ -47,6 +45,8 @@ export class Hand extends ObserverComponent {
     crack = false;
 
     playerNaturalOrCrack = false;
+
+    private _shouldSwap = false;
 
     get cards(): HandCard[] {
         const result = [];
@@ -104,19 +104,18 @@ export class Hand extends ObserverComponent {
         }
     }
 
-    showSwapCards(showSwapCards: boolean) {
-        this._shouldSwap = showSwapCards;
+    showSwapCards() {
+        this._shouldSwap = true;
 
-        if (showSwapCards) {
-            this.schedule(() => {
-                const random = Math.random();
-                if (this._shouldSwap && random < 0.5 && this._swappingTween.length === 0) {
-                    this.randomSwapCards();
-                }
-            }, 2);
-        } else {
-            this.stopAllSwapping();
-        }
+        const keepSwap = () => {
+            if (!this._shouldSwap) {
+                this.unschedule(keepSwap);
+            } else if (Math.random() < 0.5 && this._swappingTween.length === 0) {
+                this.randomSwapCards();
+            }
+        };
+
+        this.schedule(keepSwap, 1.5);
     }
 
     randomSwapCards() {
@@ -138,30 +137,41 @@ export class Hand extends ObserverComponent {
     }
 
     swap(from: Node, to: Node) {
-        const { parent, worldPosition, eulerAngles } = from;
+        const fromParent = from.getParent();
+        const fromPosition = from.getPosition();
+        const fromWorldPosition = from.getWorldPosition();
         const fromSiblingIndex = from.getSiblingIndex();
-        const { worldPosition: toPosition, eulerAngles: toEulerAngles } = to;
+        const fromRotation = from.getRotation();
 
-        from.setParent(to.parent);
-        from.setWorldPosition(worldPosition);
-        from.setSiblingIndex(to.getSiblingIndex());
+        const toParent = to.getParent();
+        const toPosition = to.getPosition();
+        const toWorldPosition = to.getWorldPosition();
+        const toSiblingIndex = to.getSiblingIndex();
+        const toRotation = to.getRotation();
 
-        to.setParent(parent);
-        to.setWorldPosition(toPosition);
+        from.setParent(toParent);
+        from.setWorldPosition(fromWorldPosition);
+        from.setSiblingIndex(toSiblingIndex);
+
+        to.setParent(fromParent);
+        to.setWorldPosition(toWorldPosition);
         to.setSiblingIndex(fromSiblingIndex);
-        const targetFrom = { worldPosition: new Vec3(worldPosition), eulerAngles: new Vec3(eulerAngles) };
-        const targetTo = { worldPosition: new Vec3(toPosition), eulerAngles: new Vec3(toEulerAngles) };
+
+        const targetFrom = { position: fromPosition, rotation: fromRotation };
+        const targetTo = { position: toPosition, rotation: toRotation };
 
         const t1 = tween(to)
             .to(0.5, targetFrom, { easing: easing.smooth })
             .call(() => {
                 this._swappingTween = this._swappingTween.filter(({ node }) => node.uuid !== to.uuid);
             });
+
         const t2 = tween(from)
             .to(0.5, targetTo, { easing: easing.smooth })
             .call(() => {
                 this._swappingTween = this._swappingTween.filter(({ node }) => node.uuid !== from.uuid);
             });
+
         this._swappingTween.push(
             {
                 node: to,
@@ -179,11 +189,14 @@ export class Hand extends ObserverComponent {
     }
 
     stopAllSwapping() {
+        this._shouldSwap = false;
+
         this._swappingTween.forEach(({ node, tween, target }) => {
             tween.stop();
-            node.setWorldPosition(target.worldPosition);
-            node.setRotationFromEuler(target.eulerAngles);
+            node.setPosition(target.position);
+            node.setRotation(target.rotation);
         });
+
         this._swappingTween = [];
     }
 
