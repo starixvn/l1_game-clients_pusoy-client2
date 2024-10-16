@@ -147,10 +147,21 @@ export class players extends ObserverComponent {
 
     flyCoins(sourceCoin: Node, targetCoin: Node) {
         const newCoin = instantiate(this.coinPrefab);
-        this.node.addChild(newCoin);
-        newCoin.setWorldPosition(sourceCoin.worldPosition);
+        const tmpTargetCoin = new Node();
 
-        tween(newCoin).to(COIN_FLIGHT_DURATION, { worldPosition: targetCoin.worldPosition }).destroySelf().start();
+        this.node.addChild(newCoin);
+        this.node.addChild(tmpTargetCoin);
+
+        newCoin.setWorldPosition(sourceCoin.worldPosition);
+        tmpTargetCoin.setWorldPosition(targetCoin.worldPosition);
+
+        tween(newCoin)
+            .to(COIN_FLIGHT_DURATION, { position: tmpTargetCoin.getPosition() })
+            .destroySelf()
+            .call(() => {
+                tmpTargetCoin.destroy();
+            })
+            .start();
     }
 
     animateShowTotalWin() {
