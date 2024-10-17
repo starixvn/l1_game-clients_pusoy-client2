@@ -33,6 +33,7 @@ export default class SearchingPlayers extends ObserverComponent {
 
     stopSearching() {
         this.time = 0;
+        this.waitTime.string = ` 00 s`;
         clearInterval(this.runner);
     }
 

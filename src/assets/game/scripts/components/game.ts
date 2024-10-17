@@ -405,10 +405,14 @@ export default class Game extends GameComponent {
         }
     }
 
+    @handle(gc.GamePusoy.Rounds.RoundTimeHandlers, (handler) => handler.handleRoundEnd())
+    handleRoundEnd() {}
+
     @render(gc.GamePusoy.Settlement.SettlementStore, (store) => store.showAnimation[ANIMATION_STAGES.chipFly])
     handleAfterSettle(showAnimation: boolean) {
         if (showAnimation) {
             this.handleClearCrack();
+            this.handleRoundEnd();
         }
     }
 
