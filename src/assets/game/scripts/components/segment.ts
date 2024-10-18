@@ -67,7 +67,7 @@ export class Segment extends Component {
             const card = this.segmentContainer.children[i].getComponent(CardContainer);
             const frame = card.draggableCardNode.getComponent(CardFrame);
             const value = card.getCardValue();
-            const frames = [];
+            const frames: CardFrame[] = [];
             if (highlightValues.includes(value)) {
                 frame.state = CardState.Highlight;
                 frames.push(frame);

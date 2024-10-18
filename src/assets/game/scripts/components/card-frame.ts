@@ -101,10 +101,10 @@ export class CardFrame extends ObserverComponent {
         }
 
         this._highlightFrameTimeout = setTimeout(() => {
-            this.highlightFrame.active = false;
+            this.highlightFrame && (this.highlightFrame.active = false);
         }, 1000);
         this._highlightStarTimeout = setTimeout(() => {
-            this.highlighStar.active = false;
+            this.highlighStar && (this.highlighStar.active = false);
         }, 1200);
     }
 
