@@ -128,7 +128,6 @@ export default class Game extends GameComponent {
             );
 
             this._crackHand = [];
-
             this.finishSettleAnimation(ANIMATION_STAGES.crack as AnimationStage);
         }
     }
