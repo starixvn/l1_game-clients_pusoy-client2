@@ -1768,7 +1768,30 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
-    "_id": ""
+    "_id": "",
+    "_enableShadow": true,
+    "_shadowBlur": 3,
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": -4
+    },
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 127
+    },
+    "_enableOutline": true,
+    "_outlineWidth": 4,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 199,
+      "g": 80,
+      "b": 0,
+      "a": 255
+    }
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -1786,19 +1809,6 @@
     "__prefab": {
       "__id__": 75
     },
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
-      "a": 127
-    },
-    "_offset": {
-      "__type__": "cc.Vec2",
-      "x": 2,
-      "y": -4
-    },
-    "_blur": 3,
     "_id": ""
   },
   {
@@ -1817,14 +1827,6 @@
     "__prefab": {
       "__id__": 77
     },
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 199,
-      "g": 80,
-      "b": 0,
-      "a": 255
-    },
-    "_width": 4,
     "_id": ""
   },
   {

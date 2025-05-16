@@ -1,7 +1,7 @@
 import { values } from "lodash-es";
 import gc from "@sg/game-client-base";
 import { CCInteger, Label, Sprite, SpriteFrame, _decorator, Node, Vec3, Color } from "cc";
-import { bundleManager } from "db://shared-components/shared/common-components/bundle-magager/bundle-manager";
+import { bundleManager } from "db://shared-components/shared/common-components/bundle-manager/bundle-manager";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import Observer from "observer";
 import { GradientNode } from "db://shared-components/shared/common-components/custom-materials/components/gradient-node";

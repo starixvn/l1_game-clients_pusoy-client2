@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.8",
+  "ver": "2.3.13",
   "importer": "fbx",
   "imported": true,
   "uuid": "b577f6ec-660e-4599-ad97-0b90053bc13e",
@@ -109,7 +109,6 @@
     "fbx": {
       "smartMaterialEnabled": true
     },
-    "redirect": "b577f6ec-660e-4599-ad97-0b90053bc13e@a9fa0",
     "lods": {
       "enable": false,
       "hasBuiltinLOD": false,

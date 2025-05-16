@@ -1,4 +1,4 @@
-import { bundleManager } from "db://shared-components/shared/common-components/bundle-magager/bundle-manager";
+import { bundleManager } from "db://shared-components/shared/common-components/bundle-manager/bundle-manager";
 import { CCBoolean, Component, Font, Label, _decorator } from "cc";
 import gc from "@sg/game-client-base";
 
