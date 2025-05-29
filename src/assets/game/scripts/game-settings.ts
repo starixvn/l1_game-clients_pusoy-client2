@@ -1,9 +1,12 @@
 import gc from "@sg/game-client-base";
 import { sharedContainer } from "../../scripts/shared-container";
 
+const GAME_NAME = "Pusoy";
+
 export const settings = {
     id: 94,
-    name: "Pusoy",
+    name: GAME_NAME,
+    observerNamespace: GAME_NAME,
     durations: {},
 };
 

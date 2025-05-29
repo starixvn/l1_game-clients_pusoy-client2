@@ -6,7 +6,6 @@
     },
     "configs": {
       "migrationsConfig": {
-        "name": "Migrated Configuration",
         "cache": {
           "base": {
             "_value": true
@@ -27,7 +26,7 @@
             "_value": false
           },
           "3d": {
-            "_value": true
+            "_value": false
           },
           "meshopt": {
             "_value": false
@@ -57,7 +56,7 @@
             "_value": true
           },
           "particle": {
-            "_value": true
+            "_value": false
           },
           "physics": {
             "_value": false,
@@ -190,10 +189,12 @@
             "_value": false
           }
         },
-        "flags": {},
+        "flags": {
+          "LOAD_SPINE_MANUALLY": false
+        },
+        "name": "Migrated Configuration",
         "includeModules": [
           "2d",
-          "3d",
           "affine-transform",
           "animation",
           "audio",
@@ -203,7 +204,6 @@
           "intersection-2d",
           "legacy-pipeline",
           "mask",
-          "particle",
           "particle-2d",
           "physics-2d-builtin",
           "profiler",
