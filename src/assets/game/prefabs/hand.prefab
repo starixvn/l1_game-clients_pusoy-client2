@@ -553,7 +553,6 @@
     "_timeScale": 1,
     "_preCacheMode": 0,
     "_cacheMode": 0,
-    "_defaultCacheMode": 0,
     "_sockets": [
       {
         "__id__": 19
@@ -716,14 +715,16 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
-    "_id": "",
-    "_enableShadow": true,
-    "_shadowBlur": 3,
-    "_shadowOffset": {
-      "__type__": "cc.Vec2",
-      "x": 2,
-      "y": -4
+    "_enableOutline": true,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 47,
+      "g": 21,
+      "b": 6,
+      "a": 255
     },
+    "_outlineWidth": 2,
+    "_enableShadow": true,
     "_shadowColor": {
       "__type__": "cc.Color",
       "r": 0,
@@ -731,15 +732,13 @@
       "b": 0,
       "a": 127
     },
-    "_enableOutline": true,
-    "_outlineWidth": 2,
-    "_outlineColor": {
-      "__type__": "cc.Color",
-      "r": 47,
-      "g": 21,
-      "b": 6,
-      "a": 255
-    }
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": -4
+    },
+    "_shadowBlur": 3,
+    "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -1125,7 +1124,6 @@
     "_timeScale": 1,
     "_preCacheMode": 0,
     "_cacheMode": 0,
-    "_defaultCacheMode": 0,
     "_sockets": [
       {
         "__id__": 50
@@ -1288,14 +1286,16 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
-    "_id": "",
-    "_enableShadow": true,
-    "_shadowBlur": 3,
-    "_shadowOffset": {
-      "__type__": "cc.Vec2",
-      "x": 2,
-      "y": -4
+    "_enableOutline": true,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 47,
+      "g": 21,
+      "b": 6,
+      "a": 255
     },
+    "_outlineWidth": 2,
+    "_enableShadow": true,
     "_shadowColor": {
       "__type__": "cc.Color",
       "r": 0,
@@ -1303,15 +1303,13 @@
       "b": 0,
       "a": 127
     },
-    "_enableOutline": true,
-    "_outlineWidth": 2,
-    "_outlineColor": {
-      "__type__": "cc.Color",
-      "r": 47,
-      "g": 21,
-      "b": 6,
-      "a": 255
-    }
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": -4
+    },
+    "_shadowBlur": 3,
+    "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -1684,7 +1682,6 @@
     "_timeScale": 1,
     "_preCacheMode": 0,
     "_cacheMode": 0,
-    "_defaultCacheMode": 0,
     "_sockets": [
       {
         "__id__": 83
@@ -1847,14 +1844,16 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
-    "_id": "",
-    "_enableShadow": true,
-    "_shadowBlur": 3,
-    "_shadowOffset": {
-      "__type__": "cc.Vec2",
-      "x": 2,
-      "y": -4
+    "_enableOutline": true,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 47,
+      "g": 21,
+      "b": 6,
+      "a": 255
     },
+    "_outlineWidth": 2,
+    "_enableShadow": true,
     "_shadowColor": {
       "__type__": "cc.Color",
       "r": 0,
@@ -1862,15 +1861,13 @@
       "b": 0,
       "a": 127
     },
-    "_enableOutline": true,
-    "_outlineWidth": 2,
-    "_outlineColor": {
-      "__type__": "cc.Color",
-      "r": 47,
-      "g": 21,
-      "b": 6,
-      "a": 255
-    }
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": -4
+    },
+    "_shadowBlur": 3,
+    "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -2380,14 +2377,16 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
-    "_id": "",
-    "_enableShadow": true,
-    "_shadowBlur": 3,
-    "_shadowOffset": {
-      "__type__": "cc.Vec2",
-      "x": 2,
-      "y": -4
+    "_enableOutline": true,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 47,
+      "g": 21,
+      "b": 6,
+      "a": 255
     },
+    "_outlineWidth": 2,
+    "_enableShadow": true,
     "_shadowColor": {
       "__type__": "cc.Color",
       "r": 0,
@@ -2395,15 +2394,13 @@
       "b": 0,
       "a": 127
     },
-    "_enableOutline": true,
-    "_outlineWidth": 2,
-    "_outlineColor": {
-      "__type__": "cc.Color",
-      "r": 47,
-      "g": 21,
-      "b": 6,
-      "a": 255
-    }
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": -4
+    },
+    "_shadowBlur": 3,
+    "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -2717,14 +2714,16 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
-    "_id": "",
-    "_enableShadow": true,
-    "_shadowBlur": 3,
-    "_shadowOffset": {
-      "__type__": "cc.Vec2",
-      "x": 2,
-      "y": -4
+    "_enableOutline": true,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 47,
+      "g": 21,
+      "b": 6,
+      "a": 255
     },
+    "_outlineWidth": 2,
+    "_enableShadow": true,
     "_shadowColor": {
       "__type__": "cc.Color",
       "r": 0,
@@ -2732,15 +2731,13 @@
       "b": 0,
       "a": 127
     },
-    "_enableOutline": true,
-    "_outlineWidth": 2,
-    "_outlineColor": {
-      "__type__": "cc.Color",
-      "r": 47,
-      "g": 21,
-      "b": 6,
-      "a": 255
-    }
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": -4
+    },
+    "_shadowBlur": 3,
+    "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -3044,14 +3041,16 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
-    "_id": "",
-    "_enableShadow": true,
-    "_shadowBlur": 3,
-    "_shadowOffset": {
-      "__type__": "cc.Vec2",
-      "x": 2,
-      "y": -4
+    "_enableOutline": true,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 47,
+      "g": 21,
+      "b": 6,
+      "a": 255
     },
+    "_outlineWidth": 2,
+    "_enableShadow": true,
     "_shadowColor": {
       "__type__": "cc.Color",
       "r": 0,
@@ -3059,15 +3058,13 @@
       "b": 0,
       "a": 127
     },
-    "_enableOutline": true,
-    "_outlineWidth": 2,
-    "_outlineColor": {
-      "__type__": "cc.Color",
-      "r": 47,
-      "g": 21,
-      "b": 6,
-      "a": 255
-    }
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": -4
+    },
+    "_shadowBlur": 3,
+    "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",

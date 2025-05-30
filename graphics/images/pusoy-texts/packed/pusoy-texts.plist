@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>logo-pusoy-en.png</key>
+            <key>logo_pusoy_en.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -19,7 +19,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>logo-pusoy-vn.png</key>
+            <key>logo_pusoy_vi.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -34,7 +34,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>text-Pusoy-2-vn.png</key>
+            <key>text_Pusoy_2_vi.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -49,7 +49,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>text-Pusoy-en.png</key>
+            <key>text_Pusoy_en.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -64,7 +64,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>text-Pusoy-vn.png</key>
+            <key>text_Pusoy_vi.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -79,7 +79,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>text-Ready-en.png</key>
+            <key>text_Ready.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -94,7 +94,22 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>text-Ready-vn.png</key>
+            <key>text_Ready_en.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{260,78}</string>
+                <key>spriteSourceSize</key>
+                <string>{260,78}</string>
+                <key>textureRect</key>
+                <string>{{415,318},{260,78}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>text_Ready_vi.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -109,22 +124,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>text-Ready.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{0,0}</string>
-                <key>spriteSize</key>
-                <string>{260,78}</string>
-                <key>spriteSourceSize</key>
-                <string>{260,78}</string>
-                <key>textureRect</key>
-                <string>{{415,318},{260,78}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>text-crack-en.png</key>
+            <key>text_crack_en.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -139,7 +139,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>text-crack-vn.png</key>
+            <key>text_crack_vi.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -154,7 +154,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>text-win-en.png</key>
+            <key>text_win_en.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -169,7 +169,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>text-win-vn.png</key>
+            <key>text_win_vi.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -194,13 +194,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>pusoy-texts.png</string>
+            <string>pusoy-texts.webp</string>
             <key>size</key>
             <string>{512,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:c486bfd72acd8e26c794723ec772a24b:c0d6c42751db66b3807ac2c5ffe33adf:11058d747a32d650d72d6de6b06459f6$</string>
+            <string>$TexturePacker:SmartUpdate:6b43d3772c742f6c55f056551bf945f5:17edaf7e0339b36288a59ac8675aa4bb:ffb6d573202fc61107e5cf5e6129c50c$</string>
             <key>textureFileName</key>
-            <string>pusoy-texts.png</string>
+            <string>pusoy-texts.webp</string>
         </dict>
     </dict>
 </plist>

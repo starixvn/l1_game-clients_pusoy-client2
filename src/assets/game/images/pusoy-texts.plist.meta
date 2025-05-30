@@ -7,14 +7,13 @@
     ".json"
   ],
   "subMetas": {
-    "56878": {
+    "27709": {
       "importer": "sprite-frame",
-      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@56878",
+      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@27709",
       "displayName": "",
-      "id": "56878",
-      "name": "text-Ready",
+      "id": "27709",
+      "name": "text_Ready",
       "userData": {
-        "trimType": "auto",
         "trimThreshold": 1,
         "rotated": true,
         "offsetX": 0,
@@ -43,8 +42,9 @@
           "maxPos": []
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "6415a521-3980-4998-bb90-fca3d323c1cc@6c48a",
-        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7"
+        "imageUuidOrDatabaseUri": "db29eeca-53aa-4c9c-83d6-397ec4237f03@6c48a",
+        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
+        "trimType": "auto"
       },
       "ver": "1.0.12",
       "imported": true,
@@ -53,14 +53,13 @@
       ],
       "subMetas": {}
     },
-    "7be12": {
+    "900cb": {
       "importer": "sprite-frame",
-      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@7be12",
+      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@900cb",
       "displayName": "",
-      "id": "7be12",
-      "name": "logo-pusoy-en",
+      "id": "900cb",
+      "name": "logo_pusoy_en",
       "userData": {
-        "trimType": "auto",
         "trimThreshold": 1,
         "rotated": false,
         "offsetX": 0,
@@ -89,8 +88,9 @@
           "maxPos": []
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "6415a521-3980-4998-bb90-fca3d323c1cc@6c48a",
-        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7"
+        "imageUuidOrDatabaseUri": "db29eeca-53aa-4c9c-83d6-397ec4237f03@6c48a",
+        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
+        "trimType": "auto"
       },
       "ver": "1.0.12",
       "imported": true,
@@ -99,14 +99,13 @@
       ],
       "subMetas": {}
     },
-    "dd115": {
+    "0735a": {
       "importer": "sprite-frame",
-      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@dd115",
+      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@0735a",
       "displayName": "",
-      "id": "dd115",
-      "name": "logo-pusoy-vn",
+      "id": "0735a",
+      "name": "logo_pusoy_vi",
       "userData": {
-        "trimType": "auto",
         "trimThreshold": 1,
         "rotated": false,
         "offsetX": 0,
@@ -135,8 +134,9 @@
           "maxPos": []
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "6415a521-3980-4998-bb90-fca3d323c1cc@6c48a",
-        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7"
+        "imageUuidOrDatabaseUri": "db29eeca-53aa-4c9c-83d6-397ec4237f03@6c48a",
+        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
+        "trimType": "auto"
       },
       "ver": "1.0.12",
       "imported": true,
@@ -145,14 +145,13 @@
       ],
       "subMetas": {}
     },
-    "dbec1": {
+    "63b01": {
       "importer": "sprite-frame",
-      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@dbec1",
+      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@63b01",
       "displayName": "",
-      "id": "dbec1",
-      "name": "text-Pusoy-2-vn",
+      "id": "63b01",
+      "name": "text_Pusoy_2_vi",
       "userData": {
-        "trimType": "auto",
         "trimThreshold": 1,
         "rotated": false,
         "offsetX": 0,
@@ -181,8 +180,9 @@
           "maxPos": []
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "6415a521-3980-4998-bb90-fca3d323c1cc@6c48a",
-        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7"
+        "imageUuidOrDatabaseUri": "db29eeca-53aa-4c9c-83d6-397ec4237f03@6c48a",
+        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
+        "trimType": "auto"
       },
       "ver": "1.0.12",
       "imported": true,
@@ -191,14 +191,13 @@
       ],
       "subMetas": {}
     },
-    "4837e": {
+    "1dd05": {
       "importer": "sprite-frame",
-      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@4837e",
+      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@1dd05",
       "displayName": "",
-      "id": "4837e",
-      "name": "text-Pusoy-en",
+      "id": "1dd05",
+      "name": "text_Pusoy_en",
       "userData": {
-        "trimType": "auto",
         "trimThreshold": 1,
         "rotated": false,
         "offsetX": 0,
@@ -227,8 +226,9 @@
           "maxPos": []
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "6415a521-3980-4998-bb90-fca3d323c1cc@6c48a",
-        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7"
+        "imageUuidOrDatabaseUri": "db29eeca-53aa-4c9c-83d6-397ec4237f03@6c48a",
+        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
+        "trimType": "auto"
       },
       "ver": "1.0.12",
       "imported": true,
@@ -237,14 +237,13 @@
       ],
       "subMetas": {}
     },
-    "7aa15": {
+    "b0903": {
       "importer": "sprite-frame",
-      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@7aa15",
+      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@b0903",
       "displayName": "",
-      "id": "7aa15",
-      "name": "text-Pusoy-vn",
+      "id": "b0903",
+      "name": "text_Pusoy_vi",
       "userData": {
-        "trimType": "auto",
         "trimThreshold": 1,
         "rotated": true,
         "offsetX": 1,
@@ -273,8 +272,9 @@
           "maxPos": []
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "6415a521-3980-4998-bb90-fca3d323c1cc@6c48a",
-        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7"
+        "imageUuidOrDatabaseUri": "db29eeca-53aa-4c9c-83d6-397ec4237f03@6c48a",
+        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
+        "trimType": "auto"
       },
       "ver": "1.0.12",
       "imported": true,
@@ -283,14 +283,13 @@
       ],
       "subMetas": {}
     },
-    "566be": {
+    "c6ac7": {
       "importer": "sprite-frame",
-      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@566be",
+      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@c6ac7",
       "displayName": "",
-      "id": "566be",
-      "name": "text-Ready-en",
+      "id": "c6ac7",
+      "name": "text_Ready_en",
       "userData": {
-        "trimType": "auto",
         "trimThreshold": 1,
         "rotated": true,
         "offsetX": 0,
@@ -319,8 +318,9 @@
           "maxPos": []
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "6415a521-3980-4998-bb90-fca3d323c1cc@6c48a",
-        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7"
+        "imageUuidOrDatabaseUri": "db29eeca-53aa-4c9c-83d6-397ec4237f03@6c48a",
+        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
+        "trimType": "auto"
       },
       "ver": "1.0.12",
       "imported": true,
@@ -329,14 +329,13 @@
       ],
       "subMetas": {}
     },
-    "cde87": {
+    "c9b8e": {
       "importer": "sprite-frame",
-      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@cde87",
+      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@c9b8e",
       "displayName": "",
-      "id": "cde87",
-      "name": "text-Ready-vn",
+      "id": "c9b8e",
+      "name": "text_Ready_vi",
       "userData": {
-        "trimType": "auto",
         "trimThreshold": 1,
         "rotated": false,
         "offsetX": 0,
@@ -365,8 +364,9 @@
           "maxPos": []
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "6415a521-3980-4998-bb90-fca3d323c1cc@6c48a",
-        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7"
+        "imageUuidOrDatabaseUri": "db29eeca-53aa-4c9c-83d6-397ec4237f03@6c48a",
+        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
+        "trimType": "auto"
       },
       "ver": "1.0.12",
       "imported": true,
@@ -375,14 +375,13 @@
       ],
       "subMetas": {}
     },
-    "d0c8c": {
+    "e7db1": {
       "importer": "sprite-frame",
-      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@d0c8c",
+      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@e7db1",
       "displayName": "",
-      "id": "d0c8c",
-      "name": "text-crack-en",
+      "id": "e7db1",
+      "name": "text_crack_en",
       "userData": {
-        "trimType": "auto",
         "trimThreshold": 1,
         "rotated": true,
         "offsetX": 0,
@@ -411,8 +410,9 @@
           "maxPos": []
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "6415a521-3980-4998-bb90-fca3d323c1cc@6c48a",
-        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7"
+        "imageUuidOrDatabaseUri": "db29eeca-53aa-4c9c-83d6-397ec4237f03@6c48a",
+        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
+        "trimType": "auto"
       },
       "ver": "1.0.12",
       "imported": true,
@@ -421,14 +421,13 @@
       ],
       "subMetas": {}
     },
-    "42ee0": {
+    "e9554": {
       "importer": "sprite-frame",
-      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@42ee0",
+      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@e9554",
       "displayName": "",
-      "id": "42ee0",
-      "name": "text-crack-vn",
+      "id": "e9554",
+      "name": "text_crack_vi",
       "userData": {
-        "trimType": "auto",
         "trimThreshold": 1,
         "rotated": true,
         "offsetX": 0,
@@ -457,8 +456,9 @@
           "maxPos": []
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "6415a521-3980-4998-bb90-fca3d323c1cc@6c48a",
-        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7"
+        "imageUuidOrDatabaseUri": "db29eeca-53aa-4c9c-83d6-397ec4237f03@6c48a",
+        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
+        "trimType": "auto"
       },
       "ver": "1.0.12",
       "imported": true,
@@ -467,14 +467,13 @@
       ],
       "subMetas": {}
     },
-    "3d10f": {
+    "6ca26": {
       "importer": "sprite-frame",
-      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@3d10f",
+      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@6ca26",
       "displayName": "",
-      "id": "3d10f",
-      "name": "text-win-en",
+      "id": "6ca26",
+      "name": "text_win_en",
       "userData": {
-        "trimType": "auto",
         "trimThreshold": 1,
         "rotated": true,
         "offsetX": 0,
@@ -503,8 +502,9 @@
           "maxPos": []
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "6415a521-3980-4998-bb90-fca3d323c1cc@6c48a",
-        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7"
+        "imageUuidOrDatabaseUri": "db29eeca-53aa-4c9c-83d6-397ec4237f03@6c48a",
+        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
+        "trimType": "auto"
       },
       "ver": "1.0.12",
       "imported": true,
@@ -513,14 +513,13 @@
       ],
       "subMetas": {}
     },
-    "2b00d": {
+    "89a9f": {
       "importer": "sprite-frame",
-      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@2b00d",
+      "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@89a9f",
       "displayName": "",
-      "id": "2b00d",
-      "name": "text-win-vn",
+      "id": "89a9f",
+      "name": "text_win_vi",
       "userData": {
-        "trimType": "auto",
         "trimThreshold": 1,
         "rotated": true,
         "offsetX": 0,
@@ -549,8 +548,9 @@
           "maxPos": []
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "6415a521-3980-4998-bb90-fca3d323c1cc@6c48a",
-        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7"
+        "imageUuidOrDatabaseUri": "db29eeca-53aa-4c9c-83d6-397ec4237f03@6c48a",
+        "atlasUuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
+        "trimType": "auto"
       },
       "ver": "1.0.12",
       "imported": true,
@@ -561,9 +561,9 @@
     }
   },
   "userData": {
-    "atlasTextureName": "pusoy-texts.png",
+    "atlasTextureName": "pusoy-texts.webp",
     "format": 3,
     "uuid": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
-    "textureUuid": "6415a521-3980-4998-bb90-fca3d323c1cc@6c48a"
+    "textureUuid": "db29eeca-53aa-4c9c-83d6-397ec4237f03@6c48a"
   }
 }
