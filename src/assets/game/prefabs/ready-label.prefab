@@ -112,10 +112,7 @@
       "b": 255,
       "a": 255
     },
-    "_spriteFrame": {
-      "__uuid__": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7@c6ac7",
-      "__expectedType__": "cc.SpriteFrame"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_fillType": 0,
     "_sizeMode": 2,
@@ -128,10 +125,7 @@
     "_fillRange": 0,
     "_isTrimmedMode": false,
     "_useGrayscale": false,
-    "_atlas": {
-      "__uuid__": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
-      "__expectedType__": "cc.SpriteAtlas"
-    },
+    "_atlas": null,
     "_id": ""
   },
   {
@@ -139,7 +133,7 @@
     "fileId": "ccb4KI1rBKV5vMo1h9vjPD"
   },
   {
-    "__type__": "a67896fTUBMjqsMU4DLBJx4",
+    "__type__": "bde97ZsJaRDf7RJ+auROTFs",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -152,17 +146,15 @@
     },
     "spriteList": [],
     "usingRawSize": true,
-    "atlas": {
-      "__uuid__": "2e4f1ef3-d03a-4de3-97e8-6a374ba933b7",
-      "__expectedType__": "cc.SpriteAtlas"
-    },
-    "prefix": "text_Ready",
-    "defaultLocalized": "en",
+    "bundleName": "resources",
+    "path": "i18n-images",
+    "frameName": "text_Ready",
+    "pathType": 1,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "f8djE7dStPsIazymdSP2Pj"
+    "fileId": "a9ZomWY2hOpoyV7zHoz8JL"
   },
   {
     "__type__": "cc.PrefabInfo",

@@ -731,7 +731,10 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_useGrayscale": false,
-    "_atlas": null,
+    "_atlas": {
+      "__uuid__": "b6933441-1fbe-4822-8b5e-ba2fc740338e",
+      "__expectedType__": "cc.SpriteAtlas"
+    },
     "_id": ""
   },
   {
@@ -906,7 +909,10 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_useGrayscale": false,
-    "_atlas": null,
+    "_atlas": {
+      "__uuid__": "b6933441-1fbe-4822-8b5e-ba2fc740338e",
+      "__expectedType__": "cc.SpriteAtlas"
+    },
     "_id": ""
   },
   {
