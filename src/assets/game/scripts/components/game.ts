@@ -21,7 +21,7 @@ import { Quake } from "./quake";
 import { ReadyLabel } from "./ready-label";
 import { AudioIds } from "../constanst/audio-ids";
 
-startGame(settings.name, containerOptions, siteConfigs);
+startGame(settings.name, containerOptions, siteConfigs, null, ["en", "vi"]);
 
 const { ccclass, property } = _decorator;
 const { observer, render, handle } = Observer;
