@@ -23,7 +23,6 @@ const defaultConfig: gc.Configs.SiteConfigs = {
         proxyPath: "pusoy",
         route: "pusoy",
     },
-    mainObserverNamespace: "Pusoy",
     tolgeeUrl: "",
 };
 
