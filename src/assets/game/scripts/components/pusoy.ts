@@ -51,7 +51,7 @@ export class Pusoy extends Component {
     }
 
     playAnimation(source: Node, sourceSlot: string, target: Node, targetSlot: string) {
-        const randomRotation = Math.floor(Math.random() * 50) * 10 + 360;
+        const randomRotation = Math.floor(Math.random() * 50) * 10 + 360; //NOSONAR
         const rotationSource = ROTATE_SOURCE[sourceSlot];
         const rotationTarget = ROTATE_TARGET[targetSlot];
         const rotation = new Vec3(

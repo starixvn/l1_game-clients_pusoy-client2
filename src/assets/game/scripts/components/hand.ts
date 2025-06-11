@@ -110,7 +110,7 @@ export class Hand extends ObserverComponent {
         const keepSwap = () => {
             if (!this._shouldSwap) {
                 this.unschedule(keepSwap);
-            } else if (Math.random() < 0.5 && this._swappingTween.length === 0) {
+            } else if (Math.random() < 0.5 && this._swappingTween.length === 0) { //NOSONAR
                 this.randomSwapCards();
             }
         };
@@ -126,11 +126,11 @@ export class Hand extends ObserverComponent {
             pickCards.push(...nodes);
         }
 
-        const randomIndex = Math.floor(Math.random() * pickCards.length);
+        const randomIndex = Math.floor(Math.random() * pickCards.length); //NOSONAR
         const card1 = pickCards[randomIndex];
         pickCards = pickCards.filter((c) => c != card1);
 
-        const randomIndex2 = Math.floor(Math.random() * pickCards.length);
+        const randomIndex2 = Math.floor(Math.random() * pickCards.length); //NOSONAR
         const card2 = pickCards[randomIndex2];
 
         this.swap(card1, card2);

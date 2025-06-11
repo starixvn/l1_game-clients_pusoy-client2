@@ -60,6 +60,6 @@ export class Quake extends Component {
     }
 
     private getRandom(range: number) {
-        return 2 * range * Math.random() - range;
+        return 2 * range * Math.random() - range; //NOSONAR
     }
 }

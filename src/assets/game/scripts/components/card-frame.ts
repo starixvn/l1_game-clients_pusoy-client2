@@ -93,7 +93,7 @@ export class CardFrame extends ObserverComponent {
 
         if (this.highlighStar.active) {
             const star = this.highlighStar.getComponent(sp.Skeleton);
-            star.setAnimation(0, ANIMATION.star[Math.floor(Math.random() * 5)], false);
+            star.setAnimation(0, ANIMATION.star[Math.floor(Math.random() * 5)], false); //NOSONAR
         }
         if (this.highlightFrame.active) {
             const frame = this.highlightFrame.getComponent(sp.Skeleton);
