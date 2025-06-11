@@ -7,7 +7,7 @@ export class CardValue extends Component {
     @property(Node)
     innerCard: Node;
 
-    private _value: number = 0;
+    private _value = 0;
     public get value(): number {
         return this._value;
     }

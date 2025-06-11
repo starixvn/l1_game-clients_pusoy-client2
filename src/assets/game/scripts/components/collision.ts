@@ -5,13 +5,13 @@ const { ccclass, property } = _decorator;
 
 @ccclass("Collision")
 export class Collision extends Component {
-    private _containerMap: Map<string, Collider2D> = new Map();
+    private readonly _containerMap: Map<string, Collider2D> = new Map();
 
     _currentRect: math.Rect;
     _newCardContainer: Node = null;
     _currentWorldPosition: Vec3;
     _currentParent: Node = null;
-    _isDragging: boolean = false;
+    _isDragging = false;
 
     start() {
         const collider = this.node.getComponent(Collider2D);
@@ -33,14 +33,12 @@ export class Collision extends Component {
     }
 
     onDragging(event: EventTouch) {
-        if (this._containerMap.size == 1) {
+        if (this._containerMap.size === 1) {
             this.notifyCardContainer(this._containerMap.values().next().value.node);
         } else if (this._containerMap.size > 1) {
             let max: Node = null;
-            let maxIntersectArea = 0;
-            ({ maxIntersectArea, max } = this.getMaxIntersectNode(maxIntersectArea, max));
-
-            this.notifyCardContainer(max);
+            const { max: maxNode } = this.getMaxIntersectNode(0, max);
+            this.notifyCardContainer(maxNode);
         }
     }
 

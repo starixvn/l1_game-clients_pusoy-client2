@@ -271,7 +271,7 @@ export default class Game extends GameComponent {
                         target: handComponents[Number(key)].node,
                         targetSlot: key,
                     });
-                } else if (value == 0) {
+                } else if (value === 0) {
                     this._looseSuperPusoy.push({
                         target: handComponent.node,
                         targetSlot: `${data.slot}`,

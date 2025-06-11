@@ -37,7 +37,7 @@ export class Pusoy extends Component {
     @property(Node)
     rocket: Node;
 
-    private _onDestroyHandlers: Function[] = [];
+    private readonly _onDestroyHandlers: Function[] = [];
 
     addDestroyHandler(handler: Function) {
         this._onDestroyHandlers.push(handler);
@@ -58,7 +58,7 @@ export class Pusoy extends Component {
             rotationTarget ? rotationTarget.x : rotationSource.x,
             rotationTarget ? rotationTarget.y : rotationSource.y
         );
-        const rotationVec = new Vec3(rotation.x, rotation.y, rotation.y != 0 ? randomRotation : 0);
+        const rotationVec = new Vec3(rotation.x, rotation.y, rotation.y !== 0 ? randomRotation : 0);
         this.rocket.getComponent(Rocket).fly(source.worldPosition, target.worldPosition, rotationVec);
     }
 }

@@ -1,4 +1,4 @@
-import { _decorator, Component, easing, EventHandler, instantiate, Node, Prefab, tween, Vec3 } from "cc";
+import { _decorator, easing, EventHandler, instantiate, Node, Prefab, tween, Vec3 } from "cc";
 import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { DragCardEvent } from "../custom-event";

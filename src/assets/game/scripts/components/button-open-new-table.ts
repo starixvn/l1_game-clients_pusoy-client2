@@ -1,4 +1,4 @@
-import { _decorator, Component, Node } from "cc";
+import { _decorator } from "cc";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import Observer from "observer";
 import gc from "@sg/game-client-base";

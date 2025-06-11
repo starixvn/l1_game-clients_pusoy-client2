@@ -17,7 +17,7 @@ export class Hand extends ObserverComponent {
     protected cardPrefab: Prefab = null;
 
     @property(CCInteger)
-    protected slotIndex: number = -1;
+    protected slotIndex = -1;
 
     protected readyNode: Node = null;
 
@@ -128,7 +128,7 @@ export class Hand extends ObserverComponent {
 
         const randomIndex = Math.floor(Math.random() * pickCards.length); //NOSONAR
         const card1 = pickCards[randomIndex];
-        pickCards = pickCards.filter((c) => c != card1);
+        pickCards = pickCards.filter((c) => c !== card1);
 
         const randomIndex2 = Math.floor(Math.random() * pickCards.length); //NOSONAR
         const card2 = pickCards[randomIndex2];

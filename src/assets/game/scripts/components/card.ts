@@ -26,47 +26,32 @@ export enum CardRank {
 }
 
 function suitToString(suit: CardSuit): string {
-    switch (suit) {
-        case CardSuit.CLUB:
-            return "club";
-        case CardSuit.DIAMOND:
-            return "diamond";
-        case CardSuit.HEART:
-            return "heart";
-        case CardSuit.SPADE:
-            return "spade";
-    }
+    const suitMap = {
+        [CardSuit.CLUB]: "club",
+        [CardSuit.DIAMOND]: "diamond",
+        [CardSuit.HEART]: "heart",
+        [CardSuit.SPADE]: "spade"
+    };
+    return suitMap[suit];
 }
 
 function rankToString(rank: CardRank): string {
-    switch (rank) {
-        case CardRank.ACE:
-            return "A";
-        case CardRank.TWO:
-            return "2";
-        case CardRank.THREE:
-            return "3";
-        case CardRank.FOUR:
-            return "4";
-        case CardRank.FIVE:
-            return "5";
-        case CardRank.SIX:
-            return "6";
-        case CardRank.SEVEN:
-            return "7";
-        case CardRank.EIGHT:
-            return "8";
-        case CardRank.NINE:
-            return "9";
-        case CardRank.TEN:
-            return "10";
-        case CardRank.JACK:
-            return "J";
-        case CardRank.QUEEN:
-            return "Q";
-        case CardRank.KING:
-            return "K";
-    }
+    const rankMap = {
+        [CardRank.ACE]: "A",
+        [CardRank.TWO]: "2",
+        [CardRank.THREE]: "3",
+        [CardRank.FOUR]: "4",
+        [CardRank.FIVE]: "5",
+        [CardRank.SIX]: "6",
+        [CardRank.SEVEN]: "7",
+        [CardRank.EIGHT]: "8",
+        [CardRank.NINE]: "9",
+        [CardRank.TEN]: "10",
+        [CardRank.JACK]: "J",
+        [CardRank.QUEEN]: "Q",
+        [CardRank.KING]: "K"
+    };
+    return rankMap[rank];
 }
 
 @ccclass
@@ -112,7 +97,7 @@ export class Card extends Component {
     }
 
     public set back(value: boolean) {
-        this.backNode!.active = value;
+        this.backNode.active = value;
     }
 
     @property
@@ -121,7 +106,7 @@ export class Card extends Component {
     }
 
     public set disable(value: boolean) {
-        this.disableNode!.active = value;
+        this.disableNode.active = value;
     }
 
     @property

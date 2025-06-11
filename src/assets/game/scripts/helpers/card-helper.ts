@@ -41,8 +41,8 @@ export const sortSegment = (cards: number[], increase = false) => {
     const statistic = pusoy.statisticCardByCountSameRank(cards);
     const kind: number[] = sortIntegers(Array.from(statistic.keys()), increase);
     const result: number[] = [];
-    for (let i = 0; i < kind.length; i++) {
-        result.push(...sortIntegers(statistic.get(kind[i]), increase));
+    for (const k of kind) {
+        result.push(...sortIntegers(statistic.get(k), increase));
     }
     return result;
 };

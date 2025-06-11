@@ -5,6 +5,8 @@ import gc from "@sg/game-client-base";
 const { Translator } = gc;
 const { ccclass, property } = _decorator;
 
+const FONT_MEDIUM = "Poppins-Medium";
+
 @ccclass("LanguageFont")
 export class LanguageFont {
     @property
@@ -71,11 +73,11 @@ export class PusoyLocalizedFont extends Component {
     initData() {
         this.fontBases = {
             vi: "noto-serif-bold",
-            id: "Poppins-Medium",
-            en: "Poppins-Medium",
-            th: "Poppins-Medium",
-            zh_cn: "Poppins-Medium",
-            zh_tw: "Poppins-Medium",
+            id: FONT_MEDIUM,
+            en: FONT_MEDIUM,
+            th: FONT_MEDIUM,
+            zh_cn: FONT_MEDIUM,
+            zh_tw: FONT_MEDIUM,
         };
     }
 

@@ -1,5 +1,4 @@
-import pusoy from "@rd/pusoy-rules";
-import { _decorator, CCBoolean, CCString, Component, Enum, Label, Node, Sprite, SpriteAtlas } from "cc";
+import { _decorator, CCBoolean, CCString, Component, Node, Sprite, SpriteAtlas } from "cc";
 import { CardContainer } from "./card-container";
 import { CardFrame, CardState } from "./card-frame";
 import { LocalizedLabel } from "../../../../extensions/i18n/assets/LocalizedLabel";
@@ -63,11 +62,12 @@ export class Segment extends Component {
     }
 
     changeState(highlightValues: number[], playAnimation = false) {
-        for (let i = 0; i < this.segmentContainer.children.length; i++) {
-            const card = this.segmentContainer.children[i].getComponent(CardContainer);
+        for (const child of this.segmentContainer.children) {
+            const card = child.getComponent(CardContainer);
             const frame = card.draggableCardNode.getComponent(CardFrame);
             const value = card.getCardValue();
             const frames: CardFrame[] = [];
+
             if (highlightValues.includes(value)) {
                 frame.state = CardState.Highlight;
                 frames.push(frame);

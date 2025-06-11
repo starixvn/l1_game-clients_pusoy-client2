@@ -1,6 +1,6 @@
 import { _decorator, Button, Component, EventHandler, Node, NodeEventType, Vec3 } from "cc";
 const { ccclass, property } = _decorator;
-Button;
+
 @ccclass("ButtonChangePosition")
 export class ButtonChangePosition extends Component {
     @property([EventHandler])

@@ -3,13 +3,13 @@ const { ccclass, property } = _decorator;
 
 @ccclass("AutoDestroySpine")
 export class AutoDestroySpine extends Component {
-    private _autoDestroySpineHandler: AutoDestroySpineHandler[] = [];
+    private readonly _autoDestroySpineHandler: AutoDestroySpineHandler[] = [];
 
     addDestroyHandler(handler: AutoDestroySpineHandler) {
         this._autoDestroySpineHandler.push(handler);
     }
 
-    play(shouldDestroy = true, animation: string = "active") {
+    play(shouldDestroy = true, animation = "active") {
         const skeleton = this.node.getComponent(sp.Skeleton);
         skeleton.setAnimation(0, animation, false);
         this._autoDestroySpineHandler.forEach((handler) => {

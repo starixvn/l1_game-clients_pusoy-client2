@@ -1,4 +1,4 @@
-import { _decorator, Component, EventHandler, EventTouch, Node, NodeEventType, v3, Vec3 } from "cc";
+import { _decorator, Component, EventHandler, EventTouch, NodeEventType, v3, Vec3 } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("Draggable")
@@ -15,7 +15,7 @@ export class Draggable extends Component {
     @property([EventHandler])
     dragCancelHandlers: EventHandler[] = [];
 
-    _isDragging: boolean = false;
+    _isDragging = false;
 
     _delta: Vec3;
 

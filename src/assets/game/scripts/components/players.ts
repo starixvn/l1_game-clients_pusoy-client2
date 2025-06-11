@@ -17,8 +17,8 @@ const COIN_FLIGHT_DURATION = 0.5;
 const NUMBER_OF_COINS = 6;
 const DELAY_BETWEEN_COINS = COIN_FLIGHT_DURATION / (NUMBER_OF_COINS - 1);
 
-@ccclass
-export class players extends ObserverComponent {
+@ccclass("Players")
+export class Players extends ObserverComponent {
     @property({ type: Prefab })
     coinPrefab: Prefab | null = null;
 

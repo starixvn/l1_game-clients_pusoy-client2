@@ -1,6 +1,6 @@
 import pusoy from "@rd/pusoy-rules";
 import gc from "@sg/game-client-base";
-import { _decorator, Color, easing, EventHandler, isValid, Node, Prefab, Sprite, tween, Vec3 } from "cc";
+import { _decorator, Color, easing, EventHandler, Node, Prefab, Sprite, tween, Vec3 } from "cc";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import Observer from "observer";
 import { isChangeSegment, sortSegment } from "../helpers/card-helper";

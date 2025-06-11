@@ -14,16 +14,16 @@ export class HandCard extends Component {
     }
 
     set back(value: boolean) {
-        this.card!.back = value;
+        this.card.back = value;
     }
 
     set disable(value: boolean) {
-        this.card!.disable = value;
+        this.card.disable = value;
     }
 
     value(rank: number, suit: number) {
-        this.card!.suit = suit;
-        this.card!.rank = rank;
+        this.card.suit = suit;
+        this.card.rank = rank;
     }
 
     flip(duration = 0.32, keepBack = false, done = () => ({})) {
