@@ -36,7 +36,7 @@ export class Collision extends Component {
         if (this._containerMap.size === 1) {
             this.notifyCardContainer(this._containerMap.values().next().value.node);
         } else if (this._containerMap.size > 1) {
-            let max: Node = null;
+            const max: Node = null;
             const { max: maxNode } = this.getMaxIntersectNode(0, max);
             this.notifyCardContainer(maxNode);
         }

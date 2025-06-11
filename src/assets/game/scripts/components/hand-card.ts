@@ -44,10 +44,10 @@ export class HandCard extends Component {
     }
 
     hide() {
-        this.card!.node.active = false;
+        this.card.node.active = false;
     }
 
     show() {
-        this.card!.node.active = true;
+        this.card.node.active = true;
     }
 }
