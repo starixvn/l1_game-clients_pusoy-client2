@@ -9,4 +9,5 @@ window.envConfig = {
     enableMsgpackParserAllGames: false,
     SGConnectSubDomain: "connectsite",
     backgroundNoTranslate: true,
+    clientSubDomain: "l1-client",
 };
