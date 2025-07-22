@@ -9,7 +9,7 @@ function writeFile(fileName: string, content: string, extension = "ts") {
 }
 
 const languageFolder = "./src/assets/resources/i18n/";
-const languageCodes = ["en", "vi"];
+const languageCodes = ["en", "vi", "ja"];
 const namespaces = ["Common", "CommonPoker", "Pusoy"];
 const tg = Tolgee().use(DevTools()).init({
     defaultLanguage: "en",
@@ -81,7 +81,8 @@ win.languages.${languageId} = languages;`;
         languageFolder + "index",
         `export * as en from "./en";
 export * as vi from "./vi";
-`
+
+export * as ja from "./ja";`
     );
 
     writeFile("./src/remote/localization", JSON.stringify(remoteNames, null, 4), "json");
