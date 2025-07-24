@@ -1,18 +1,9 @@
 {
-    "lobbyNames": {
-        "en": "PUSOY",
-        "id": "PUSOY",
-        "th": "PUSOY",
-        "vi": "MẬU BINH",
-        "zh_cn": "PUSOY",
-        "zh_tw": "PUSOY"
-    },
+    "lobbyNames": {},
     "gameNames": {
         "en": "Pusoy",
         "vi": "Mậu Binh",
-        "id": "Pusoy",
-        "th": "Pusoy",
-        "zh_cn": "Pusoy",
-        "zh_tw": "Pusoy"
+        "ja": "プソイ",
+        "es": "Pusoy"
     }
 }

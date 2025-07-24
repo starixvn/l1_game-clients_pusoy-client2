@@ -9,7 +9,7 @@ function writeFile(fileName: string, content: string, extension = "ts") {
 }
 
 const languageFolder = "./src/assets/resources/i18n/";
-const languageCodes = ["en", "vi", "ja"];
+const languageCodes = ["en", "vi", "ja", "es"];
 const namespaces = ["Common", "CommonPoker", "Pusoy"];
 const tg = Tolgee().use(DevTools()).init({
     defaultLanguage: "en",
