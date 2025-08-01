@@ -5,7 +5,9 @@
         "th": "PUSOY",
         "vi": "MẬU BINH",
         "zh_cn": "PUSOY",
-        "zh_tw": "PUSOY"
+        "zh_tw": "PUSOY",
+        "ja": "PUSOY",
+        "es": "PUSOY"
     },
     "gameNames": {
         "en": "Pusoy",
@@ -13,6 +15,8 @@
         "id": "Pusoy",
         "th": "Pusoy",
         "zh_cn": "Pusoy",
-        "zh_tw": "Pusoy"
+        "zh_tw": "Pusoy",
+        "ja": "PUSOY",
+        "es": "PUSOY"
     }
 }
